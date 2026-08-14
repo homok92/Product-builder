@@ -141,7 +141,7 @@ html[data-theme="dark"] .widget-title {
 	background: var(--livingtmw-surface);
 	border: 1px solid var(--livingtmw-border);
 	border-radius: 999px;
-	bottom: max(20px, env(safe-area-inset-bottom));
+	bottom: max(84px, calc(env(safe-area-inset-bottom) + 64px));
 	box-shadow: var(--livingtmw-shadow);
 	color: var(--livingtmw-text);
 	cursor: pointer;
@@ -153,6 +153,13 @@ html[data-theme="dark"] .widget-title {
 	position: fixed;
 	right: max(20px, env(safe-area-inset-right));
 	z-index: 99999;
+}
+
+/* Keep GeneratePress' back-to-top control below the theme switcher. */
+.generate-back-to-top,
+.generate-back-to-top:visited {
+	bottom: max(20px, env(safe-area-inset-bottom));
+	right: max(20px, env(safe-area-inset-right));
 }
 
 .livingtmw-theme-toggle:hover {
@@ -176,7 +183,13 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 
 @media (max-width: 600px) {
 	.livingtmw-theme-toggle {
-		bottom: 14px;
+		bottom: max(70px, calc(env(safe-area-inset-bottom) + 56px));
+		right: 14px;
+	}
+
+	.generate-back-to-top,
+	.generate-back-to-top:visited {
+		bottom: max(14px, env(safe-area-inset-bottom));
 		right: 14px;
 	}
 }
