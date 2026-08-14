@@ -16,6 +16,14 @@ html[data-theme="dark"] {
 	--livingtmw-border: #343a46;
 	--livingtmw-accent: #7eafff;
 	--livingtmw-shadow: 0 10px 30px rgb(0 0 0 / 38%);
+	/* GeneratePress color variables. */
+	--base: #252a33;
+	--base-2: #111318;
+	--base-3: #111318;
+	--contrast: #f2f4f8;
+	--contrast-2: #adb5c3;
+	--contrast-3: #7f8998;
+	background-color: var(--livingtmw-bg);
 }
 
 html,
@@ -27,6 +35,23 @@ body,
 .site-main {
 	background-color: var(--livingtmw-bg);
 	color: var(--livingtmw-text);
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] body.separate-containers,
+html[data-theme="dark"] #page,
+html[data-theme="dark"] .site.grid-container,
+html[data-theme="dark"] .site-content,
+html[data-theme="dark"] .content-area,
+html[data-theme="dark"] .site-main {
+	background: var(--livingtmw-bg) !important;
+}
+
+html[data-theme="dark"] .site-header,
+html[data-theme="dark"] .site-header .inside-header,
+html[data-theme="dark"] .site-logo,
+html[data-theme="dark"] .custom-logo-link {
+	background: var(--livingtmw-bg) !important;
 }
 
 body,
