@@ -54,6 +54,33 @@ html[data-theme="dark"] .custom-logo-link {
 	background: var(--livingtmw-bg) !important;
 }
 
+html[data-theme="dark"] .header-image.is-logo-image {
+	background: var(--livingtmw-bg);
+	content: url("images/logo-dark.png");
+}
+
+html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] #footer-widgets,
+html[data-theme="dark"] .footer-widgets,
+html[data-theme="dark"] .footer-widgets-container,
+html[data-theme="dark"] .inside-footer-widgets,
+html[data-theme="dark"] .site-footer .widget,
+html[data-theme="dark"] footer.site-info,
+html[data-theme="dark"] .inside-site-info,
+html[data-theme="dark"] .footer-bar,
+html[data-theme="dark"] .copyright-bar {
+	background: var(--livingtmw-bg) !important;
+	border-color: var(--livingtmw-border) !important;
+	color: var(--livingtmw-text) !important;
+}
+
+html[data-theme="dark"] .site-footer a,
+html[data-theme="dark"] .site-footer .widget-title,
+html[data-theme="dark"] .site-footer p,
+html[data-theme="dark"] .site-footer li {
+	color: var(--livingtmw-text) !important;
+}
+
 body,
 #page,
 .site,
