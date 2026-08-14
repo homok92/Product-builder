@@ -1,2 +1,13 @@
 .vscode/sftp.json
 backups/
+
+# Local/server WordPress mirror. Only site/ is deployed and versioned.
+/wp-data/
+/plugins/
+/apache-mpm.conf
+/apache2.conf
+/docker-compose.yml
+/hide-php.ini
+/uploads.ini
+/zzz-bridge-security.conf
+/zzz-memory.ini
