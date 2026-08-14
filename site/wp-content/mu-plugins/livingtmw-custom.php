@@ -11,17 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/livingtmw-custom/adsense-readiness.php';
 require_once __DIR__ . '/livingtmw-custom/content-enhancements.php';
+require_once __DIR__ . '/livingtmw-custom/living-tools.php';
 
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		$stylesheet = __DIR__ . '/livingtmw-custom/custom-layout-v2.css';
+		$stylesheet = __DIR__ . '/livingtmw-custom/custom-tools-v3.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
+		$tools      = __DIR__ . '/livingtmw-custom/living-tools.js';
 
 		if ( is_readable( $stylesheet ) ) {
 			wp_enqueue_style(
 				'livingtmw-custom',
-				content_url( 'mu-plugins/livingtmw-custom/custom-layout-v2.css' ),
+				content_url( 'mu-plugins/livingtmw-custom/custom-tools-v3.css' ),
 				array(),
 				(string) filemtime( $stylesheet )
 			);
@@ -33,6 +35,16 @@ add_action(
 				content_url( 'mu-plugins/livingtmw-custom/theme-toggle.js' ),
 				array(),
 				(string) filemtime( $script ),
+				true
+			);
+		}
+
+		if ( is_readable( $tools ) && ( is_front_page() || is_home() ) ) {
+			wp_enqueue_script(
+				'livingtmw-living-tools',
+				content_url( 'mu-plugins/livingtmw-custom/living-tools.js' ),
+				array(),
+				(string) filemtime( $tools ),
 				true
 			);
 		}
