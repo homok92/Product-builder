@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once __DIR__ . '/livingtmw-custom/adsense-readiness.php';
+
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
