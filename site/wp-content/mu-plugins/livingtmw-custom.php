@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/livingtmw-custom/adsense-readiness.php';
+require_once __DIR__ . '/livingtmw-custom/content-enhancements.php';
 
 add_action(
 	'wp_enqueue_scripts',
