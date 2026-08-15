@@ -140,6 +140,7 @@ function livingtmw_quality_head(): void {
 			'about-livingtmw'       => '내일의 생활 운영 목적, 현지 생활정보의 확인 범위와 정정 문의 방법을 안내합니다.',
 			'editorial-policy'      => '내일의 생활이 현지 경험과 공개 자료를 확인하고 콘텐츠를 제작·수정하는 원칙입니다.',
 			'advertising-disclosure'=> '내일의 생활의 광고, 제휴 콘텐츠 및 AI 설명 이미지 공개 원칙을 안내합니다.',
+			'today-fortune'         => '12띠와 관심 분야를 선택해 오늘의 흐름을 가볍게 살펴보는 무료 운세입니다. 입력 정보는 저장하거나 전송하지 않습니다.',
 		);
 		$description  = $descriptions[ get_post_field( 'post_name', get_queried_object_id() ) ] ?? '';
 		if ( '' === $description ) {

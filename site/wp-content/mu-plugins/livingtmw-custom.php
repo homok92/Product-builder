@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/livingtmw-custom/adsense-readiness.php';
 require_once __DIR__ . '/livingtmw-custom/content-enhancements.php';
 require_once __DIR__ . '/livingtmw-custom/living-tools.php';
+require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 
 add_action(
 	'wp_enqueue_scripts',
@@ -19,6 +20,7 @@ add_action(
 		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v5.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
 		$tools      = __DIR__ . '/livingtmw-custom/living-market-v2.js';
+		$fortune    = __DIR__ . '/livingtmw-custom/daily-fortune-v1.js';
 
 		if ( is_readable( $stylesheet ) ) {
 			wp_enqueue_style(
@@ -45,6 +47,16 @@ add_action(
 				content_url( 'mu-plugins/livingtmw-custom/living-market-v2.js' ),
 				array(),
 				(string) filemtime( $tools ),
+				true
+			);
+		}
+
+		if ( is_readable( $fortune ) && is_page( 'today-fortune' ) ) {
+			wp_enqueue_script(
+				'livingtmw-daily-fortune',
+				content_url( 'mu-plugins/livingtmw-custom/daily-fortune-v1.js' ),
+				array(),
+				(string) filemtime( $fortune ),
 				true
 			);
 		}
