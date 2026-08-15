@@ -199,14 +199,6 @@ function livingtmw_render_living_tools(): void {
 					<p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p>
 					<button type="button" data-weather-retry>다시 불러오기</button>
 				</div>
-				<div class="livingtmw-market-rate" aria-label="EGCurrency 기준 미얀마 바깥환율">
-					<div class="livingtmw-market-rate__heading"><strong>오늘의 바깥환율</strong><span>EGCurrency Black Market 기준</span></div>
-					<div class="livingtmw-market-rate__rows">
-						<div><strong>1 USD</strong><span><small>BUY</small> <b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b> MMK</span><span><small>SELL</small> <b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b> MMK</span></div>
-						<div><strong>1원</strong><span><small>BUY</small> <b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b> MMK</span><span><small>SELL</small> <b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b> MMK</span></div>
-					</div>
-					<p><span data-market-status>최신값 확인 중</span> · 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://egcurrency.com/en/currency/MMK/blackMarket" target="_blank" rel="noopener noreferrer">출처</a></p>
-				</div>
 			</article>
 
 			<article class="livingtmw-cost" aria-labelledby="livingtmw-cost-title">
@@ -229,6 +221,21 @@ function livingtmw_render_living_tools(): void {
 					<ul data-cost-breakdown></ul>
 				</div>
 				<p class="livingtmw-tool-card__meta">작성자의 2026년 8월 체감값을 사용한 참고 계산입니다. 환율·가족의 소비 습관·건물 요금에 따라 달라집니다.</p>
+			</article>
+
+			<article class="livingtmw-market-rate" aria-labelledby="livingtmw-market-title">
+				<div class="livingtmw-tool-card__heading">
+					<div>
+						<p class="livingtmw-tool-card__kicker">15분마다 자동 확인</p>
+						<h3 id="livingtmw-market-title">오늘의 바깥환율</h3>
+					</div>
+					<span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span>
+				</div>
+				<div class="livingtmw-market-rate__rows">
+					<div><strong>1 USD</strong><span><small>BUY</small><b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div>
+					<div><strong>1원</strong><span><small>BUY</small><b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div>
+				</div>
+				<p><span data-market-status>최신값 확인 중</span> · EGCurrency Black Market 기준 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://egcurrency.com/en/currency/MMK/blackMarket" target="_blank" rel="noopener noreferrer">출처</a></p>
 			</article>
 		</div>
 	</section>
