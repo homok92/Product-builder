@@ -326,4 +326,4 @@ function livingtmw_trust_navigation(): void {
 	}
 	echo '</ul></div></nav>';
 }
-add_action( 'wp_footer', 'livingtmw_trust_navigation', 8 );
+add_action( 'generate_before_footer', 'livingtmw_trust_navigation', 8 );

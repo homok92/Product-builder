@@ -229,7 +229,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	background: #111318;
 	border-top: 1px solid #343a46;
 	color: #f2f4f8;
-	padding: 34px 20px 82px;
+	padding: 34px 20px;
 }
 
 .livingtmw-trust-nav__inner {
