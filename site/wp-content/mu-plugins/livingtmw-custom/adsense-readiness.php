@@ -130,6 +130,7 @@ add_filter( 'wp_sitemaps_taxonomies', 'livingtmw_quality_sitemap_taxonomies' );
  * Add concise homepage metadata when no SEO plugin supplies it.
  */
 function livingtmw_quality_head(): void {
+	echo '<meta name="google-site-verification" content="hoFp2Ja6GpJ8ISIJF2XB_74k9CPR2LuTbkXgjA27GVs">' . "\n";
 	echo '<meta name="google-adsense-account" content="ca-pub-3693971488676035">' . "\n";
 
 	if ( is_front_page() || is_home() ) {
