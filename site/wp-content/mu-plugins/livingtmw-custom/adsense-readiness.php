@@ -298,6 +298,15 @@ function livingtmw_clean_fallback_menu( array $args ): array {
 }
 add_filter( 'wp_page_menu_args', 'livingtmw_clean_fallback_menu' );
 
+function livingtmw_exclude_footer_pages_from_lists( array $excluded_ids ): array {
+	if ( is_admin() ) {
+		return $excluded_ids;
+	}
+
+	return array_values( array_unique( array_merge( $excluded_ids, livingtmw_footer_page_ids() ) ) );
+}
+add_filter( 'wp_list_pages_excludes', 'livingtmw_exclude_footer_pages_from_lists' );
+
 /**
  * Keep trust and policy pages visible from every page.
  */
