@@ -324,6 +324,6 @@ function livingtmw_trust_navigation(): void {
 	foreach ( $links as $label => $url ) {
 		echo '<li><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
 	}
-	echo '</ul></div></nav>';
+	echo '</ul></div></nav><script id="livingtmw-footer-order">(function(){var n=document.querySelector(".livingtmw-trust-nav"),f=document.querySelector(".site-footer");if(n&&f&&f.parentNode){f.parentNode.insertBefore(n,f)}}());</script>';
 }
-add_action( 'generate_before_footer', 'livingtmw_trust_navigation', 8 );
+add_action( 'wp_footer', 'livingtmw_trust_navigation', 8 );
