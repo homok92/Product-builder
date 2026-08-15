@@ -249,22 +249,72 @@ function livingtmw_related_articles( string $content ): string {
 add_filter( 'the_content', 'livingtmw_related_articles', 18 );
 
 /**
+ * Keep policy and operator pages out of the primary header navigation.
+ * They remain crawlable and are presented together in the footer.
+ */
+function livingtmw_footer_page_ids(): array {
+	$slugs = array(
+		'개인정보처리방침',
+		'이용약관',
+		'문의하기',
+		'about-livingtmw',
+		'editorial-policy',
+		'advertising-disclosure',
+	);
+	$ids   = array();
+
+	foreach ( $slugs as $slug ) {
+		$page = get_page_by_path( $slug, OBJECT, 'page' );
+		if ( $page ) {
+			$ids[] = (int) $page->ID;
+		}
+	}
+
+	return $ids;
+}
+
+function livingtmw_clean_primary_menu( array $items, $args ): array {
+	if ( is_admin() || empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+		return $items;
+	}
+
+	$hidden_ids = livingtmw_footer_page_ids();
+	return array_values(
+		array_filter(
+			$items,
+			static function ( $item ) use ( $hidden_ids ): bool {
+				return 'page' !== $item->object || ! in_array( (int) $item->object_id, $hidden_ids, true );
+			}
+		)
+	);
+}
+add_filter( 'wp_nav_menu_objects', 'livingtmw_clean_primary_menu', 10, 2 );
+
+function livingtmw_clean_fallback_menu( array $args ): array {
+	$excluded        = livingtmw_footer_page_ids();
+	$current_exclude = empty( $args['exclude'] ) ? array() : array_map( 'intval', explode( ',', (string) $args['exclude'] ) );
+	$args['exclude'] = implode( ',', array_unique( array_merge( $current_exclude, $excluded ) ) );
+	return $args;
+}
+add_filter( 'wp_page_menu_args', 'livingtmw_clean_fallback_menu' );
+
+/**
  * Keep trust and policy pages visible from every page.
  */
 function livingtmw_trust_navigation(): void {
 	$links = array(
 		'사이트 소개'     => home_url( '/about-livingtmw/' ),
-		'콘텐츠 제작 원칙' => home_url( '/editorial-policy/' ),
-		'광고·이미지 공개' => home_url( '/advertising-disclosure/' ),
+		'콘텐츠 제작 및 검수 원칙' => home_url( '/editorial-policy/' ),
+		'광고 및 이미지 공개 원칙' => home_url( '/advertising-disclosure/' ),
 		'개인정보처리방침' => home_url( '/개인정보처리방침/' ),
 		'이용약관'         => home_url( '/이용약관/' ),
 		'문의하기'         => home_url( '/문의하기/' ),
 	);
 
-	echo '<nav class="livingtmw-trust-nav" aria-label="사이트 신뢰 및 정책 안내"><span>내일의 생활 안내</span><ul>';
+	echo '<nav class="livingtmw-trust-nav" aria-label="사이트 신뢰 및 정책 안내"><div class="livingtmw-trust-nav__inner"><div class="livingtmw-trust-nav__heading"><span>내일의 생활 안내</span><p>운영 원칙과 이용자 안내를 확인하세요.</p></div><ul>';
 	foreach ( $links as $label => $url ) {
 		echo '<li><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
 	}
-	echo '</ul></nav>';
+	echo '</ul></div></nav>';
 }
 add_action( 'wp_footer', 'livingtmw_trust_navigation', 8 );
