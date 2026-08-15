@@ -6,6 +6,10 @@
 
 	var form = root.querySelector('[data-fortune-form]');
 	var result = root.querySelector('[data-fortune-result]');
+	var birthFields = root.querySelector('[data-birth-fields]');
+	var zodiacField = root.querySelector('[data-zodiac-field]');
+	var lunarLeap = root.querySelector('[data-lunar-leap]');
+	var zodiacOrder = ['rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake', 'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig'];
 	var zodiacNames = { rat: '쥐띠', ox: '소띠', tiger: '호랑이띠', rabbit: '토끼띠', dragon: '용띠', snake: '뱀띠', horse: '말띠', goat: '양띠', monkey: '원숭이띠', rooster: '닭띠', dog: '개띠', pig: '돼지띠' };
 	var focusNames = { balance: '종합', work: '일·학업', money: '금전', relationship: '관계' };
 	var messages = {
@@ -61,24 +65,89 @@
 		return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Yangon', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 	}
 
+	function setMethod(method) {
+		var useBirth = method === 'birth';
+		birthFields.hidden = !useBirth;
+		zodiacField.hidden = useBirth;
+		['birth_year', 'birth_month', 'birth_day'].forEach(function (name) {
+			form.elements[name].required = useBirth;
+		});
+		form.elements.zodiac.required = !useBirth;
+	}
+
+	function setCalendar(calendar) {
+		lunarLeap.hidden = calendar !== 'lunar';
+		if (calendar !== 'lunar') form.elements.leap_month.checked = false;
+	}
+
+	function validDate(year, month, day, calendar) {
+		if (year < 1930 || year > new Date().getFullYear() || month < 1 || month > 12 || day < 1) return false;
+		if (calendar === 'lunar') return day <= 30;
+		var date = new Date(Date.UTC(year, month - 1, day));
+		return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+	}
+
+	function lunarYearFromSolar(year, month, day) {
+		try {
+			var parts = new Intl.DateTimeFormat('en-u-ca-chinese', { year: 'numeric', timeZone: 'UTC' }).formatToParts(new Date(Date.UTC(year, month - 1, day)));
+			var related = parts.filter(function (part) { return part.type === 'relatedYear'; })[0];
+			if (related && /^\d{4}$/.test(related.value)) return parseInt(related.value, 10);
+		} catch (error) {
+			return null;
+		}
+		return null;
+	}
+
+	function zodiacForYear(year) {
+		return zodiacOrder[((year - 4) % 12 + 12) % 12];
+	}
+
+	form.addEventListener('change', function (event) {
+		if (event.target.name === 'method') setMethod(event.target.value);
+		if (event.target.name === 'calendar') setCalendar(event.target.value);
+	});
+	setMethod(form.elements.method.value);
+	setCalendar(form.elements.calendar.value);
+
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
+		var method = form.elements.method.value;
+		var calendar = form.elements.calendar.value;
 		var zodiac = form.elements.zodiac.value;
+		var birthKey = 'direct';
 		var focus = form.elements.focus.value;
-		if (!zodiac) {
+
+		if (method === 'birth') {
+			var year = parseInt(form.elements.birth_year.value, 10);
+			var month = parseInt(form.elements.birth_month.value, 10);
+			var day = parseInt(form.elements.birth_day.value, 10);
+			if (!validDate(year, month, day, calendar)) {
+				form.elements.birth_year.focus();
+				result.innerHTML = '<p class="livingtmw-fortune__error">생년월일을 달력 구분에 맞게 확인해 주세요.</p>';
+				return;
+			}
+			var zodiacYear = calendar === 'solar' ? lunarYearFromSolar(year, month, day) : year;
+			if (!zodiacYear) {
+				result.innerHTML = '<p class="livingtmw-fortune__error">이 브라우저에서는 양력의 띠 계산을 지원하지 않습니다. ‘띠 직접 선택’을 이용해 주세요.</p>';
+				return;
+			}
+			zodiac = zodiacForYear(zodiacYear);
+			birthKey = [calendar, year, month, day, form.elements.leap_month.checked ? 'leap' : 'normal'].join('-');
+		} else if (!zodiac) {
 			form.elements.zodiac.focus();
 			result.innerHTML = '<p class="livingtmw-fortune__error">먼저 나의 띠를 선택해 주세요.</p>';
 			return;
 		}
 
-		var seed = hash(dateKey() + ':' + zodiac + ':' + focus);
+		var seed = hash(dateKey() + ':' + zodiac + ':' + focus + ':' + birthKey);
 		var score = 62 + (seed % 30);
 		var message = messages[focus][seed % messages[focus].length];
 		var action = actions[(seed >>> 3) % actions.length];
 		var color = colors[(seed >>> 5) % colors.length];
 		var number = 1 + ((seed >>> 7) % 9);
 
-		result.innerHTML = '<div class="livingtmw-fortune__result-head"><div><span>' + zodiacNames[zodiac] + ' · ' + focusNames[focus] + '</span><strong>오늘의 흐름 ' + score + '</strong></div><b aria-label="오늘의 흐름 점수 ' + score + '점">' + score + '<small>/100</small></b></div>' +
+		var calendarLabel = method === 'birth' ? (calendar === 'solar' ? '양력 생일' : (form.elements.leap_month.checked ? '음력 윤달 생일' : '음력 생일')) + ' · ' : '';
+		result.innerHTML = '<div class="livingtmw-fortune__result-head"><div><span>' + calendarLabel + zodiacNames[zodiac] + ' · ' + focusNames[focus] + '</span><strong>오늘의 흐름 ' + score + '</strong></div><b aria-label="오늘의 흐름 점수 ' + score + '점">' + score + '<small>/100</small></b></div>' +
 			'<p class="livingtmw-fortune__message">' + message + '</p>' +
 			'<dl class="livingtmw-fortune__details"><div><dt>오늘의 작은 행동</dt><dd>' + action + '</dd></div><div><dt>기분 전환 색상</dt><dd>' + color + '</dd></div><div><dt>오늘의 숫자</dt><dd>' + number + ' <small>오락용이며 복권·투자와 무관합니다.</small></dd></div></dl>';
 		result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });

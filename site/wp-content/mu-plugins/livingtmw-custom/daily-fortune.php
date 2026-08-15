@@ -8,11 +8,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function livingtmw_ensure_fortune_page(): void {
-	if ( get_page_by_path( 'today-fortune', OBJECT, 'page' ) ) {
+	$page = get_page_by_path( 'today-fortune', OBJECT, 'page' );
+	if ( $page ) {
+		if ( '2' !== get_option( 'livingtmw_fortune_page_version' ) ) {
+			wp_update_post(
+				array(
+					'ID'           => (int) $page->ID,
+					'post_content' => '[livingtmw_daily_fortune]',
+				)
+			);
+			update_option( 'livingtmw_fortune_page_version', '2', false );
+		}
 		return;
 	}
 
-	wp_insert_post(
+	$post_id = wp_insert_post(
 		array(
 			'post_title'     => '오늘의 운세',
 			'post_name'      => 'today-fortune',
@@ -22,6 +32,9 @@ function livingtmw_ensure_fortune_page(): void {
 			'comment_status' => 'closed',
 		)
 	);
+	if ( $post_id && ! is_wp_error( $post_id ) ) {
+		update_option( 'livingtmw_fortune_page_version', '2', false );
+	}
 }
 add_action( 'init', 'livingtmw_ensure_fortune_page', 25 );
 
@@ -32,18 +45,45 @@ function livingtmw_render_daily_fortune(): string {
 		<header class="livingtmw-fortune__intro">
 			<p class="livingtmw-fortune__eyebrow">매일 달라지는 가벼운 읽을거리</p>
 			<h2>12띠로 보는 오늘의 흐름</h2>
-			<p>띠와 오늘 가장 궁금한 분야를 선택하면 하루를 정리하는 데 도움이 되는 짧은 메시지를 보여드립니다. 생년월일이나 이름은 받지 않으며 선택 정보는 서버로 전송하거나 저장하지 않습니다.</p>
+			<p>양력·음력 생년월일 또는 나의 띠와 오늘 가장 궁금한 분야를 선택하면 하루를 정리하는 데 도움이 되는 짧은 메시지를 보여드립니다. 입력 정보는 서버로 전송하거나 저장하지 않습니다.</p>
 		</header>
 
 		<div class="livingtmw-fortune__layout">
 			<form class="livingtmw-fortune__form" data-fortune-form>
-				<label for="livingtmw-zodiac">나의 띠</label>
-				<select id="livingtmw-zodiac" name="zodiac" required>
-					<option value="">띠를 선택하세요</option>
-					<option value="rat">쥐띠</option><option value="ox">소띠</option><option value="tiger">호랑이띠</option><option value="rabbit">토끼띠</option>
-					<option value="dragon">용띠</option><option value="snake">뱀띠</option><option value="horse">말띠</option><option value="goat">양띠</option>
-					<option value="monkey">원숭이띠</option><option value="rooster">닭띠</option><option value="dog">개띠</option><option value="pig">돼지띠</option>
-				</select>
+				<fieldset>
+					<legend>운세 기준</legend>
+					<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
+						<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
+						<label><input type="radio" name="method" value="zodiac"><span>띠 직접 선택</span></label>
+					</div>
+				</fieldset>
+
+				<div class="livingtmw-fortune__birth" data-birth-fields>
+					<fieldset>
+						<legend>달력 구분</legend>
+						<div class="livingtmw-fortune__choices">
+							<label><input type="radio" name="calendar" value="solar" checked><span>양력</span></label>
+							<label><input type="radio" name="calendar" value="lunar"><span>음력</span></label>
+						</div>
+					</fieldset>
+					<div class="livingtmw-fortune__date-fields">
+						<label>태어난 해<input type="number" name="birth_year" inputmode="numeric" min="1930" max="2026" placeholder="예: 1990" required></label>
+						<label>월<input type="number" name="birth_month" inputmode="numeric" min="1" max="12" placeholder="1~12" required></label>
+						<label>일<input type="number" name="birth_day" inputmode="numeric" min="1" max="31" placeholder="1~31" required></label>
+					</div>
+					<label class="livingtmw-fortune__leap" data-lunar-leap hidden><input type="checkbox" name="leap_month" value="1"> 음력 윤달 생일입니다</label>
+					<p class="livingtmw-fortune__field-note">양력 생일은 음력 새해 경계를 반영해 띠를 계산합니다. 음력은 음력 달력에 적힌 연·월·일을 입력하세요.</p>
+				</div>
+
+				<div class="livingtmw-fortune__zodiac" data-zodiac-field hidden>
+					<label for="livingtmw-zodiac">나의 띠</label>
+					<select id="livingtmw-zodiac" name="zodiac">
+						<option value="">띠를 선택하세요</option>
+						<option value="rat">쥐띠</option><option value="ox">소띠</option><option value="tiger">호랑이띠</option><option value="rabbit">토끼띠</option>
+						<option value="dragon">용띠</option><option value="snake">뱀띠</option><option value="horse">말띠</option><option value="goat">양띠</option>
+						<option value="monkey">원숭이띠</option><option value="rooster">닭띠</option><option value="dog">개띠</option><option value="pig">돼지띠</option>
+					</select>
+				</div>
 
 				<fieldset>
 					<legend>오늘의 관심 분야</legend>
@@ -56,13 +96,13 @@ function livingtmw_render_daily_fortune(): string {
 				</fieldset>
 
 				<button type="submit">오늘의 운세 보기</button>
-				<p class="livingtmw-fortune__privacy">🔒 선택값은 이 브라우저에서만 계산되며 저장되지 않습니다.</p>
+				<p class="livingtmw-fortune__privacy">🔒 생년월일과 선택값은 이 브라우저에서만 계산되며 저장·전송되지 않습니다.</p>
 			</form>
 
 			<div class="livingtmw-fortune__result" data-fortune-result aria-live="polite">
 				<div class="livingtmw-fortune__empty">
 					<span aria-hidden="true">☀️</span>
-					<strong>띠를 선택해 오늘의 메시지를 확인하세요</strong>
+					<strong>생년월일 또는 띠를 선택해 오늘의 메시지를 확인하세요</strong>
 					<p>결과는 매일 자정 이후 달라집니다.</p>
 				</div>
 			</div>
@@ -76,7 +116,7 @@ function livingtmw_render_daily_fortune(): string {
 		<div class="livingtmw-fortune__guide">
 			<section>
 				<h2>결과는 어떻게 만들어지나요?</h2>
-				<p>선택한 띠, 관심 분야와 양곤 현지 날짜를 조합해 사이트가 직접 작성한 문장 목록에서 오늘의 메시지를 정합니다. 같은 날짜에 같은 항목을 선택하면 같은 결과가 나오며, 이용자를 추적하거나 실제 개인정보를 분석하는 방식이 아닙니다.</p>
+				<p>입력한 생년월일에서 계산한 띠 또는 직접 선택한 띠, 관심 분야와 양곤 현지 날짜를 조합해 사이트가 직접 작성한 문장 목록에서 오늘의 메시지를 정합니다. 생년월일은 결과의 조합값을 만드는 데만 사용되고 네트워크로 전송되지 않습니다.</p>
 				<p>점수는 하루의 좋고 나쁨을 객관적으로 측정한 수치가 아닙니다. 메시지를 읽기 쉽게 보여주기 위한 표현이므로 낮은 점수가 나오더라도 걱정하거나 중요한 일정을 변경할 필요가 없습니다.</p>
 			</section>
 			<section>
@@ -92,7 +132,8 @@ function livingtmw_render_daily_fortune(): string {
 
 		<section class="livingtmw-fortune__faq">
 			<h2>자주 묻는 질문</h2>
-			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p>네. 개인정보를 최소화하기 위해 띠만 직접 선택하도록 만들었습니다. 띠를 모르더라도 생년월일을 사이트에 입력할 필요 없이 외부 달력에서 확인한 뒤 선택할 수 있습니다.</p></details>
+			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p>네. 운세 기준에서 ‘띠 직접 선택’을 고르면 생년월일 없이 이용할 수 있습니다.</p></details>
+			<details><summary>양력과 음력은 어떻게 구분하나요?</summary><p>주민등록이나 일반 달력에 표시된 날짜를 사용하면 보통 양력입니다. 가족이 음력 생일을 따로 기념한다면 음력을 선택하고 음력 달력의 날짜를 입력하세요. 윤달에 태어난 경우에만 윤달 항목을 선택합니다.</p></details>
 			<details><summary>왜 어제와 결과가 다른가요?</summary><p>오늘 날짜가 계산에 포함되므로 날짜가 바뀌면 결과도 바뀝니다. 같은 날에는 새로고침해도 같은 선택에 동일한 결과가 표시됩니다.</p></details>
 			<details><summary>결과를 믿고 중요한 결정을 해도 되나요?</summary><p>아니요. 이 기능은 오락용입니다. 건강, 재산, 법률 및 신변 안전과 관련된 결정에는 공식 정보와 자격을 갖춘 전문가의 도움을 이용하세요.</p></details>
 		</section>

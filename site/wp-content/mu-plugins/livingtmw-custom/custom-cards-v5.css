@@ -826,6 +826,55 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	width: 100%;
 }
 
+.livingtmw-fortune__date-fields {
+	display: grid;
+	gap: 8px;
+	grid-template-columns: 1.25fr .8fr .8fr;
+	margin-bottom: 10px;
+}
+
+.livingtmw-fortune__date-fields label,
+.livingtmw-fortune__zodiac > label {
+	color: var(--livingtmw-muted);
+	font-size: 12px;
+	font-weight: 800;
+}
+
+.livingtmw-fortune__date-fields input {
+	background: var(--livingtmw-bg);
+	border: 1px solid var(--livingtmw-border);
+	border-radius: 10px;
+	color: var(--livingtmw-text);
+	display: block;
+	font: inherit;
+	margin-top: 6px;
+	min-height: 46px;
+	padding: 8px 10px;
+	width: 100%;
+}
+
+.livingtmw-fortune__birth,
+.livingtmw-fortune__zodiac {
+	border-top: 1px solid var(--livingtmw-border);
+	margin-top: 4px;
+	padding-top: 18px;
+}
+
+.livingtmw-fortune__leap {
+	align-items: center;
+	display: flex;
+	font-size: 13px !important;
+	gap: 7px;
+	margin: 10px 0;
+}
+
+.livingtmw-fortune__field-note {
+	color: var(--livingtmw-muted);
+	font-size: 11px;
+	line-height: 1.55;
+	margin: 10px 0 18px;
+}
+
 .livingtmw-fortune__form fieldset {
 	border: 0;
 	margin: 0 0 20px;
@@ -1025,6 +1074,16 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 
 	.livingtmw-fortune__result {
 		min-height: 300px;
+	}
+}
+
+@media (max-width: 430px) {
+	.livingtmw-fortune__date-fields {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.livingtmw-fortune__date-fields label:first-child {
+		grid-column: 1 / -1;
 	}
 }
 
