@@ -7,10 +7,79 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function livingtmw_default_market_rates(): array {
+	return array(
+		'usd_buy'   => 4310,
+		'usd_sell'  => 4420,
+		'krw_buy'   => 3.05,
+		'krw_sell'  => 3.13,
+		'updated_at' => '2026-08-15',
+	);
+}
+
+function livingtmw_sanitize_market_rates( $input ): array {
+	$defaults = livingtmw_default_market_rates();
+	$input    = is_array( $input ) ? $input : array();
+
+	return array(
+		'usd_buy'    => max( 0, (float) ( $input['usd_buy'] ?? $defaults['usd_buy'] ) ),
+		'usd_sell'   => max( 0, (float) ( $input['usd_sell'] ?? $defaults['usd_sell'] ) ),
+		'krw_buy'    => max( 0, (float) ( $input['krw_buy'] ?? $defaults['krw_buy'] ) ),
+		'krw_sell'   => max( 0, (float) ( $input['krw_sell'] ?? $defaults['krw_sell'] ) ),
+		'updated_at' => current_time( 'Y-m-d H:i' ),
+	);
+}
+
+add_action(
+	'admin_init',
+	static function (): void {
+		register_setting(
+			'livingtmw_market_rates_group',
+			'livingtmw_market_rates',
+			array(
+				'type'              => 'array',
+				'sanitize_callback' => 'livingtmw_sanitize_market_rates',
+				'default'           => livingtmw_default_market_rates(),
+			)
+		);
+	}
+);
+
+add_action(
+	'admin_menu',
+	static function (): void {
+		add_options_page( '현지 환율', '현지 환율', 'manage_options', 'livingtmw-market-rates', 'livingtmw_render_market_rates_page' );
+	}
+);
+
+function livingtmw_render_market_rates_page(): void {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	$rates = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
+	?>
+	<div class="wrap">
+		<h1>현지 바깥환율</h1>
+		<p>Myanmar Market Price 앱에 표시된 BUY·SELL 값을 입력하세요. 저장 시 홈페이지의 업데이트 시각도 함께 갱신됩니다.</p>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'livingtmw_market_rates_group' ); ?>
+			<table class="form-table" role="presentation"><tbody>
+				<tr><th scope="row">USD BUY</th><td><input type="number" min="0" step="1" name="livingtmw_market_rates[usd_buy]" value="<?php echo esc_attr( $rates['usd_buy'] ); ?>"> MMK</td></tr>
+				<tr><th scope="row">USD SELL</th><td><input type="number" min="0" step="1" name="livingtmw_market_rates[usd_sell]" value="<?php echo esc_attr( $rates['usd_sell'] ); ?>"> MMK</td></tr>
+				<tr><th scope="row">KRW BUY</th><td><input type="number" min="0" step="0.01" name="livingtmw_market_rates[krw_buy]" value="<?php echo esc_attr( $rates['krw_buy'] ); ?>"> MMK</td></tr>
+				<tr><th scope="row">KRW SELL</th><td><input type="number" min="0" step="0.01" name="livingtmw_market_rates[krw_sell]" value="<?php echo esc_attr( $rates['krw_sell'] ); ?>"> MMK</td></tr>
+			</tbody></table>
+			<?php submit_button( '환율 업데이트' ); ?>
+		</form>
+	</div>
+	<?php
+}
+
 function livingtmw_render_living_tools(): void {
 	if ( ! is_front_page() && ! is_home() ) {
 		return;
 	}
+	$rates = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<div class="livingtmw-tools__intro">
@@ -47,6 +116,14 @@ function livingtmw_render_living_tools(): void {
 					<p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p>
 					<button type="button" data-weather-retry>다시 불러오기</button>
 				</div>
+				<div class="livingtmw-market-rate" aria-label="Myanmar Market Price 앱 기준 바깥환율">
+					<div class="livingtmw-market-rate__heading"><strong>오늘의 바깥환율</strong><span>Myanmar Market Price 앱 기준</span></div>
+					<div class="livingtmw-market-rate__rows">
+						<div><strong>1 USD</strong><span><small>BUY</small> <?php echo esc_html( number_format( (float) $rates['usd_buy'], 0, '.', ',' ) ); ?> MMK</span><span><small>SELL</small> <?php echo esc_html( number_format( (float) $rates['usd_sell'], 0, '.', ',' ) ); ?> MMK</span></div>
+						<div><strong>1원</strong><span><small>BUY</small> <?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?> MMK</span><span><small>SELL</small> <?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?> MMK</span></div>
+					</div>
+					<p>업데이트: <?php echo esc_html( (string) $rates['updated_at'] ); ?> · 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://myanmarmarketprice.com/" target="_blank" rel="noopener noreferrer">출처</a></p>
+				</div>
 			</article>
 
 			<article class="livingtmw-cost" aria-labelledby="livingtmw-cost-title">
@@ -76,4 +153,3 @@ function livingtmw_render_living_tools(): void {
 }
 
 add_action( 'generate_before_main_content', 'livingtmw_render_living_tools', 5 );
-
