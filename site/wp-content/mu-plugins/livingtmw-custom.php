@@ -18,7 +18,7 @@ add_action(
 	static function (): void {
 		$stylesheet = __DIR__ . '/livingtmw-custom/custom-market-v4.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
-		$tools      = __DIR__ . '/livingtmw-custom/living-tools.js';
+		$tools      = __DIR__ . '/livingtmw-custom/living-market-v2.js';
 
 		if ( is_readable( $stylesheet ) ) {
 			wp_enqueue_style(
@@ -42,7 +42,7 @@ add_action(
 		if ( is_readable( $tools ) && ( is_front_page() || is_home() ) ) {
 			wp_enqueue_script(
 				'livingtmw-living-tools',
-				content_url( 'mu-plugins/livingtmw-custom/living-tools.js' ),
+				content_url( 'mu-plugins/livingtmw-custom/living-market-v2.js' ),
 				array(),
 				(string) filemtime( $tools ),
 				true

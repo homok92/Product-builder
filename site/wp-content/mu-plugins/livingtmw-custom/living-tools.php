@@ -30,6 +30,89 @@ function livingtmw_sanitize_market_rates( $input ): array {
 	);
 }
 
+function livingtmw_parse_market_number( string $value ): float {
+	return (float) str_replace( ',', '', trim( $value ) );
+}
+
+function livingtmw_fetch_live_market_rates( bool $force = false ): array {
+	$cache_key = 'livingtmw_egcurrency_rates';
+	if ( ! $force ) {
+		$cached = get_transient( $cache_key );
+		if ( is_array( $cached ) ) {
+			return $cached;
+		}
+	}
+
+	$fallback = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
+	$response = wp_remote_get(
+		'https://egcurrency.com/en/currency/MMK/blackMarket',
+		array(
+			'timeout'    => 12,
+			'redirection' => 3,
+			'user-agent' => 'LivingTMW/1.0 (+https://livingtmw.com/; exchange-rate widget)',
+		)
+	);
+
+	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		$fallback['status'] = 'stale';
+		return $fallback;
+	}
+
+	$html = wp_remote_retrieve_body( $response );
+	$text = preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $html ) );
+	$usd  = array();
+	$krw  = array();
+
+	preg_match( '/US Dollar\s*\(USD\)\s*([0-9,.]+)\s*([0-9,.]+)/iu', $text, $usd );
+	preg_match( '/1000\s*South Korean Won\s*\(KRW\)\s*([0-9,.]+)\s*([0-9,.]+)/iu', $text, $krw );
+
+	if ( empty( $usd[1] ) || empty( $usd[2] ) || empty( $krw[1] ) || empty( $krw[2] ) ) {
+		$fallback['status'] = 'stale';
+		return $fallback;
+	}
+
+	$rates = array(
+		'usd_buy'    => livingtmw_parse_market_number( $usd[1] ),
+		'usd_sell'   => livingtmw_parse_market_number( $usd[2] ),
+		'krw_buy'    => livingtmw_parse_market_number( $krw[1] ) / 1000,
+		'krw_sell'   => livingtmw_parse_market_number( $krw[2] ) / 1000,
+		'updated_at' => current_time( 'Y-m-d H:i' ),
+		'status'     => 'live',
+	);
+
+	if ( $rates['usd_buy'] < 1000 || $rates['usd_buy'] > 10000 || $rates['krw_buy'] < 0.5 || $rates['krw_buy'] > 10 ) {
+		$fallback['status'] = 'stale';
+		return $fallback;
+	}
+
+	if ( preg_match( '/Live exchange rate for Myanmar Kyat at Black Market,\s*([^<]+)/iu', $html, $source_time ) ) {
+		$rates['source_updated_at'] = sanitize_text_field( trim( wp_strip_all_tags( $source_time[1] ) ) );
+	}
+
+	update_option( 'livingtmw_market_rates', $rates, false );
+	set_transient( $cache_key, $rates, 15 * MINUTE_IN_SECONDS );
+	return $rates;
+}
+
+add_action(
+	'rest_api_init',
+	static function (): void {
+		register_rest_route(
+			'livingtmw/v1',
+			'/market-rate',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'permission_callback' => '__return_true',
+				'callback'            => static function (): WP_REST_Response {
+					$response = new WP_REST_Response( livingtmw_fetch_live_market_rates() );
+					$response->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
+					return $response;
+				},
+			)
+		);
+	}
+);
+
 add_action(
 	'admin_init',
 	static function (): void {
@@ -116,13 +199,13 @@ function livingtmw_render_living_tools(): void {
 					<p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p>
 					<button type="button" data-weather-retry>다시 불러오기</button>
 				</div>
-				<div class="livingtmw-market-rate" aria-label="Myanmar Market Price 앱 기준 바깥환율">
-					<div class="livingtmw-market-rate__heading"><strong>오늘의 바깥환율</strong><span>Myanmar Market Price 앱 기준</span></div>
+				<div class="livingtmw-market-rate" aria-label="EGCurrency 기준 미얀마 바깥환율">
+					<div class="livingtmw-market-rate__heading"><strong>오늘의 바깥환율</strong><span>EGCurrency Black Market 기준</span></div>
 					<div class="livingtmw-market-rate__rows">
-						<div><strong>1 USD</strong><span><small>BUY</small> <?php echo esc_html( number_format( (float) $rates['usd_buy'], 0, '.', ',' ) ); ?> MMK</span><span><small>SELL</small> <?php echo esc_html( number_format( (float) $rates['usd_sell'], 0, '.', ',' ) ); ?> MMK</span></div>
-						<div><strong>1원</strong><span><small>BUY</small> <?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?> MMK</span><span><small>SELL</small> <?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?> MMK</span></div>
+						<div><strong>1 USD</strong><span><small>BUY</small> <b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b> MMK</span><span><small>SELL</small> <b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b> MMK</span></div>
+						<div><strong>1원</strong><span><small>BUY</small> <b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b> MMK</span><span><small>SELL</small> <b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b> MMK</span></div>
 					</div>
-					<p>업데이트: <?php echo esc_html( (string) $rates['updated_at'] ); ?> · 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://myanmarmarketprice.com/" target="_blank" rel="noopener noreferrer">출처</a></p>
+					<p><span data-market-status>최신값 확인 중</span> · 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://egcurrency.com/en/currency/MMK/blackMarket" target="_blank" rel="noopener noreferrer">출처</a></p>
 				</div>
 			</article>
 
