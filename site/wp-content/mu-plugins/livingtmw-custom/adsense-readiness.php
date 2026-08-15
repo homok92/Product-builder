@@ -308,6 +308,15 @@ function livingtmw_exclude_footer_pages_from_lists( array $excluded_ids ): array
 add_filter( 'wp_list_pages_excludes', 'livingtmw_exclude_footer_pages_from_lists' );
 
 /**
+ * The custom trust navigation already contains the policy and contact paths.
+ * Remove GeneratePress's older, duplicate Site info / Category / Contact row.
+ */
+function livingtmw_disable_duplicate_footer_widgets( $widgets ): int {
+	return 0;
+}
+add_filter( 'generate_footer_widgets', 'livingtmw_disable_duplicate_footer_widgets' );
+
+/**
  * Keep trust and policy pages visible from every page.
  */
 function livingtmw_trust_navigation(): void {
