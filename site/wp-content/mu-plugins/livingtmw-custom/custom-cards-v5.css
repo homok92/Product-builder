@@ -639,7 +639,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	border-radius: 14px;
 	display: grid;
 	gap: 10px 14px;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: 1fr;
 	min-width: 0;
 	padding: 16px;
 }
@@ -662,8 +662,8 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 }
 
 .livingtmw-market-rate__rows span + span {
-	border-left: 1px solid var(--livingtmw-border);
-	padding-left: 14px;
+	border-top: 1px solid var(--livingtmw-border);
+	padding-top: 12px;
 }
 
 .livingtmw-market-rate__rows small {
@@ -1110,6 +1110,6 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	}
 
 	.livingtmw-market-rate__rows > div {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: 1fr;
 	}
 }
