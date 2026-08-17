@@ -7,6 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/** Keep the public tagline concise and descriptive wherever the theme uses it. */
+function livingtmw_public_tagline( $value ): string {
+	return is_admin() ? (string) $value : '한국인을 위한 미얀마·양곤 생활 정보';
+}
+add_filter( 'option_blogdescription', 'livingtmw_public_tagline' );
+
 /**
  * Create durable trust pages once. Existing pages are never overwritten.
  */
@@ -219,7 +225,7 @@ function livingtmw_quality_robots( array $robots ): array {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
-	if ( is_page( array( 'today-fortune', 'editorial-policy', '이용약관' ) ) ) {
+	if ( is_page( array( 'today-fortune', '이용약관' ) ) ) {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
@@ -252,7 +258,7 @@ function livingtmw_quality_page_sitemap_args( array $args, string $post_type ): 
 		return $args;
 	}
 	$excluded_ids = array();
-	foreach ( array( 'today-fortune', 'editorial-policy', '이용약관' ) as $slug ) {
+	foreach ( array( 'today-fortune', '이용약관' ) as $slug ) {
 		$page = get_page_by_path( $slug, OBJECT, 'page' );
 		if ( $page instanceof WP_Post ) {
 			$excluded_ids[] = (int) $page->ID;
@@ -264,6 +270,86 @@ function livingtmw_quality_page_sitemap_args( array $args, string $post_type ): 
 	return $args;
 }
 add_filter( 'wp_sitemaps_posts_query_args', 'livingtmw_quality_page_sitemap_args', 10, 2 );
+
+/** Return the editorial image used for a post so metadata matches visible content. */
+function livingtmw_seo_image( int $post_id = 0 ): array {
+	$post_id = $post_id ?: (int) get_queried_object_id();
+	$images  = array(
+		8  => array( 'articles', 'yangon-monthly-budget.png' ),
+		11 => array( 'articles', 'yangon-condo-water-filter.png' ),
+		13 => array( 'articles', 'yangon-rent-contract.png' ),
+		15 => array( 'articles', 'yangon-electricity-bill.png' ),
+		17 => array( 'field-photos', 'atom-app-redacted.png' ),
+		19 => array( 'articles', 'yangon-home-internet.png' ),
+		21 => array( 'field-photos', 'kbzpay-app-redacted.png' ),
+		23 => array( 'articles', 'yangon-currency-exchange.png' ),
+		25 => array( 'field-photos', 'grab-taxi-redacted.png' ),
+		27 => array( 'articles', 'yangon-grocery-split.png' ),
+		29 => array( 'articles', 'yangon-market-comparison.png' ),
+		31 => array( 'articles', 'yangon-korean-groceries.png' ),
+		33 => array( 'articles', 'yangon-driving-safety.png' ),
+		35 => array( 'articles', 'yangon-h1-commute.png' ),
+		37 => array( 'articles', 'yangon-monsoon-flood.png' ),
+		39 => array( 'articles', 'yangon-backup-generator.png' ),
+		41 => array( 'articles', 'yangon-food-delivery.png' ),
+		43 => array( 'articles', 'yangon-arrival-essentials.png' ),
+		45 => array( 'articles', 'yangon-hospital-visit.png' ),
+		47 => array( 'articles', 'yangon-korea-cost-comparison.png' ),
+	);
+
+	if ( ! isset( $images[ $post_id ] ) ) {
+		return array();
+	}
+	list( $directory, $file ) = $images[ $post_id ];
+	$path                     = __DIR__ . '/images/' . $directory . '/' . $file;
+	$data                     = array( 'url' => content_url( 'mu-plugins/livingtmw-custom/images/' . $directory . '/' . $file ) );
+	$size                     = is_readable( $path ) ? getimagesize( $path ) : false;
+	if ( is_array( $size ) ) {
+		$data['width']  = (int) $size[0];
+		$data['height'] = (int) $size[1];
+	}
+	return $data;
+}
+
+function livingtmw_social_description(): string {
+	if ( is_front_page() || is_home() ) {
+		return '미얀마와 양곤의 주거, 생활비, 통신, 교통, 금융 및 쇼핑 정보를 현지 경험과 공식 자료로 정리합니다.';
+	}
+	if ( is_singular() ) {
+		$post_descriptions = array(
+			8  => '2026년 양곤 1인 생활비와 식비, 통신비, 환율을 실제 거주 경험을 바탕으로 항목별로 정리합니다.',
+			11 => '한국인이 양곤에서 집을 구할 때 확인해야 할 전력, 수질, 교통과 계약 조건을 실제 거주 경험으로 안내합니다.',
+			13 => '양곤 아파트 월세, 보증금, 관리비와 공과금의 실제 범위 및 계약 전 확인사항을 정리합니다.',
+			15 => '미얀마 가정용 전기요금과 24시간 전용선 단가, 에어컨 사용 시 실제 청구 사례를 비교합니다.',
+			17 => '미얀마 ATOM eSIM 개통 준비물, 등록 과정, 실제 비용과 데이터 사용 시 주의사항을 안내합니다.',
+			19 => '양곤 APN·MPT 인터넷의 실제 속도와 비용, 설치 및 정전 대비 확인사항을 정리합니다.',
+			21 => '양곤에서 KBZPay와 은행 계좌를 실제로 사용한 경험, 외국인 준비서류와 QR 결제 주의사항을 소개합니다.',
+			23 => '미얀마 공식 환율과 실제 환전 조건, 달러 지폐 상태 및 안전한 환전 시 확인사항을 안내합니다.',
+			25 => '양곤 Grab 택시의 실제 요금 사례와 호출, 차량 확인, 현금 결제 및 안전 이용 방법을 정리합니다.',
+			27 => '양곤에서 식료품과 생필품을 구매할 때 마트, 시장과 배달을 품목별로 선택하는 방법을 소개합니다.',
+			29 => '양곤 City Mart, Market Place와 현지 시장의 장단점, 가격 및 이동 조건을 비교합니다.',
+			31 => '미얀마에서 한국 식재료를 구하는 곳과 현지 재료로 대체하는 기준, 보관 시 주의사항을 안내합니다.',
+			33 => '미얀마에서 자동차를 운전하기 전 확인할 면허, 보험, 차량 점검과 우기 안전 수칙을 정리합니다.',
+			35 => '양곤 장거리 출퇴근에 사용한 현대 H-1의 실제 연료비와 차량 유지비 변동 요인을 소개합니다.',
+			37 => '미얀마 우기 침수와 정전이 생활에 미치는 영향, 이동 및 비상전원 준비사항을 안내합니다.',
+			39 => '양곤 아파트의 24시간 전력과 발전기 조건, 정전 시 확인해야 할 공급 범위와 비용을 정리합니다.',
+			41 => '양곤 GrabFood의 실제 배달비, 주문 가능 시간, 현금 결제 한도와 수령 시 확인사항을 소개합니다.',
+			43 => '양곤 정착 첫 주에 필요한 생수, 통신, 전기, 장보기와 중요 자료 백업 순서를 안내합니다.',
+			45 => '양곤 CLL·Aryu 병원의 실제 진료비 사례와 방문 전 준비물, 진료 후 받아야 할 서류를 정리합니다.',
+			47 => '양곤과 한국의 생활비를 주거, 교통, 식비와 환율 조건을 맞춰 현실적으로 비교하는 방법을 안내합니다.',
+		);
+		$post_id = (int) get_queried_object_id();
+		if ( isset( $post_descriptions[ $post_id ] ) ) {
+			return $post_descriptions[ $post_id ];
+		}
+		$text = wp_strip_all_tags( get_the_excerpt( get_queried_object_id() ) );
+		return wp_html_excerpt( trim( preg_replace( '/\s+/', ' ', $text ) ), 155, '…' );
+	}
+	if ( is_category() ) {
+		return wp_html_excerpt( wp_strip_all_tags( category_description() ), 155, '…' );
+	}
+	return '';
+}
 
 /**
  * Add concise homepage metadata when no SEO plugin supplies it.
@@ -296,7 +382,7 @@ function livingtmw_quality_head(): void {
 			'today-fortune'         => '양력·음력 생년월일 또는 12띠와 관심 분야를 선택해 오늘의 흐름을 살펴보는 무료 운세입니다. 입력 정보는 저장하거나 전송하지 않습니다.',
 			'myanmar-life-guide'    => '한국인이 미얀마 생활을 준비할 때 예산, 주거, 금융, 통신, 교통과 장보기를 순서대로 확인하는 종합 안내서입니다.',
 		);
-		$description  = $descriptions[ get_post_field( 'post_name', get_queried_object_id() ) ] ?? '';
+		$description  = $descriptions[ get_post_field( 'post_name', get_queried_object_id() ) ] ?? livingtmw_social_description();
 		if ( '' === $description ) {
 			$description = wp_strip_all_tags( get_the_excerpt( get_queried_object_id() ) );
 		}
@@ -315,6 +401,10 @@ function livingtmw_quality_head(): void {
 				'name'  => '내일의 생활 편집팀',
 				'url'   => home_url( '/' ),
 				'email' => 'help@livingtmw.com',
+				'logo'  => array(
+					'@type' => 'ImageObject',
+					'url'   => content_url( 'mu-plugins/livingtmw-custom/images/logo-dark.png' ),
+				),
 			),
 			array(
 				'@type'     => 'WebSite',
@@ -327,6 +417,7 @@ function livingtmw_quality_head(): void {
 	);
 
 	if ( is_singular( 'post' ) ) {
+		$seo_image = livingtmw_seo_image();
 		$article = array(
 			'@type'            => 'Article',
 			'headline'         => get_the_title(),
@@ -340,15 +431,63 @@ function livingtmw_quality_head(): void {
 			),
 			'publisher'        => array( '@id' => home_url( '/#organization' ) ),
 		);
-		if ( has_post_thumbnail() ) {
+		if ( ! empty( $seo_image['url'] ) ) {
+			$article['image'] = array( $seo_image['url'] );
+		} elseif ( has_post_thumbnail() ) {
 			$article['image'] = array( get_the_post_thumbnail_url( null, 'full' ) );
 		}
 		$schema['@graph'][] = $article;
+
+		$categories = get_the_category();
+		$items      = array(
+			array( '@type' => 'ListItem', 'position' => 1, 'name' => '홈', 'item' => home_url( '/' ) ),
+		);
+		if ( ! empty( $categories ) ) {
+			$items[] = array( '@type' => 'ListItem', 'position' => 2, 'name' => $categories[0]->name, 'item' => get_category_link( (int) $categories[0]->term_id ) );
+		}
+		$items[] = array( '@type' => 'ListItem', 'position' => count( $items ) + 1, 'name' => get_the_title() );
+		$schema['@graph'][] = array(
+			'@type'           => 'BreadcrumbList',
+			'@id'             => get_permalink() . '#breadcrumb',
+			'itemListElement' => $items,
+		);
 	}
 
 	echo '<script type="application/ld+json" id="livingtmw-structured-data">' . wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
 }
 add_action( 'wp_head', 'livingtmw_quality_head', 5 );
+
+/** Add share previews that accurately describe each public landing page. */
+function livingtmw_social_meta(): void {
+	if ( ! ( is_front_page() || is_home() || is_singular() || is_category() ) ) {
+		return;
+	}
+	$title       = wp_get_document_title();
+	$description = livingtmw_social_description();
+	$url         = is_singular() ? get_permalink() : ( is_category() ? get_category_link( get_queried_object_id() ) : home_url( '/' ) );
+	$image       = is_singular( 'post' ) ? livingtmw_seo_image() : array();
+
+	echo '<meta property="og:locale" content="ko_KR">' . "\n";
+	echo '<meta property="og:type" content="' . ( is_singular( 'post' ) ? 'article' : 'website' ) . '">' . "\n";
+	echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
+	echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+	echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+	if ( '' !== $description ) {
+		echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+		echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '">' . "\n";
+	}
+	echo '<meta name="twitter:card" content="' . ( empty( $image['url'] ) ? 'summary' : 'summary_large_image' ) . '">' . "\n";
+	echo '<meta name="twitter:title" content="' . esc_attr( $title ) . '">' . "\n";
+	if ( ! empty( $image['url'] ) ) {
+		echo '<meta property="og:image" content="' . esc_url( $image['url'] ) . '">' . "\n";
+		echo '<meta name="twitter:image" content="' . esc_url( $image['url'] ) . '">' . "\n";
+		if ( ! empty( $image['width'] ) && ! empty( $image['height'] ) ) {
+			echo '<meta property="og:image:width" content="' . (int) $image['width'] . '">' . "\n";
+			echo '<meta property="og:image:height" content="' . (int) $image['height'] . '">' . "\n";
+		}
+	}
+}
+add_action( 'wp_head', 'livingtmw_social_meta', 6 );
 
 /**
  * Give readers a visible path back to the topic and homepage.

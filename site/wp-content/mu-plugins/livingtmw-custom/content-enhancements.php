@@ -7,14 +7,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function livingtmw_content_image_figure( string $directory, string $file, string $alt, string $caption ): string {
+	$relative_path = 'livingtmw-custom/images/' . $directory . '/' . $file;
+	$absolute_path = __DIR__ . '/images/' . $directory . '/' . $file;
+	$dimensions    = '';
+	if ( is_readable( $absolute_path ) ) {
+		$size = getimagesize( $absolute_path );
+		if ( is_array( $size ) ) {
+			$dimensions = ' width="' . (int) $size[0] . '" height="' . (int) $size[1] . '"';
+		}
+	}
+	$url = content_url( 'mu-plugins/' . $relative_path );
+	return '<figure class="livingtmw-field-image"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '"' . $dimensions . ' loading="lazy" decoding="async"><figcaption>' . esc_html( $caption ) . '</figcaption></figure>';
+}
+
 function livingtmw_article_image( string $file, string $alt ): string {
-	$url = content_url( 'mu-plugins/livingtmw-custom/images/articles/' . $file );
-	return '<figure class="livingtmw-field-image"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '" loading="lazy" decoding="async"><figcaption>AI로 제작한 주제 설명 이미지입니다. 실제 장소·상품의 모습과 다를 수 있습니다.</figcaption></figure>';
+	return livingtmw_content_image_figure( 'articles', $file, $alt, 'AI로 제작한 주제 설명 이미지입니다. 실제 장소·상품의 모습과 다를 수 있습니다.' );
 }
 
 function livingtmw_field_photo( string $file, string $alt ): string {
-	$url = content_url( 'mu-plugins/livingtmw-custom/images/field-photos/' . $file );
-	return '<figure class="livingtmw-field-image"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '" loading="lazy" decoding="async"><figcaption>작성자가 직접 사용 중 촬영한 화면입니다. 개인정보와 금융·위치 정보는 보호를 위해 가렸습니다.</figcaption></figure>';
+	return livingtmw_content_image_figure( 'field-photos', $file, $alt, '작성자가 직접 사용 중 촬영한 화면입니다. 개인정보와 금융·위치 정보는 보호를 위해 가렸습니다.' );
 }
 
 function livingtmw_sources( array $sources ): string {
