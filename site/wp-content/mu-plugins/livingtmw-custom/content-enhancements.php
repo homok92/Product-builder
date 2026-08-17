@@ -178,6 +178,44 @@ function livingtmw_article_clarification( int $post_id ): string {
 	return $clarifications[ $post_id ] ?? '';
 }
 
+/** Detailed, non-repeating additions for the next six prepared articles. */
+function livingtmw_upcoming_article_deep_dive( int $post_id ): string {
+	$sections = array(
+		37 => '<section class="livingtmw-deep-dive"><h2>우기 출근 계획은 전날부터 준비합니다</h2><p>비 예보가 있으면 평소 경로 하나만 믿지 말고 고가도로와 큰 도로를 중심으로 대체 경로를 저장하세요. 회사와 학교에는 침수 시 연락할 담당자와 재택·지각 처리 방법을 미리 확인합니다. 출발 직전에는 지도 앱뿐 아니라 거주지 관리실, 동료와 운전기사에게 실제 도로 상태를 물어보는 편이 정확합니다.</p><div class="livingtmw-checklist"><h3>우기 이동 가방</h3><ul><li>충전된 보조배터리와 방수 주머니</li><li>식수, 복용약과 간단한 간식</li><li>우산·얇은 우의와 여분 양말</li><li>보험·회사·가족의 비상 연락처</li></ul></div><p>차량 바닥까지 물이 올라오거나 수심을 알 수 없다면 진입하지 마세요. 침수 뒤에는 브레이크와 전기장치를 점검하고, 집에 돌아온 뒤 젖은 신발과 옷은 바로 세척·건조합니다. 일정 지연보다 사람과 차량의 안전을 우선하는 기준을 가족과 공유해 두는 것이 중요합니다.</p></section>',
+		39 => '<section class="livingtmw-deep-dive"><h2>정전 대비는 전력 우선순위를 정하는 일입니다</h2><p>모든 기기를 오래 가동하려 하기보다 조명, 휴대전화, 인터넷, 냉장 보관 중 무엇이 꼭 필요한지 먼저 정하세요. 공유기용 UPS는 소비전력과 배터리 지속시간을 확인하고, 대용량 보조전원은 충전 위치와 환기·과열 안전수칙을 지켜야 합니다. 정전이 예고되면 냉장고 온도를 미리 낮추고 문을 자주 열지 않습니다.</p><div class="livingtmw-checklist"><h3>월 1회 정전 준비 점검</h3><ul><li>손전등·보조배터리 충전 상태</li><li>비상 식수와 상온 보관 식품의 기한</li><li>발전기 요금과 가동 공지 확인 방법</li><li>엘리베이터 중단 시 가족 이동 계획</li></ul></div><p>발전기 비용은 관리비에 포함되는지, 세대별 사용량으로 계산하는지 확인해 영수증을 보관하세요. 의료기기나 냉장 의약품을 사용한다면 일반적인 준비만으로 부족할 수 있으므로 병원과 관리실에 별도의 비상 전원 계획을 문의해야 합니다.</p></section>',
+		41 => '<section class="livingtmw-deep-dive"><h2>배달 주문은 주소 설명에서 절반이 결정됩니다</h2><p>도로명만 입력하기보다 콘도 이름, 출입구, 가까운 랜드마크와 연락 가능한 번호를 함께 적으세요. 관리실 등록이나 로비 수령 규칙이 있으면 주문 메모에 넣습니다. 비가 심한 날에는 예상 시간이 늘고 취소될 수 있으므로 중요한 식사는 늦기 전에 주문하고 상온 보관 식품을 비상용으로 준비하는 편이 좋습니다.</p><div class="livingtmw-checklist"><h3>수령 즉시 확인</h3><ul><li>주문한 메뉴와 수량, 밀봉 상태</li><li>뜨거운 음식과 차가운 음식의 온도</li><li>영수증·할인·배달비의 일치 여부</li><li>누락·파손 사진과 앱 문의 기한</li></ul></div><p>현금 주문은 정확한 금액에 가까운 지폐를 준비하고 비대면으로 돈을 방치하지 마세요. 알레르기가 있다면 요청사항만 믿지 말고 도착 후 재료를 확인합니다. 반복 주문할 식당은 맛뿐 아니라 포장, 배달시간, 문제 대응 결과까지 기록하면 실패를 줄일 수 있습니다.</p></section>',
+		43 => '<section class="livingtmw-deep-dive"><h2>도착 첫 주는 날짜별로 나누면 수월합니다</h2><p>첫날에는 생수, 통신, 잠자리와 집의 전기·수도부터 해결하고, 둘째 날부터 마트·병원·출퇴근 동선을 확인하세요. 모든 생활용품을 한꺼번에 사면 집에 이미 포함된 물건과 중복되기 쉽습니다. 일주일 동안 실제로 불편했던 항목을 기록한 뒤 가구와 가전을 결정하면 이사 비용도 줄어듭니다.</p><div class="livingtmw-checklist"><h3>중요 자료 백업</h3><ul><li>여권·비자·보험 서류 사본</li><li>집주인·관리실·회사 비상 연락처</li><li>처방약 성분명과 가까운 병원 위치</li><li>집 계약서와 입주 상태 사진</li></ul></div><p>현금과 카드는 한곳에 두지 말고 소액 결제로 각각 정상 작동하는지 시험하세요. 가족 구성원 모두가 집 주소를 현지어와 영어로 보여줄 수 있게 저장하고, 휴대전화가 꺼졌을 때 만날 장소도 정합니다. 정착 준비는 물건 목록보다 연락·이동·결제 수단을 실제로 시험하는 과정에 가깝습니다.</p></section>',
+		45 => '<section class="livingtmw-deep-dive"><h2>병원 방문 전 증상을 한 장으로 정리합니다</h2><p>증상이 시작된 날짜, 체온, 복용 중인 약, 알레르기와 과거 진단을 한국어와 영어 성분명으로 준비하세요. 예약할 때 진료과, 통역 가능 여부, 접수비와 검사비 결제 통화를 확인합니다. 응급 증상은 비용 비교를 위해 기다리지 말고 즉시 현지 응급기관의 안내를 따라야 합니다.</p><div class="livingtmw-checklist"><h3>진료 후 받아둘 자료</h3><ul><li>영문 진단서와 검사 결과 원본</li><li>약 이름·용량·복용 기간이 적힌 처방전</li><li>항목별 영수증과 결제 증빙</li><li>재방문 시점과 악화 시 행동 지침</li></ul></div><p>처방약은 포장과 설명서를 함께 보관하고 다른 사람의 약을 나눠 먹지 마세요. 설명을 이해하지 못했다면 복용 전에 병원이나 약사에게 다시 확인합니다. 이 글의 비용은 작성자 경험일 뿐 질환별 예상액이 아니므로 보험 청구 조건과 보장 병원은 가입한 보험사에 직접 문의해야 합니다.</p></section>',
+		47 => '<section class="livingtmw-deep-dive"><h2>생활비 비교는 같은 생활 수준으로 맞춥니다</h2><p>한국의 대중교통 생활과 양곤의 차량 통근, 한국 원룸과 발전기가 있는 외국인 선호 콘도를 그대로 비교하면 결론이 왜곡됩니다. 가족 수, 주거 면적, 통근거리, 외식 횟수, 에어컨 사용시간을 같은 조건으로 정한 뒤 월세·공과금·교통·식비를 합산하세요. 일회성 이사비와 비자 비용은 월 생활비와 분리합니다.</p><div class="livingtmw-table-wrap"><table><thead><tr><th>비교 항목</th><th>같이 기록할 조건</th></tr></thead><tbody><tr><td>주거</td><td>면적, 가구, 전력과 관리비</td></tr><tr><td>교통</td><td>월 이동거리와 소요시간</td></tr><tr><td>식비</td><td>현지식·한식·배달 횟수</td></tr><tr><td>환율</td><td>계산 날짜와 실제 수수료</td></tr></tbody></table></div><p>짯 가격을 원화로 바꿀 때는 체감 환율 하나를 장기간 고정하지 말고 비교일의 실제 환전 조건을 사용하세요. 저렴한 항목만 모아 전체 생활비가 싸다고 결론 내리기보다 의료, 교육, 정전 대비와 귀국 비용처럼 빈도는 낮지만 큰 지출도 별도 비상예산에 포함해야 현실적인 비교가 됩니다.</p></section>',
+	);
+
+	return $sections[ $post_id ] ?? '';
+}
+
+/** Show an editorial quality audit for every current and future blog post. */
+function livingtmw_render_content_quality_audit( WP_Post $post ): void {
+	$text       = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $post->post_content ) ) );
+	$word_count = '' === $text ? 0 : count( preg_split( '/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY ) );
+	$checks     = array(
+		'본문 600어절 이상'       => $word_count >= 600,
+		'소제목 3개 이상'         => substr_count( strtolower( $post->post_content ), '<h2' ) >= 3,
+		'목록 또는 체크리스트'    => (bool) preg_match( '/<(ul|ol)\b/i', $post->post_content ),
+		'출처 링크 1개 이상'      => (bool) preg_match( '/<a\b[^>]*href=/i', $post->post_content ),
+	);
+	echo '<p><strong>현재 본문: ' . esc_html( number_format_i18n( $word_count ) ) . '어절</strong></p><ul>';
+	foreach ( $checks as $label => $passed ) {
+		echo '<li>' . ( $passed ? '✅ ' : '⚠️ ' ) . esc_html( $label ) . '</li>';
+	}
+	echo '</ul><p>숫자만 늘리지 말고 직접 경험, 예외, 확인 날짜와 독자가 실행할 수 있는 절차를 보강하세요. 자동으로 표시되는 현장 업데이트는 본문 분량에 포함하지 않습니다.</p>';
+}
+
+add_action(
+	'add_meta_boxes_post',
+	static function (): void {
+		add_meta_box( 'livingtmw-content-quality', '발행 전 콘텐츠 품질 검사', 'livingtmw_render_content_quality_audit', 'post', 'side', 'high' );
+	}
+);
+
 add_filter(
 	'the_content',
 	static function ( string $content ): string {
@@ -189,10 +227,11 @@ add_filter(
 		$deep_dive = livingtmw_article_deep_dive( $post_id );
 		$field_note = livingtmw_article_field_note( $post_id );
 		$clarification = livingtmw_article_clarification( $post_id );
+		$upcoming_deep_dive = livingtmw_upcoming_article_deep_dive( $post_id );
 		if ( '' === $update ) {
 			return $content;
 		}
-		return $content . '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' . $deep_dive . $field_note . $clarification;
+		return $content . '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' . $deep_dive . $field_note . $clarification . $upcoming_deep_dive;
 	},
 	15
 );
