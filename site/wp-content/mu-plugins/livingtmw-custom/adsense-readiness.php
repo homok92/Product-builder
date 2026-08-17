@@ -255,6 +255,19 @@ function livingtmw_quality_head(): void {
 
 	if ( is_front_page() || is_home() ) {
 		echo '<meta name="description" content="미얀마와 양곤의 주거, 생활비, 통신, 교통, 금융 및 쇼핑 정보를 한국어로 정리하는 생활정보 사이트입니다.">' . "\n";
+		echo '<link rel="canonical" href="' . esc_url( home_url( '/' ) ) . '">' . "\n";
+	} elseif ( is_category() ) {
+		$category_descriptions = array(
+			'미얀마 생활비'             => '미얀마와 양곤의 월 생활비, 전기료, 환율과 실제 지출 사례를 항목별로 확인합니다.',
+			'미얀마 주거·생활'          => '한국인이 양곤에서 집을 구하고 월세 계약과 정전·수질 등 생활환경을 점검하는 방법을 안내합니다.',
+			'미얀마 통신·금융'          => '미얀마 유심, 가정용 인터넷, 은행 계좌와 환전 이용 시 필요한 준비사항과 주의점을 정리합니다.',
+			'양곤 교통·자동차'          => '양곤의 Grab 택시, 직접 운전과 자동차 유지비를 실제 이동 환경에 맞춰 안내합니다.',
+			'양곤 쇼핑·생활정보'        => '양곤의 마트, 시장, 한국 식재료와 생활용품 구매 방법을 품목과 상황별로 소개합니다.',
+		);
+		$category_name = single_cat_title( '', false );
+		$description   = $category_descriptions[ $category_name ] ?? sprintf( '%s에 관한 내일의 생활 현지 정보와 실용 안내를 모았습니다.', $category_name );
+		echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+		echo '<link rel="canonical" href="' . esc_url( get_category_link( get_queried_object_id() ) ) . '">' . "\n";
 	} elseif ( is_singular() ) {
 		$descriptions = array(
 			'about-livingtmw'       => '내일의 생활 운영 목적, 현지 생활정보의 확인 범위와 정정 문의 방법을 안내합니다.',
