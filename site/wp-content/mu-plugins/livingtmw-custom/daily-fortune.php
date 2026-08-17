@@ -43,9 +43,9 @@ function livingtmw_render_daily_fortune(): string {
 	?>
 	<section class="livingtmw-fortune" data-daily-fortune>
 		<header class="livingtmw-fortune__intro">
-			<p class="livingtmw-fortune__eyebrow">매일 달라지는 가벼운 읽을거리</p>
-			<h2>12띠로 보는 오늘의 흐름</h2>
-			<p>양력·음력 생년월일 또는 나의 띠와 오늘 가장 궁금한 분야를 선택하면 하루를 정리하는 데 도움이 되는 짧은 메시지를 보여드립니다. 입력 정보는 서버로 전송하거나 저장하지 않습니다.</p>
+			<p class="livingtmw-fortune__eyebrow">오늘부터 이달까지 자세히 보는 운세</p>
+			<h2>생년월일로 보는 나의 생활 운세</h2>
+			<p>양력·음력 생년월일 또는 나의 띠를 선택하면 총운, 애정운, 금전운, 직장운, 학업·성적운, 건강운을 자세히 보여드립니다. 오늘·내일·이번 주·이번 달의 흐름을 자유롭게 바꿔 볼 수 있으며 입력 정보는 서버로 전송하거나 저장하지 않습니다.</p>
 		</header>
 
 		<div class="livingtmw-fortune__layout">
@@ -85,25 +85,15 @@ function livingtmw_render_daily_fortune(): string {
 					</select>
 				</div>
 
-				<fieldset>
-					<legend>오늘의 관심 분야</legend>
-					<div class="livingtmw-fortune__choices">
-						<label><input type="radio" name="focus" value="balance" checked><span>종합</span></label>
-						<label><input type="radio" name="focus" value="work"><span>일·학업</span></label>
-						<label><input type="radio" name="focus" value="money"><span>금전</span></label>
-						<label><input type="radio" name="focus" value="relationship"><span>관계</span></label>
-					</div>
-				</fieldset>
-
-				<button type="submit">오늘의 운세 보기</button>
+				<button type="submit">내 운세 자세히 보기</button>
 				<p class="livingtmw-fortune__privacy">🔒 생년월일과 선택값은 이 브라우저에서만 계산되며 저장·전송되지 않습니다.</p>
 			</form>
 
 			<div class="livingtmw-fortune__result" data-fortune-result aria-live="polite">
 				<div class="livingtmw-fortune__empty">
 					<span aria-hidden="true">☀️</span>
-					<strong>생년월일 또는 띠를 선택해 오늘의 메시지를 확인하세요</strong>
-					<p>결과는 매일 자정 이후 달라집니다.</p>
+					<strong>생년월일 또는 띠를 선택해 자세한 운세를 확인하세요</strong>
+					<p>오늘·내일·이번 주·이번 달의 여섯 가지 운세를 볼 수 있습니다.</p>
 				</div>
 			</div>
 		</div>
@@ -116,7 +106,7 @@ function livingtmw_render_daily_fortune(): string {
 		<div class="livingtmw-fortune__guide">
 			<section>
 				<h2>결과는 어떻게 만들어지나요?</h2>
-				<p>입력한 생년월일에서 계산한 띠 또는 직접 선택한 띠, 관심 분야와 양곤 현지 날짜를 조합해 사이트가 직접 작성한 문장 목록에서 오늘의 메시지를 정합니다. 생년월일은 결과의 조합값을 만드는 데만 사용되고 네트워크로 전송되지 않습니다.</p>
+				<p>입력한 생년월일에서 계산한 띠 또는 직접 선택한 띠와 양곤 현지 날짜를 조합해 사이트가 직접 작성한 문장 목록에서 기간별·분야별 메시지를 정합니다. 생년월일은 결과의 조합값을 만드는 데만 사용되고 네트워크로 전송되지 않습니다.</p>
 				<p>점수는 하루의 좋고 나쁨을 객관적으로 측정한 수치가 아닙니다. 메시지를 읽기 쉽게 보여주기 위한 표현이므로 낮은 점수가 나오더라도 걱정하거나 중요한 일정을 변경할 필요가 없습니다.</p>
 			</section>
 			<section>

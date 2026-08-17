@@ -800,7 +800,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 .livingtmw-fortune__layout {
 	display: grid;
 	gap: 22px;
-	grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
+	grid-template-columns: minmax(280px, .65fr) minmax(0, 1.35fr);
 	margin: 28px 0;
 }
 
@@ -941,8 +941,160 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 }
 
 .livingtmw-fortune__result {
-	align-content: center;
+	align-content: start;
 	min-height: 350px;
+}
+
+.livingtmw-fortune__profile {
+	align-items: flex-end;
+	display: flex;
+	gap: 12px;
+	justify-content: space-between;
+	margin-bottom: 18px;
+}
+
+.livingtmw-fortune__profile span,
+.livingtmw-fortune__reading header span {
+	color: var(--livingtmw-muted);
+	font-size: 12px;
+}
+
+.livingtmw-fortune__profile strong {
+	font-size: 20px;
+}
+
+.livingtmw-fortune__periods {
+	display: grid;
+	gap: 7px;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	margin-bottom: 18px;
+}
+
+.livingtmw-fortune__periods button {
+	background: var(--livingtmw-bg);
+	border: 1px solid var(--livingtmw-border);
+	border-radius: 999px;
+	color: var(--livingtmw-text);
+	cursor: pointer;
+	font: inherit;
+	font-size: 12px;
+	font-weight: 800;
+	min-height: 38px;
+	padding: 7px 8px;
+}
+
+.livingtmw-fortune__periods button.is-active {
+	background: var(--livingtmw-accent);
+	border-color: var(--livingtmw-accent);
+	color: #fff;
+}
+
+.livingtmw-fortune__periods button:focus-visible,
+.livingtmw-fortune__category:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--livingtmw-accent) 28%, transparent);
+	outline-offset: 2px;
+}
+
+.livingtmw-fortune__category-grid {
+	display: grid;
+	gap: 8px;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin-bottom: 18px;
+}
+
+.livingtmw-fortune__category {
+	align-items: center;
+	background: var(--livingtmw-bg);
+	border: 1px solid var(--livingtmw-border);
+	border-radius: 12px;
+	color: var(--livingtmw-text);
+	cursor: pointer;
+	display: flex;
+	font: inherit;
+	gap: 8px;
+	justify-content: space-between;
+	min-width: 0;
+	padding: 11px 12px;
+	text-align: left;
+}
+
+.livingtmw-fortune__category.is-active {
+	background: color-mix(in srgb, var(--livingtmw-accent) 10%, var(--livingtmw-bg));
+	border-color: var(--livingtmw-accent);
+}
+
+.livingtmw-fortune__category span {
+	align-items: center;
+	display: flex;
+	gap: 6px;
+	min-width: 0;
+}
+
+.livingtmw-fortune__category i {
+	font-style: normal;
+}
+
+.livingtmw-fortune__category strong {
+	font-size: 12px;
+	line-height: 1.25;
+}
+
+.livingtmw-fortune__category > b {
+	color: var(--livingtmw-accent);
+	font-size: 17px;
+	white-space: nowrap;
+}
+
+.livingtmw-fortune__category small {
+	font-size: 9px;
+}
+
+.livingtmw-fortune__reading {
+	background: color-mix(in srgb, var(--livingtmw-accent) 5%, var(--livingtmw-surface));
+	border: 1px solid var(--livingtmw-border);
+	border-radius: 15px;
+	padding: clamp(18px, 3vw, 26px);
+}
+
+.livingtmw-fortune__reading header {
+	align-items: center;
+	display: flex;
+	gap: 16px;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+
+.livingtmw-fortune__reading h3 {
+	font-size: 22px;
+	margin: 3px 0 0;
+}
+
+.livingtmw-fortune__reading header > b {
+	color: var(--livingtmw-accent);
+	font-size: 32px;
+}
+
+.livingtmw-fortune__reading header small {
+	font-size: 10px;
+}
+
+.livingtmw-fortune__reading p {
+	line-height: 1.8;
+	margin: 12px 0 0;
+}
+
+.livingtmw-fortune__reading-lead {
+	border-top: 1px solid var(--livingtmw-border);
+	font-size: 17px;
+	font-weight: 800;
+	padding-top: 16px;
+}
+
+.livingtmw-fortune__reading-caution {
+	background: color-mix(in srgb, #f59e0b 9%, var(--livingtmw-bg));
+	border-radius: 10px;
+	font-size: 13px;
+	padding: 12px 14px;
 }
 
 .livingtmw-fortune__empty {
@@ -1080,6 +1232,10 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	.livingtmw-fortune__result {
 		min-height: 300px;
 	}
+
+	.livingtmw-fortune__category-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }
 
 @media (max-width: 430px) {
@@ -1089,6 +1245,15 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 
 	.livingtmw-fortune__date-fields label:first-child {
 		grid-column: 1 / -1;
+	}
+
+	.livingtmw-fortune__periods {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.livingtmw-fortune__profile {
+		align-items: flex-start;
+		flex-direction: column;
 	}
 }
 
