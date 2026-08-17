@@ -243,6 +243,8 @@
 		form.elements.birth_day.placeholder = '1~31';
 		document.documentElement.lang = 'my';
 		document.title = document.title.replace('오늘의 운세', 'ယနေ့ကံကြမ္မာ');
+		var pageTitle = document.querySelector('h1.entry-title');
+		if (pageTitle) pageTitle.textContent = 'ယနေ့ကံကြမ္မာ';
 	}
 
 	function setMethod(method) {

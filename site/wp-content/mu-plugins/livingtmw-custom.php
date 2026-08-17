@@ -17,15 +17,15 @@ require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v8.css';
+		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v9.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
 		$tools      = __DIR__ . '/livingtmw-custom/living-market-v2.js';
-		$fortune    = __DIR__ . '/livingtmw-custom/daily-fortune-v3.js';
+		$fortune    = __DIR__ . '/livingtmw-custom/daily-fortune-v4.js';
 
 		if ( is_readable( $stylesheet ) ) {
 			wp_enqueue_style(
 				'livingtmw-custom',
-				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v8.css' ),
+				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v9.css' ),
 				array(),
 				(string) filemtime( $stylesheet )
 			);
@@ -54,7 +54,7 @@ add_action(
 		if ( is_readable( $fortune ) && is_page( 'today-fortune' ) ) {
 			wp_enqueue_script(
 				'livingtmw-daily-fortune',
-				content_url( 'mu-plugins/livingtmw-custom/daily-fortune-v3.js' ),
+				content_url( 'mu-plugins/livingtmw-custom/daily-fortune-v4.js' ),
 				array(),
 				(string) filemtime( $fortune ),
 				true
