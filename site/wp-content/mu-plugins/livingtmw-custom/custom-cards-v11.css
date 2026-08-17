@@ -1293,8 +1293,32 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	.livingtmw-fortune[data-language="my"] {
 		box-sizing: border-box;
 		margin-inline: auto;
-		max-width: calc(100vw - 40px);
-		width: calc(100vw - 40px);
+		max-width: calc(100vw - 64px);
+		width: calc(100vw - 64px);
+	}
+
+	.livingtmw-fortune[data-language="my"] *,
+	.livingtmw-fortune[data-language="my"] *::before,
+	.livingtmw-fortune[data-language="my"] *::after {
+		box-sizing: border-box;
+		min-width: 0;
+	}
+
+	.livingtmw-fortune[data-language="my"] h1,
+	.livingtmw-fortune[data-language="my"] h2,
+	.livingtmw-fortune[data-language="my"] h3,
+	.livingtmw-fortune[data-language="my"] p,
+	.livingtmw-fortune[data-language="my"] strong,
+	.livingtmw-fortune[data-language="my"] label,
+	.livingtmw-fortune[data-language="my"] button {
+		overflow-wrap: anywhere;
+		white-space: normal;
+		word-break: break-word;
+	}
+
+	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__intro h2 {
+		font-size: clamp(24px, 8vw, 30px);
+		line-height: 1.45;
 	}
 
 	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__choices,
