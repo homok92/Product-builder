@@ -219,7 +219,7 @@ function livingtmw_quality_robots( array $robots ): array {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
-	if ( is_page( 'today-fortune' ) ) {
+	if ( is_page( array( 'today-fortune', 'editorial-policy', '이용약관' ) ) ) {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
@@ -251,9 +251,15 @@ function livingtmw_quality_page_sitemap_args( array $args, string $post_type ): 
 	if ( 'page' !== $post_type ) {
 		return $args;
 	}
-	$fortune = get_page_by_path( 'today-fortune', OBJECT, 'page' );
-	if ( $fortune instanceof WP_Post ) {
-		$args['post__not_in'] = array_values( array_unique( array_merge( $args['post__not_in'] ?? array(), array( (int) $fortune->ID ) ) ) );
+	$excluded_ids = array();
+	foreach ( array( 'today-fortune', 'editorial-policy', '이용약관' ) as $slug ) {
+		$page = get_page_by_path( $slug, OBJECT, 'page' );
+		if ( $page instanceof WP_Post ) {
+			$excluded_ids[] = (int) $page->ID;
+		}
+	}
+	if ( $excluded_ids ) {
+		$args['post__not_in'] = array_values( array_unique( array_merge( $args['post__not_in'] ?? array(), $excluded_ids ) ) );
 	}
 	return $args;
 }

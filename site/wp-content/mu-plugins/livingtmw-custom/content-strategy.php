@@ -87,3 +87,15 @@ function livingtmw_redirect_legacy_categories(): void {
 }
 add_action( 'template_redirect', 'livingtmw_redirect_legacy_categories', 1 );
 
+/** Retire obsolete tag feed URLs instead of serving duplicate 200 responses. */
+function livingtmw_retire_tag_feeds(): void {
+	if ( ! is_tag() || ! is_feed() ) {
+		return;
+	}
+	status_header( 410 );
+	nocache_headers();
+	header( 'Content-Type: text/plain; charset=UTF-8' );
+	echo '이 태그 피드는 더 이상 제공되지 않습니다.';
+	exit;
+}
+add_action( 'template_redirect', 'livingtmw_retire_tag_feeds', 0 );
