@@ -216,12 +216,28 @@ add_action(
 	}
 );
 
-/**
- * Place supporting material before the author's conclusion instead of after it.
- * This keeps the reading flow as introduction, evidence, practical guidance,
- * and one final conclusion for both published and scheduled articles.
- * Deployment revision: conclusion-flow-v2.
- */
+/** Insert one fragment before a numbered section in the original article. */
+function livingtmw_insert_before_numbered_section( string $content, int $number, string $fragment ): string {
+	if ( '' === $fragment ) {
+		return $content;
+	}
+
+	$pattern = '/(<h2\b[^>]*>\s*(?:<[^>]+>\s*)*' . $number . '\.)/iu';
+	if ( ! preg_match( $pattern, $content ) ) {
+		return $content;
+	}
+
+	return preg_replace_callback(
+		$pattern,
+		static function ( array $matches ) use ( $fragment ): string {
+			return $fragment . $matches[1];
+		},
+		$content,
+		1
+	) ?? $content;
+}
+
+/** Place one final fragment immediately before the author's conclusion. */
 function livingtmw_insert_before_conclusion( string $content, string $enhancements ): string {
 	if ( '' === $enhancements ) {
 		return $content;
@@ -242,6 +258,45 @@ function livingtmw_insert_before_conclusion( string $content, string $enhancemen
 	return $content . $enhancements;
 }
 
+/**
+ * Weave unique supporting material through the author's numbered outline.
+ * The image follows the introduction, evidence follows the first section,
+ * deeper guidance sits around the middle, and the conclusion remains last.
+ */
+function livingtmw_weave_article_enhancements(
+	string $content,
+	string $update,
+	string $deep_dive,
+	string $field_note,
+	string $clarification
+): string {
+	$image = '';
+	if ( preg_match( '/<figure\b[^>]*livingtmw-field-image[^>]*>[\s\S]*?<\/figure>/i', $update, $image_match ) ) {
+		$image  = $image_match[0];
+		$update = str_replace( $image, '', $update );
+	}
+
+	preg_match_all( '/<h2\b[^>]*>\s*(?:<[^>]+>\s*)*(\d+)\./iu', $content, $numbered_matches );
+	$numbers = array_values( array_unique( array_map( 'intval', $numbered_matches[1] ?? array() ) ) );
+	if ( empty( $numbers ) ) {
+		$all = $image . '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' . $deep_dive . $field_note . $clarification;
+		return livingtmw_insert_before_conclusion( $content, $all );
+	}
+
+	$last_index = count( $numbers ) - 1;
+	$second     = $numbers[ min( 1, $last_index ) ];
+	$middle     = $numbers[ min( $last_index, max( 2, (int) floor( count( $numbers ) * 0.6 ) ) ) ];
+	$last       = $numbers[ $last_index ];
+	$deep       = $deep_dive;
+
+	$content = livingtmw_insert_before_numbered_section( $content, $numbers[0], $image );
+	$content = livingtmw_insert_before_numbered_section( $content, $second, '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' );
+	$content = livingtmw_insert_before_numbered_section( $content, $middle, $deep );
+	$content = livingtmw_insert_before_numbered_section( $content, $last, $field_note );
+
+	return livingtmw_insert_before_conclusion( $content, $clarification );
+}
+
 add_filter(
 	'the_content',
 	static function ( string $content ): string {
@@ -257,9 +312,7 @@ add_filter(
 		if ( '' === $update ) {
 			return $content;
 		}
-		$enhancements = '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' . $deep_dive . $field_note . $clarification . $upcoming_deep_dive;
-
-		return livingtmw_insert_before_conclusion( $content, $enhancements );
+		return livingtmw_weave_article_enhancements( $content, $update, $deep_dive . $upcoming_deep_dive, $field_note, $clarification );
 	},
 	15
 );
