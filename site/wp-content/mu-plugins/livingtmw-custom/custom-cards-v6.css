@@ -800,7 +800,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 .livingtmw-fortune__layout {
 	display: grid;
 	gap: 22px;
-	grid-template-columns: minmax(280px, .65fr) minmax(0, 1.35fr);
+	grid-template-columns: 1fr;
 	margin: 28px 0;
 }
 
