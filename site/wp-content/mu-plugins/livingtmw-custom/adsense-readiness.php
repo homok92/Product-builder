@@ -69,6 +69,122 @@ function livingtmw_ensure_trust_pages(): void {
 add_action( 'init', 'livingtmw_ensure_trust_pages', 20 );
 
 /**
+ * Publish a substantive start-here guide that helps readers navigate the
+ * site's first-hand Myanmar living articles in a useful decision order.
+ */
+function livingtmw_ensure_life_guide_page(): void {
+	$page    = get_page_by_path( 'myanmar-life-guide', OBJECT, 'page' );
+	$version = '1';
+	$content = '[livingtmw_life_guide]';
+
+	if ( $page ) {
+		if ( $version !== get_option( 'livingtmw_life_guide_version' ) ) {
+			wp_update_post(
+				array(
+					'ID'           => (int) $page->ID,
+					'post_title'   => '한국인의 미얀마 생활 시작 안내',
+					'post_content' => $content,
+				)
+			);
+			update_option( 'livingtmw_life_guide_version', $version, false );
+		}
+		return;
+	}
+
+	$post_id = wp_insert_post(
+		array(
+			'post_title'     => '한국인의 미얀마 생활 시작 안내',
+			'post_name'      => 'myanmar-life-guide',
+			'post_content'   => $content,
+			'post_status'    => 'publish',
+			'post_type'      => 'page',
+			'comment_status' => 'closed',
+		)
+	);
+	if ( $post_id && ! is_wp_error( $post_id ) ) {
+		update_option( 'livingtmw_life_guide_version', $version, false );
+	}
+}
+add_action( 'init', 'livingtmw_ensure_life_guide_page', 22 );
+
+function livingtmw_guide_post_url( int $post_id ): string {
+	$url = get_permalink( $post_id );
+	return $url ? $url : home_url( '/' );
+}
+
+function livingtmw_render_life_guide(): string {
+	$links = array(
+		'housing'     => livingtmw_guide_post_url( 11 ),
+		'rent'        => livingtmw_guide_post_url( 13 ),
+		'electricity' => livingtmw_guide_post_url( 15 ),
+		'sim'         => livingtmw_guide_post_url( 17 ),
+		'internet'    => livingtmw_guide_post_url( 19 ),
+		'bank'        => livingtmw_guide_post_url( 21 ),
+		'exchange'    => livingtmw_guide_post_url( 23 ),
+		'taxi'        => livingtmw_guide_post_url( 25 ),
+		'grocery'     => livingtmw_guide_post_url( 27 ),
+		'shopping'    => livingtmw_guide_post_url( 29 ),
+		'korean_food' => livingtmw_guide_post_url( 31 ),
+		'driving'     => livingtmw_guide_post_url( 33 ),
+		'car_cost'    => livingtmw_guide_post_url( 35 ),
+		'budget'      => livingtmw_guide_post_url( 8 ),
+	);
+
+	ob_start();
+	?>
+	<article class="livingtmw-life-guide">
+		<header class="livingtmw-life-guide__intro">
+			<p class="livingtmw-tools__eyebrow">처음 방문자를 위한 읽기 순서</p>
+			<h2>미얀마 생활 준비, 무엇부터 확인해야 할까요?</h2>
+			<p>미얀마 생활은 월세 하나만 비교해서 준비하기 어렵습니다. 전력과 수질, 이동 거리, 환율, 통신 개통과 현금 사용 환경이 서로 연결되어 실제 생활비와 편의성을 결정합니다. 이 안내서는 내일의 생활에 공개된 현지 경험과 확인 자료를 주제별로 묶어, 출국 전부터 입주 후까지 필요한 순서대로 살펴볼 수 있게 정리했습니다.</p>
+		</header>
+
+		<nav class="livingtmw-life-guide__steps" aria-label="미얀마 생활 준비 순서">
+			<a href="#guide-budget"><span>1</span><strong>예산</strong><small>월 지출 범위 잡기</small></a>
+			<a href="#guide-home"><span>2</span><strong>주거</strong><small>전력·수질 확인</small></a>
+			<a href="#guide-money"><span>3</span><strong>금융</strong><small>환전·계좌 준비</small></a>
+			<a href="#guide-connect"><span>4</span><strong>통신</strong><small>SIM·인터넷 개통</small></a>
+			<a href="#guide-move"><span>5</span><strong>이동·장보기</strong><small>생활 동선 만들기</small></a>
+		</nav>
+
+		<section id="guide-budget" class="livingtmw-life-guide__section">
+			<div><span>STEP 1</span><h2>먼저 월 예산의 범위를 잡습니다</h2></div>
+			<p>양곤에서는 현지식과 대중교통만 이용할 때와 외국인 선호 아파트, 에어컨, 수입 식품, Grab을 자주 이용할 때의 비용 차이가 큽니다. 월세를 제외한 생활비만 보거나 공식 환율만 적용하면 실제 필요한 현금을 과소평가할 수 있습니다. 식비·주거·전기·교통을 따로 기록하고 최소 예산과 여유 예산을 함께 준비하세요.</p>
+			<ul><li><a href="<?php echo esc_url( $links['budget'] ); ?>">2026년 양곤 한 달 생활비 실제 기준</a></li><li><a href="<?php echo esc_url( $links['electricity'] ); ?>">미얀마 전기세와 냉방 비용 확인하기</a></li><li><a href="<?php echo esc_url( $links['car_cost'] ); ?>">자가용을 이용할 때 드는 월 유지비</a></li></ul>
+		</section>
+
+		<section id="guide-home" class="livingtmw-life-guide__section">
+			<div><span>STEP 2</span><h2>집은 월세보다 전력·물·이동 조건을 함께 봅니다</h2></div>
+			<p>정전이 잦은 건물은 발전기 가동 범위와 별도 요금에 따라 생활의 질과 비용이 크게 달라집니다. 계약 전에 에어컨과 엘리베이터까지 백업 전력이 공급되는지, 수돗물의 색과 냄새, 물탱크 청소 주기와 필터 설치 가능 여부를 직접 확인하세요. 마트와 직장까지의 Grab 비용과 이동 시간도 사실상 주거비의 일부입니다.</p>
+			<ul><li><a href="<?php echo esc_url( $links['housing'] ); ?>">한국인이 미얀마에서 집을 구할 때 확인할 것</a></li><li><a href="<?php echo esc_url( $links['rent'] ); ?>">양곤 아파트 월세와 관리비 비교</a></li></ul>
+		</section>
+
+		<section id="guide-money" class="livingtmw-life-guide__section">
+			<div><span>STEP 3</span><h2>환율과 계좌는 공식 조건을 다시 확인합니다</h2></div>
+			<p>미얀마에서는 환율과 금융 조건이 빠르게 달라질 수 있습니다. 온라인에서 본 숫자만 믿지 말고 허가된 은행·환전소의 당일 고시, 수수료와 실제 수령액을 확인하세요. 외국인의 계좌 개설 서류와 지점별 심사도 달라질 수 있으므로 여권, 비자, 주소와 재직 증빙을 준비하고 방문할 지점에 먼저 문의하는 편이 안전합니다.</p>
+			<ul><li><a href="<?php echo esc_url( $links['exchange'] ); ?>">미얀마 현지 환전 시 확인할 기본 정보</a></li><li><a href="<?php echo esc_url( $links['bank'] ); ?>">한국인의 미얀마 은행 계좌 개설 준비</a></li></ul>
+		</section>
+
+		<section id="guide-connect" class="livingtmw-life-guide__section">
+			<div><span>STEP 4</span><h2>도착 직후 사용할 통신 수단을 준비합니다</h2></div>
+			<p>현지 SIM은 여권 등록과 요금제 확인이 필요하고, 주거 인터넷은 설치 가능 지역과 정전 시 공유기 사용 여부까지 확인해야 합니다. 도착 첫날 지도, 택시 호출과 연락에 사용할 데이터 요금제를 먼저 개통하고 장기 거주지에서는 건물 관리사무소와 통신사에 설치 일정과 장비 비용을 확인하세요.</p>
+			<ul><li><a href="<?php echo esc_url( $links['sim'] ); ?>">미얀마 휴대폰 SIM 개통 순서</a></li><li><a href="<?php echo esc_url( $links['internet'] ); ?>">양곤 가정용 인터넷 설치 확인사항</a></li></ul>
+		</section>
+
+		<section id="guide-move" class="livingtmw-life-guide__section">
+			<div><span>STEP 5</span><h2>교통과 장보기 동선을 실제로 시험합니다</h2></div>
+			<p>양곤은 같은 거리라도 시간대와 우기 침수에 따라 이동 시간이 크게 달라집니다. 집을 결정하기 전에 출퇴근 시간에 실제 경로를 이동해 보고, Grab 요금과 우회로를 확인하세요. 식료품은 대형마트, 현지 시장과 배달을 품목별로 나누면 비용과 시간을 줄일 수 있습니다. 냉장 식품은 정전 이력과 포장 상태도 함께 살펴야 합니다.</p>
+			<ul><li><a href="<?php echo esc_url( $links['taxi'] ); ?>">양곤 택시와 Grab 이용 방법</a></li><li><a href="<?php echo esc_url( $links['driving'] ); ?>">미얀마 자동차 운전 기본 상식</a></li><li><a href="<?php echo esc_url( $links['grocery'] ); ?>">식료품과 생필품 구매처 정리</a></li><li><a href="<?php echo esc_url( $links['shopping'] ); ?>">양곤 대형마트와 쇼핑몰 비교</a></li><li><a href="<?php echo esc_url( $links['korean_food'] ); ?>">한국 식재료를 구하는 방법</a></li></ul>
+		</section>
+
+		<aside class="livingtmw-life-guide__notice"><strong>정보를 이용하기 전에</strong><p>이 안내서는 작성자의 현지 생활 경험과 공개 자료를 바탕으로 한 출발점입니다. 환율, 요금, 법률, 입국·금융 조건과 업체 서비스는 달라질 수 있으므로 계약이나 결제 전에 관계 기관과 서비스 제공자의 최신 안내를 확인하세요.</p></aside>
+	</article>
+	<?php
+	return (string) ob_get_clean();
+}
+add_shortcode( 'livingtmw_life_guide', 'livingtmw_render_life_guide' );
+
+/**
  * Add an honest editorial note to articles without altering their source text.
  */
 function livingtmw_add_article_trust_box( string $content ): string {
@@ -100,6 +216,10 @@ add_filter( 'the_content', 'livingtmw_add_article_trust_box', 20 );
  */
 function livingtmw_quality_robots( array $robots ): array {
 	if ( is_search() || is_404() || is_author() || is_date() || is_tag() ) {
+		$robots['noindex'] = true;
+		$robots['follow']  = true;
+	}
+	if ( is_page( 'today-fortune' ) && isset( $_GET['lang'] ) && 'my' === sanitize_key( wp_unslash( $_GET['lang'] ) ) ) {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
@@ -141,6 +261,7 @@ function livingtmw_quality_head(): void {
 			'editorial-policy'      => '내일의 생활이 현지 경험과 공개 자료를 확인하고 콘텐츠를 제작·수정하는 원칙입니다.',
 			'advertising-disclosure'=> '내일의 생활의 광고, 제휴 콘텐츠 및 AI 설명 이미지 공개 원칙을 안내합니다.',
 			'today-fortune'         => '양력·음력 생년월일 또는 12띠와 관심 분야를 선택해 오늘의 흐름을 살펴보는 무료 운세입니다. 입력 정보는 저장하거나 전송하지 않습니다.',
+			'myanmar-life-guide'    => '한국인이 미얀마 생활을 준비할 때 예산, 주거, 금융, 통신, 교통과 장보기를 순서대로 확인하는 종합 안내서입니다.',
 		);
 		$description  = $descriptions[ get_post_field( 'post_name', get_queried_object_id() ) ] ?? '';
 		if ( '' === $description ) {
@@ -323,6 +444,7 @@ add_filter( 'generate_footer_widgets', 'livingtmw_disable_duplicate_footer_widge
  */
 function livingtmw_trust_navigation(): void {
 	$links = array(
+		'미얀마 생활 시작 안내' => home_url( '/myanmar-life-guide/' ),
 		'사이트 소개'     => home_url( '/about-livingtmw/' ),
 		'콘텐츠 제작 및 검수 원칙' => home_url( '/editorial-policy/' ),
 		'광고 및 이미지 공개 원칙' => home_url( '/advertising-disclosure/' ),

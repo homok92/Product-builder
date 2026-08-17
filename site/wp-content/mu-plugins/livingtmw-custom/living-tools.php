@@ -165,6 +165,8 @@ function livingtmw_render_living_tools(): void {
 	$rates = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
 	$fortune_page = get_page_by_path( 'today-fortune', OBJECT, 'page' );
 	$fortune_url  = $fortune_page ? get_permalink( $fortune_page ) : home_url( '/today-fortune/' );
+	$guide_page   = get_page_by_path( 'myanmar-life-guide', OBJECT, 'page' );
+	$guide_url    = $guide_page ? get_permalink( $guide_page ) : home_url( '/myanmar-life-guide/' );
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<nav class="livingtmw-content-picker" aria-labelledby="livingtmw-content-picker-title">
@@ -174,7 +176,7 @@ function livingtmw_render_living_tools(): void {
 			</div>
 			<div class="livingtmw-content-picker__actions">
 				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--fortune" href="<?php echo esc_url( $fortune_url ); ?>"><span aria-hidden="true">🔮</span> 오늘의 운세</a>
-				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--tips" href="#primary"><span aria-hidden="true">💡</span> 한국인의 미얀마 생활 꿀팁</a>
+				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--tips" href="<?php echo esc_url( $guide_url ); ?>"><span aria-hidden="true">💡</span> 한국인의 미얀마 생활 꿀팁</a>
 			</div>
 		</nav>
 
