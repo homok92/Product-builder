@@ -1283,9 +1283,18 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 
 	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__form,
 	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__result {
+		box-sizing: border-box;
+		max-width: 100%;
 		min-width: 0;
 		overflow: hidden;
 		padding: 18px 16px;
+	}
+
+	.livingtmw-fortune[data-language="my"] {
+		box-sizing: border-box;
+		margin-inline: auto;
+		max-width: calc(100vw - 40px);
+		width: calc(100vw - 40px);
 	}
 
 	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__choices,
