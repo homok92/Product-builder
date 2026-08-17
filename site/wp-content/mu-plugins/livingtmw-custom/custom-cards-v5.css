@@ -629,7 +629,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 .livingtmw-market-rate__rows {
 	display: grid;
 	gap: 14px;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: 1fr;
 }
 
 .livingtmw-market-rate__rows > div {
