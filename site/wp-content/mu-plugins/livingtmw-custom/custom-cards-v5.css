@@ -438,14 +438,14 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 }
 
 .livingtmw-content-picker {
-	align-items: center;
+	align-items: stretch;
 	background: linear-gradient(135deg, color-mix(in srgb, var(--livingtmw-accent) 13%, var(--livingtmw-surface)), var(--livingtmw-surface));
 	border: 1px solid var(--livingtmw-border);
 	border-radius: 22px;
 	box-shadow: var(--livingtmw-shadow);
 	display: flex;
+	flex-direction: column;
 	gap: 24px;
-	justify-content: space-between;
 	margin-bottom: 34px;
 	padding: clamp(20px, 3vw, 30px);
 }
@@ -458,8 +458,8 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 
 .livingtmw-content-picker__actions {
 	display: flex;
-	flex: 0 0 auto;
 	gap: 10px;
+	width: 100%;
 }
 
 .livingtmw-content-picker__button {
@@ -467,6 +467,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	border: 1px solid var(--livingtmw-border);
 	border-radius: 14px;
 	display: inline-flex;
+	flex: 1 1 0;
 	font-weight: 800;
 	gap: 8px;
 	justify-content: center;
@@ -658,6 +659,11 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	gap: 3px 6px;
 	min-width: 0;
 	overflow-wrap: anywhere;
+}
+
+.livingtmw-market-rate__rows span + span {
+	border-left: 1px solid var(--livingtmw-border);
+	padding-left: 14px;
 }
 
 .livingtmw-market-rate__rows small {
