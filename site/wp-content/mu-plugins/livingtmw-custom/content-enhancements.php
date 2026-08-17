@@ -216,6 +216,31 @@ add_action(
 	}
 );
 
+/**
+ * Place supporting material before the author's conclusion instead of after it.
+ * This keeps the reading flow as introduction, evidence, practical guidance,
+ * and one final conclusion for both published and scheduled articles.
+ */
+function livingtmw_insert_before_conclusion( string $content, string $enhancements ): string {
+	if ( '' === $enhancements ) {
+		return $content;
+	}
+
+	$pattern = '/(<h2\b[^>]*>\s*(?:마무리(?:하며)?|마치며|정리|결론)\s*<\/h2>)/iu';
+	if ( preg_match( $pattern, $content ) ) {
+		return preg_replace_callback(
+			$pattern,
+			static function ( array $matches ) use ( $enhancements ): string {
+				return $enhancements . $matches[1];
+			},
+			$content,
+			1
+		) ?? $content;
+	}
+
+	return $content . $enhancements;
+}
+
 add_filter(
 	'the_content',
 	static function ( string $content ): string {
@@ -231,7 +256,9 @@ add_filter(
 		if ( '' === $update ) {
 			return $content;
 		}
-		return $content . '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' . $deep_dive . $field_note . $clarification . $upcoming_deep_dive;
+		$enhancements = '<section class="livingtmw-field-update" aria-label="2026년 8월 현지 경험과 공식 자료 보강">' . $update . '</section>' . $deep_dive . $field_note . $clarification . $upcoming_deep_dive;
+
+		return livingtmw_insert_before_conclusion( $content, $enhancements );
 	},
 	15
 );
