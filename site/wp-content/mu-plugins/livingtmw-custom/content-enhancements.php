@@ -220,6 +220,7 @@ add_action(
  * Place supporting material before the author's conclusion instead of after it.
  * This keeps the reading flow as introduction, evidence, practical guidance,
  * and one final conclusion for both published and scheduled articles.
+ * Deployment revision: conclusion-flow-v2.
  */
 function livingtmw_insert_before_conclusion( string $content, string $enhancements ): string {
 	if ( '' === $enhancements ) {
