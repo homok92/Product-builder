@@ -163,12 +163,25 @@ function livingtmw_render_living_tools(): void {
 		return;
 	}
 	$rates = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
+	$fortune_page = get_page_by_path( 'today-fortune', OBJECT, 'page' );
+	$fortune_url  = $fortune_page ? get_permalink( $fortune_page ) : home_url( '/today-fortune/' );
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
+		<nav class="livingtmw-content-picker" aria-labelledby="livingtmw-content-picker-title">
+			<div>
+				<p class="livingtmw-tools__eyebrow">오늘은 무엇을 볼까요?</p>
+				<h2 id="livingtmw-content-picker-title">원하는 콘텐츠를 선택해 보세요</h2>
+			</div>
+			<div class="livingtmw-content-picker__actions">
+				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--fortune" href="<?php echo esc_url( $fortune_url ); ?>"><span aria-hidden="true">🔮</span> 오늘의 운세</a>
+				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--tips" href="#primary"><span aria-hidden="true">💡</span> 한국인의 미얀마 생활 꿀팁</a>
+			</div>
+		</nav>
+
 		<div class="livingtmw-tools__intro">
 			<p class="livingtmw-tools__eyebrow">오늘의 양곤 생활 도구</p>
-			<h2 id="livingtmw-tools-title">날씨를 확인하고, 내 생활비를 계산해 보세요</h2>
-			<p>실시간 예보와 양곤 거주자의 실제 지출 사례를 한곳에 모았습니다.</p>
+			<h2 id="livingtmw-tools-title">날씨와 환율을 한눈에 확인하세요</h2>
+			<p>양곤 생활에 필요한 실시간 예보와 환율 정보를 한곳에 모았습니다.</p>
 		</div>
 
 		<div class="livingtmw-tools__grid">
@@ -199,28 +212,6 @@ function livingtmw_render_living_tools(): void {
 					<p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p>
 					<button type="button" data-weather-retry>다시 불러오기</button>
 				</div>
-			</article>
-
-			<article class="livingtmw-cost" aria-labelledby="livingtmw-cost-title">
-				<div class="livingtmw-tool-card__heading">
-					<div>
-						<p class="livingtmw-tool-card__kicker">실제 사례 기반</p>
-						<h3 id="livingtmw-cost-title">양곤 월 생활비 계산기</h3>
-					</div>
-					<span class="livingtmw-cost__icon" aria-hidden="true">🧮</span>
-				</div>
-				<form class="livingtmw-cost__form">
-					<label>가족 수<select name="family"><option value="1">1인</option><option value="2">2인</option><option value="3">3인</option><option value="4">4인 이상</option></select></label>
-					<label>주거비<select name="housing"><option value="0">월세 제외</option><option value="2200000">실속형 · 약 USD 500</option><option value="3080000">여유형 · 약 USD 700</option></select></label>
-					<label>전기·냉방<select name="electricity"><option value="300000">절약형</option><option value="1000000" selected>일반 사용</option><option value="1800000">상시 냉방</option></select></label>
-					<label>교통수단<select name="transport"><option value="400000">대중교통·가끔 Grab</option><option value="900000">Grab 중심</option><option value="1200000">자가용 단거리</option><option value="2000000">H-1 장거리 통근</option></select></label>
-				</form>
-				<div class="livingtmw-cost__result" aria-live="polite">
-					<p>예상 월 생활비</p>
-					<strong><span data-cost-low>--</span>~<span data-cost-high>--</span> MMK</strong>
-					<ul data-cost-breakdown></ul>
-				</div>
-				<p class="livingtmw-tool-card__meta">작성자의 2026년 8월 체감값을 사용한 참고 계산입니다. 환율·가족의 소비 습관·건물 요금에 따라 달라집니다.</p>
 			</article>
 
 			<article class="livingtmw-market-rate" aria-labelledby="livingtmw-market-title">

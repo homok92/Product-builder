@@ -2,35 +2,9 @@
 	'use strict';
 
 	var weatherCard = document.querySelector('.livingtmw-weather');
-	var costForm = document.querySelector('.livingtmw-cost__form');
 
 	function number(value) {
 		return Number(value) || 0;
-	}
-
-	function formatMMK(value) {
-		return Math.round(value / 10000) * 10000;
-	}
-
-	function renderCost() {
-		if (!costForm) return;
-		var family = number(costForm.elements.family.value);
-		var baseByFamily = { 1: 1500000, 2: 2300000, 3: 3000000, 4: 3700000 };
-		var parts = {
-			'기본 생활·식비': baseByFamily[family],
-			'주거비': number(costForm.elements.housing.value),
-			'전기·냉방': number(costForm.elements.electricity.value),
-			'교통비': number(costForm.elements.transport.value)
-		};
-		var total = Object.keys(parts).reduce(function (sum, key) { return sum + parts[key]; }, 0);
-		var low = formatMMK(total * 0.88);
-		var high = formatMMK(total * 1.12);
-		var breakdown = document.querySelector('[data-cost-breakdown]');
-		document.querySelector('[data-cost-low]').textContent = low.toLocaleString('en-US');
-		document.querySelector('[data-cost-high]').textContent = high.toLocaleString('en-US');
-		breakdown.innerHTML = Object.keys(parts).map(function (key) {
-			return '<li><span>' + key + '</span><strong>' + parts[key].toLocaleString('en-US') + ' MMK</strong></li>';
-		}).join('');
 	}
 
 	function weatherLabel(code) {
@@ -138,10 +112,6 @@
 			});
 	}
 
-	if (costForm) {
-		costForm.addEventListener('change', renderCost);
-		renderCost();
-	}
 	if (weatherCard) {
 		var retry = weatherCard.querySelector('[data-weather-retry]');
 		if (retry) retry.addEventListener('click', loadWeather);
