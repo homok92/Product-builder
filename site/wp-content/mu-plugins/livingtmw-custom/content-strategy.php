@@ -12,7 +12,7 @@ const LIVINGTMW_PRIMARY_CATEGORY_SLUG = 'yangon-korean-local-services';
 
 /** Consolidate published and scheduled posts into one durable category. */
 function livingtmw_consolidate_categories(): void {
-	$revision = '2026-08-yangon-services-v1';
+	$revision = '2026-08-yangon-services-v2';
 	if ( $revision === get_option( 'livingtmw_category_revision' ) ) {
 		return;
 	}
@@ -56,16 +56,17 @@ function livingtmw_consolidate_categories(): void {
 		}
 	}
 
-	$scheduled_titles = array(
+	$focused_titles = array(
+		21 => '양곤 KBZPay 실제 사용 후기: QR 결제와 인터넷 주의사항',
 		39 => '양곤 24시간 전기 공급과 정전 대비: 실제 변화',
 		41 => '양곤 GrabFood 이용 후기: 저녁 7시 이후 배달과 생활권',
 		43 => '양곤 정착 첫 주: 꼭 연결해야 할 현지 서비스',
 		45 => '양곤 병원 이용 후기: CLL·Aryu 진료비와 준비물',
 		47 => '양곤 현지 서비스 생활비: 한국과 비교하기',
 	);
-	foreach ( $scheduled_titles as $post_id => $title ) {
+	foreach ( $focused_titles as $post_id => $title ) {
 		$post = get_post( $post_id );
-		if ( $post instanceof WP_Post && 'future' === $post->post_status ) {
+		if ( $post instanceof WP_Post && in_array( $post->post_status, array( 'publish', 'future' ), true ) ) {
 			wp_update_post( array( 'ID' => $post_id, 'post_title' => $title ) );
 		}
 	}

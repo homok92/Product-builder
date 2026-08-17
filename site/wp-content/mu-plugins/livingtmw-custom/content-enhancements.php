@@ -91,11 +91,35 @@ function livingtmw_field_update( int $post_id ): string {
 
 /** Apply the resident's latest first-hand corrections without inventing details. */
 function livingtmw_verified_experience_update( int $post_id, string $html ): string {
+	$insert_before_sources = static function ( string $source_html, string $addition ): string {
+		$position = strpos( $source_html, '<div class="livingtmw-field-sources">' );
+		if ( false === $position ) {
+			return $source_html . $addition;
+		}
+		return substr( $source_html, 0, $position ) . $addition . substr( $source_html, $position );
+	};
+
+	if ( 11 === $post_id ) {
+		$html = $insert_before_sources(
+			$html,
+			'<h2>Thiri Condo를 실제로 매도하며 느낀 환금성</h2><p>부모님이 살던 Thiri Condo를 매물로 내놓은 뒤 실제 매도까지 약 1년이 걸렸습니다. 온라인 매물가는 약 550,000,000 MMK로 제시했지만 자금이 급해 최종적으로는 약 400,000,000 MMK에 매도했습니다. 이는 특정 시점의 한 건에 대한 개인 경험이며 모든 콘도의 현재 시세나 미래 가격을 뜻하지 않습니다.</p><p>이 경험 이후 작성자는 양곤 아파트를 매입하기보다 월세로 거주하는 편을 선호합니다. 집값이 앞으로 반드시 떨어진다고 단정할 수는 없지만, 원하는 시기에 원하는 가격으로 팔기 어려울 수 있다는 유동성 위험을 직접 겪었기 때문입니다. 매수를 검토한다면 온라인 호가가 아니라 최근 실거래 가능 가격, 예상 매도 기간, 중개 수수료와 급매 시 가격 차이를 함께 확인해야 합니다.</p>'
+		);
+	}
+	if ( 13 === $post_id ) {
+		$html = $insert_before_sources(
+			$html,
+			'<h2>월세를 선택한 이유는 매달 비용만이 아닙니다</h2><p>작성자는 가족이 Thiri Condo를 매도하는 데 약 1년이 걸린 경험을 한 뒤 Inno City에서 월세 생활을 선택했습니다. 매입은 매달 월세가 나가지 않는 장점이 있을 수 있지만, 급하게 현금이 필요할 때 매수자를 찾는 시간과 가격 인하 폭까지 고려해야 합니다. 체류 기간이 확정되지 않았거나 자금 유동성이 중요하다면 월세가 심리적으로도 편한 선택일 수 있습니다.</p>'
+		);
+	}
 	if ( 21 === $post_id ) {
 		$html = str_replace(
 			'작성자는 미얀마 거주자로 KBZ Bank 계좌를 개설했고 일상 결제에 KBZPay를 자주 사용합니다.',
 			'작성자는 KBZ Bank(깐부자은행) 계좌와 KBZPay를 직접 사용합니다. 매장에서 QR을 스캔하면 결제가 바로 끝나 현금보다 편리하다는 것이 약 1년간 양곤에서 생활하며 느낀 가장 큰 장점입니다.',
 			$html
+		);
+		$html = $insert_before_sources(
+			$html,
+			'<h2>KBZPay를 실제 생활에서 사용하는 방식</h2><p>작성자는 미얀마에 온 직후부터 KBZPay를 사용했고, 개인적으로 한 번 또는 일상 결제에서 주로 1,000,000 MMK 미만을 결제해 왔습니다. 이 금액은 KBZPay의 공식 거래 한도가 아니라 작성자의 사용 범위입니다. 인터넷만 연결되면 대형 쇼핑몰, 마켓과 Grab 배달원에게 QR 또는 송금 방식으로 결제할 수 있어 현금을 만지는 횟수가 크게 줄었습니다.</p><div class="livingtmw-table-wrap"><table><thead><tr><th>상황</th><th>실제 결제 방식</th><th>확인할 점</th></tr></thead><tbody><tr><td>Grab 음식 배달</td><td>음식 50,000 + 배달비 2,000 = 배달원에게 52,000 MMK</td><td>앱 총액과 수취 계정명 확인</td></tr><tr><td>쇼핑몰·마켓</td><td>매장 QR 스캔 후 즉시 결제</td><td>완료 화면을 직원과 함께 확인</td></tr><tr><td>지하 마켓</td><td>인터넷이 약하면 결제 실패 가능</td><td>직원 Wi-Fi 또는 현금 예비수단</td></tr></tbody></table></div><p>미얀마에서 자주 접한 현금은 10,000·5,000·1,000·500·200·100짯권입니다. 신권을 구하기 어렵고 지폐 상태가 좋지 않은 경우가 있어 작성자는 KBZPay를 선호합니다. 다만 건물 지하 마켓에서는 데이터 연결이 약해 결제가 어려웠고, 직원이 제공한 Wi-Fi에 연결해 결제한 적도 있습니다. 휴대전화 배터리와 인터넷이 모두 필요하므로 소액 현금은 비상용으로 따로 준비하는 편이 안전합니다.</p>'
 		);
 	}
 	if ( 25 === $post_id ) {
@@ -103,6 +127,10 @@ function livingtmw_verified_experience_update( int $post_id, string $html ): str
 			'그러나 공식 안내처럼 호출 가격은 거리뿐 아니라 수요·공급과 혼잡도에 따라 바뀌므로 이 값을 정액으로 보면 안 됩니다.',
 			'그러나 공식 안내처럼 호출 가격은 거리뿐 아니라 수요·공급과 혼잡도에 따라 바뀌므로 이 값을 정액으로 보면 안 됩니다. 시내에서는 비교적 새 전기차나 깔끔한 차량을 선택해 부를 수 있었지만, 외곽으로 갈수록 연식이 오래되고 상태가 좋지 않은 차량이 배정되는 경험이 많았습니다. 호출 화면에서 제공되는 차량 종류와 번호를 확인하세요.',
 			$html
+		);
+		$html = $insert_before_sources(
+			$html,
+			'<h2>시내와 외곽에서 달랐던 배정 차량</h2><p>양곤 시내에서는 비교적 새 전기차가 배정되어 실내가 깔끔한 경우가 많았습니다. 반면 외곽에서는 Toyota Fielder 계열의 연식이 오래된 차량이 자주 잡혔고, 차량 내부의 청결 상태가 만족스럽지 않은 경험도 있었습니다. 이는 모든 기사와 지역에 적용되는 평가가 아니라 작성자의 반복 이용 경험입니다. 탑승 전에 차량 번호와 차종을 확인하고 상태가 불안하면 앱에서 가능한 취소·재호출 조건을 살펴보세요.</p>'
 		);
 	}
 	if ( 35 === $post_id ) {
@@ -127,6 +155,10 @@ function livingtmw_verified_experience_update( int $post_id, string $html ): str
 			'평균 배달비는 약 <strong>2,000 MMK</strong>로 비교적 저렴했고 자전거 배달도 이용됩니다.',
 			'평균 배달비는 약 <strong>2,000 MMK</strong>로 비교적 저렴했고 자전거 배달도 이용됩니다. 저녁 7시 이후에는 이용 가능한 식당과 배달이 사실상 크게 줄어들기 때문에, 지하나 단지 안에 마트가 있는 아파트는 늦은 시간에도 식료품을 해결할 수 있어 생활권의 장점이 컸습니다.',
 			$html
+		);
+		$html = $insert_before_sources(
+			$html,
+			'<h2>Grab 배달원에게 KBZPay로 결제한 실제 사례</h2><p>아파트에서 음식 배달을 자주 이용하며, 음식값이 50,000 MMK이고 배달비가 2,000 MMK라면 앱에 표시된 총 52,000 MMK를 배달원에게 KBZPay로 보냈습니다. 송금 전 배달원이 보여주는 계정명과 금액을 확인하고 완료 화면이 뜰 때까지 기다리는 편이 안전합니다. 저녁 7시가 지나면 주문 가능한 식당과 배달원이 크게 줄어 밤늦게 야식을 구하기 어려웠습니다.</p><p>이 때문에 지하나 단지 안에 마트가 있는 아파트는 생활 편의가 확실히 높았습니다. 배달이 끊긴 시간에도 식재료와 간단한 먹거리를 살 수 있기 때문입니다. 다만 지하 마트에서는 인터넷 수신이 약해 KBZPay 결제가 되지 않을 수 있으므로 직원 Wi-Fi 사용 가능 여부를 묻거나 소액 현금을 준비하세요.</p>'
 		);
 	}
 
