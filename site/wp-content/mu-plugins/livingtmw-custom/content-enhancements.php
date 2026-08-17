@@ -89,6 +89,50 @@ function livingtmw_field_update( int $post_id ): string {
 	return '';
 }
 
+/** Apply the resident's latest first-hand corrections without inventing details. */
+function livingtmw_verified_experience_update( int $post_id, string $html ): string {
+	if ( 21 === $post_id ) {
+		$html = str_replace(
+			'작성자는 미얀마 거주자로 KBZ Bank 계좌를 개설했고 일상 결제에 KBZPay를 자주 사용합니다.',
+			'작성자는 KBZ Bank(깐부자은행) 계좌와 KBZPay를 직접 사용합니다. 매장에서 QR을 스캔하면 결제가 바로 끝나 현금보다 편리하다는 것이 약 1년간 양곤에서 생활하며 느낀 가장 큰 장점입니다.',
+			$html
+		);
+	}
+	if ( 25 === $post_id ) {
+		$html = str_replace(
+			'그러나 공식 안내처럼 호출 가격은 거리뿐 아니라 수요·공급과 혼잡도에 따라 바뀌므로 이 값을 정액으로 보면 안 됩니다.',
+			'그러나 공식 안내처럼 호출 가격은 거리뿐 아니라 수요·공급과 혼잡도에 따라 바뀌므로 이 값을 정액으로 보면 안 됩니다. 시내에서는 비교적 새 전기차나 깔끔한 차량을 선택해 부를 수 있었지만, 외곽으로 갈수록 연식이 오래되고 상태가 좋지 않은 차량이 배정되는 경험이 많았습니다. 호출 화면에서 제공되는 차량 종류와 번호를 확인하세요.',
+			$html
+		);
+	}
+	if ( 35 === $post_id ) {
+		$html = str_replace( '현대 H-1 실제 통근비: 연료비 월 약 2,000,000 MMK', '현대 H-1 실제 통근비: 출퇴근 연료비 월 약 1,500,000 MMK', $html );
+		$html = str_replace( '회사 출퇴근을 왕복해 연료비가 월 약 <strong>2,000,000 MMK</strong> 듭니다.', '회사 출퇴근만 계산하면 연료비가 월 약 <strong>1,500,000 MMK</strong> 듭니다. 업무 중 추가 이동까지 포함하면 총연료비는 약 2,000,000 MMK 수준까지 늘 수 있습니다.', $html );
+		$html = str_replace( '<td>월 연료비</td><td>약 2,000,000 MMK</td><td>출근일·유가·에어컨 사용</td>', '<td>월 연료비</td><td>출퇴근 약 1,500,000 MMK, 추가 이동 포함 시 약 2,000,000 MMK</td><td>출근일·업무 이동·유가·에어컨 사용</td>', $html );
+	}
+	if ( 37 === $post_id ) {
+		$html = str_replace( '발전기가 없으면 4~5시간 전기 없이 지낸 경험', '2025년 시간제 공급 때 4~5시간 정전을 겪은 경험', $html );
+	}
+	if ( 39 === $post_id ) {
+		$html = str_replace( '발전기가 없는 집은 정전 때 4~5시간을 버텨야 할 수 있습니다', '2025년 시간제 정전에서 2026년 24시간 공급으로 바뀐 경험', $html );
+		$html = str_replace(
+			'작성자가 거주하는 Inno City는 24시간 전력 공급과 발전기 환경을 갖췄습니다. 반면 일반 건물에서는 정전이 자주 발생했고, 발전기가 없을 때 <strong>4~5시간가량 전기 없이 지낸 경험</strong>도 있습니다. 따라서 집을 구할 때 발전기나 24시간 전력 공급 여부를 핵심 조건으로 봅니다.',
+			'작성자가 양곤에서 생활한 2025년에는 오전 9시~정오, 오후 5시~9시처럼 정해진 시간에 전력 공급이 중단되는 날이 있었고 한 번에 4~5시간가량 전기 없이 지내기도 했습니다. 2026년에는 정부가 요금을 인상하는 대신 24시간 공급 체계로 전환해 생활 여건이 달라졌습니다. Inno City는 24시간 전력과 발전기 환경을 갖추고 있지만 건물별 계약과 실제 공급 상태는 입주 전에 다시 확인해야 합니다.',
+			$html
+		);
+		$html = str_replace( '<td>4~5시간 이상 정전에도 계속 가동하는가?</td>', '<td>과거 시간제 정전과 현재 24시간 공급에서 각각 어떻게 운영하는가?</td>', $html );
+	}
+	if ( 41 === $post_id ) {
+		$html = str_replace(
+			'평균 배달비는 약 <strong>2,000 MMK</strong>로 비교적 저렴했고 자전거 배달도 이용됩니다.',
+			'평균 배달비는 약 <strong>2,000 MMK</strong>로 비교적 저렴했고 자전거 배달도 이용됩니다. 저녁 7시 이후에는 이용 가능한 식당과 배달이 사실상 크게 줄어들기 때문에, 지하나 단지 안에 마트가 있는 아파트는 늦은 시간에도 식료품을 해결할 수 있어 생활권의 장점이 컸습니다.',
+			$html
+		);
+	}
+
+	return $html;
+}
+
 /**
  * Add a second, topic-specific practical layer to every published guide.
  * These sections answer follow-up questions instead of repeating the article.
@@ -304,7 +348,7 @@ add_filter(
 			return $content;
 		}
 		$post_id   = (int) get_the_ID();
-		$update    = livingtmw_field_update( $post_id );
+		$update    = livingtmw_verified_experience_update( $post_id, livingtmw_field_update( $post_id ) );
 		$deep_dive = livingtmw_article_deep_dive( $post_id );
 		$field_note = livingtmw_article_field_note( $post_id );
 		$clarification = livingtmw_article_clarification( $post_id );

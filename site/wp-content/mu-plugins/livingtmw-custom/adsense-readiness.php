@@ -203,7 +203,7 @@ function livingtmw_add_article_trust_box( string $content ): string {
 	$box = '<aside class="livingtmw-article-trust" aria-label="콘텐츠 정보">'
 		. '<strong>내일의 생활 편집팀</strong>'
 		. '<div class="livingtmw-article-trust__dates">' . $dates . '</div>'
-		. '<p>이 글은 미얀마 생활에 필요한 정보를 이해하기 쉽게 정리한 자료입니다. 가격, 정책 및 서비스 조건은 달라질 수 있으므로 중요한 결정 전에는 관련 기관의 최신 안내를 확인해 주세요.</p>'
+		. '<p>운영자는 약 1년간 양곤 Inno City에 거주하며 ATOM, APN·MPT, KBZ Bank·KBZPay, Grab과 현지 병원 서비스를 직접 이용했습니다. 개인 경험과 공개 자료를 구분해 정리했으며 가격, 정책 및 서비스 조건은 달라질 수 있으므로 중요한 결정 전에는 관련 기관의 최신 안내를 확인해 주세요.</p>'
 		. '<p><a href="' . esc_url( home_url( '/editorial-policy/' ) ) . '">콘텐츠 제작·검수 원칙</a> · <a href="mailto:help@livingtmw.com?subject=' . rawurlencode( '콘텐츠 정정 요청: ' . get_the_title() ) . '">정보 수정 제보</a></p>'
 		. '</aside>';
 
@@ -219,7 +219,7 @@ function livingtmw_quality_robots( array $robots ): array {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
-	if ( is_page( 'today-fortune' ) && isset( $_GET['lang'] ) && 'my' === sanitize_key( wp_unslash( $_GET['lang'] ) ) ) {
+	if ( is_page( 'today-fortune' ) ) {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
@@ -246,6 +246,19 @@ function livingtmw_quality_sitemap_taxonomies( array $taxonomies ): array {
 }
 add_filter( 'wp_sitemaps_taxonomies', 'livingtmw_quality_sitemap_taxonomies' );
 
+/** Keep the optional fortune activity out of the editorial XML sitemap. */
+function livingtmw_quality_page_sitemap_args( array $args, string $post_type ): array {
+	if ( 'page' !== $post_type ) {
+		return $args;
+	}
+	$fortune = get_page_by_path( 'today-fortune', OBJECT, 'page' );
+	if ( $fortune instanceof WP_Post ) {
+		$args['post__not_in'] = array_values( array_unique( array_merge( $args['post__not_in'] ?? array(), array( (int) $fortune->ID ) ) ) );
+	}
+	return $args;
+}
+add_filter( 'wp_sitemaps_posts_query_args', 'livingtmw_quality_page_sitemap_args', 10, 2 );
+
 /**
  * Add concise homepage metadata when no SEO plugin supplies it.
  */
@@ -258,6 +271,7 @@ function livingtmw_quality_head(): void {
 		echo '<link rel="canonical" href="' . esc_url( home_url( '/' ) ) . '">' . "\n";
 	} elseif ( is_category() ) {
 		$category_descriptions = array(
+			'양곤 한국인의 현지생활 서비스' => '양곤에서 약 1년간 생활한 한국인이 Grab, KBZPay, ATOM, APN·MPT, 주거·전기·병원 서비스를 직접 이용하며 확인한 경험을 정리합니다.',
 			'미얀마 생활비'             => '미얀마와 양곤의 월 생활비, 전기료, 환율과 실제 지출 사례를 항목별로 확인합니다.',
 			'미얀마 주거·생활'          => '한국인이 양곤에서 집을 구하고 월세 계약과 정전·수질 등 생활환경을 점검하는 방법을 안내합니다.',
 			'미얀마 통신·금융'          => '미얀마 유심, 가정용 인터넷, 은행 계좌와 환전 이용 시 필요한 준비사항과 주의점을 정리합니다.',
