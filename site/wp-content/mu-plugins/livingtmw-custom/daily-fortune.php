@@ -39,9 +39,17 @@ function livingtmw_ensure_fortune_page(): void {
 add_action( 'init', 'livingtmw_ensure_fortune_page', 25 );
 
 function livingtmw_render_daily_fortune(): string {
+	$language   = isset( $_GET['lang'] ) && 'my' === sanitize_key( wp_unslash( $_GET['lang'] ) ) ? 'my' : 'ko';
+	$korean_url = remove_query_arg( 'lang' );
+	$myanmar_url = add_query_arg( 'lang', 'my' );
 	ob_start();
 	?>
-	<section class="livingtmw-fortune" data-daily-fortune>
+	<section class="livingtmw-fortune" data-daily-fortune data-language="<?php echo esc_attr( $language ); ?>">
+		<nav class="livingtmw-fortune__language" aria-label="<?php echo 'my' === $language ? 'ဘာသာစကား ရွေးချယ်ရန်' : '운세 페이지 언어 선택'; ?>">
+			<span><?php echo 'my' === $language ? 'ဘာသာစကား' : '언어'; ?></span>
+			<a href="<?php echo esc_url( $korean_url ); ?>" lang="ko"<?php echo 'ko' === $language ? ' aria-current="page"' : ''; ?>>한국어</a>
+			<a href="<?php echo esc_url( $myanmar_url ); ?>" lang="my"<?php echo 'my' === $language ? ' aria-current="page"' : ''; ?>>မြန်မာ</a>
+		</nav>
 		<header class="livingtmw-fortune__intro">
 			<p class="livingtmw-fortune__eyebrow">오늘부터 이달까지 자세히 보는 운세</p>
 			<h2>생년월일로 보는 나의 생활 운세</h2>

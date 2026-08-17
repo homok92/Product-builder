@@ -783,6 +783,47 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	color: var(--livingtmw-text);
 }
 
+.livingtmw-fortune__language {
+	align-items: center;
+	display: flex;
+	gap: 7px;
+	justify-content: flex-end;
+	margin-bottom: 20px;
+}
+
+.livingtmw-fortune__language span {
+	color: var(--livingtmw-muted);
+	font-size: 12px;
+	font-weight: 800;
+	margin-right: 3px;
+}
+
+.livingtmw-fortune__language a {
+	background: var(--livingtmw-bg);
+	border: 1px solid var(--livingtmw-border);
+	border-radius: 999px;
+	color: var(--livingtmw-text);
+	font-size: 13px;
+	font-weight: 800;
+	padding: 7px 13px;
+	text-decoration: none;
+}
+
+.livingtmw-fortune__language a[aria-current="page"] {
+	background: var(--livingtmw-accent);
+	border-color: var(--livingtmw-accent);
+	color: #fff;
+}
+
+.livingtmw-fortune[data-language="my"] {
+	line-height: 1.75;
+}
+
+.livingtmw-fortune[data-language="my"] .livingtmw-fortune__guide,
+.livingtmw-fortune[data-language="my"] .livingtmw-fortune__faq {
+	display: none;
+}
+
 .livingtmw-fortune__intro {
 	margin-bottom: 28px;
 	max-width: 760px;
