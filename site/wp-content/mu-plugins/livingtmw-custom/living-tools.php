@@ -171,8 +171,9 @@ function livingtmw_render_living_tools(): void {
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<nav class="livingtmw-content-picker" aria-labelledby="livingtmw-content-picker-title">
 			<div>
-				<p class="livingtmw-tools__eyebrow">오늘은 무엇을 볼까요?</p>
-				<h2 id="livingtmw-content-picker-title">원하는 콘텐츠를 선택해 보세요</h2>
+				<p class="livingtmw-tools__eyebrow">현지 경험과 공식 자료로 확인합니다</p>
+				<h1 id="livingtmw-content-picker-title">한국인을 위한 미얀마·양곤 생활 정보</h1>
+				<p class="livingtmw-content-picker__summary">주거, 생활비, 통신, 금융과 교통 정보를 실제 양곤 생활 경험에 맞춰 찾아보세요.</p>
 			</div>
 			<div class="livingtmw-content-picker__actions">
 				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--fortune" href="<?php echo esc_url( $fortune_url ); ?>"><span aria-hidden="true">🔮</span> 오늘의 운세</a>
