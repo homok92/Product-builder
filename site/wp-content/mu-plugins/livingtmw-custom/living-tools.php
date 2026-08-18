@@ -167,59 +167,19 @@ function livingtmw_render_living_tools(): void {
 	$fortune_url  = $fortune_page ? get_permalink( $fortune_page ) : home_url( '/today-fortune/' );
 	$guide_page   = get_page_by_path( 'myanmar-life-guide', OBJECT, 'page' );
 	$guide_url    = $guide_page ? get_permalink( $guide_page ) : home_url( '/myanmar-life-guide/' );
-	$latest_posts = get_posts(
-		array(
-			'post_type'      => 'post',
-			'post_status'    => 'publish',
-			'posts_per_page' => 5,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		)
-	);
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
-		<div class="livingtmw-home-notice" role="note">
-			<span>현지 정보 안내</span>
-			<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 정착 전 꼭 확인할 생활 준비 순서</a>
-			<small>가격·정책은 변동될 수 있어 확인일과 출처를 함께 안내합니다.</small>
-		</div>
-
-		<nav class="livingtmw-home-nav" aria-label="홈페이지 주요 메뉴">
-			<a aria-current="page" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
-			<a href="<?php echo esc_url( $guide_url ); ?>">처음 시작하기</a>
-			<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">생활 가이드</a>
-			<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">사이트 소개</a>
-			<a href="<?php echo esc_url( home_url( '/editorial-policy/' ) ); ?>">검수 원칙</a>
+		<nav class="livingtmw-content-picker" aria-labelledby="livingtmw-content-picker-title">
+			<div>
+				<p class="livingtmw-tools__eyebrow">현지 경험과 공식 자료로 확인합니다</p>
+				<h1 id="livingtmw-content-picker-title">한국인을 위한 미얀마·양곤 생활 정보</h1>
+				<p class="livingtmw-content-picker__summary">주거, 생활비, 통신, 금융과 교통 정보를 실제 양곤 생활 경험에 맞춰 찾아보세요.</p>
+			</div>
+			<div class="livingtmw-content-picker__actions">
+				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--fortune" href="<?php echo esc_url( $fortune_url ); ?>"><span aria-hidden="true">🔮</span> 오늘의 운세</a>
+				<a class="livingtmw-content-picker__button livingtmw-content-picker__button--tips" href="<?php echo esc_url( $guide_url ); ?>"><span aria-hidden="true">💡</span> 한국인의 미얀마 생활 꿀팁</a>
+			</div>
 		</nav>
-
-		<div class="livingtmw-home-hero">
-			<section class="livingtmw-content-picker" aria-labelledby="livingtmw-content-picker-title">
-				<div class="livingtmw-content-picker__copy">
-					<p class="livingtmw-tools__eyebrow">MYANMAR LIFE · START HERE</p>
-					<h1 id="livingtmw-content-picker-title">한국인의<br>미얀마 생활 안내</h1>
-					<p class="livingtmw-content-picker__summary">주거부터 환전, 통신, 교통까지 양곤에서 직접 부딪히며 확인한 정보를 한곳에 모았습니다.</p>
-					<div class="livingtmw-content-picker__actions">
-						<a class="livingtmw-content-picker__button livingtmw-content-picker__button--fortune" href="<?php echo esc_url( $guide_url ); ?>">생활 준비 시작하기 <span aria-hidden="true">→</span></a>
-						<a class="livingtmw-content-picker__button livingtmw-content-picker__button--tips" href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
-					</div>
-				</div>
-				<figure class="livingtmw-content-picker__visual">
-					<img src="<?php echo esc_url( content_url( 'mu-plugins/livingtmw-custom/images/articles/yangon-arrival-essentials.png' ) ); ?>" alt="양곤 정착 생활 준비 안내 이미지" width="1200" height="800">
-					<figcaption><span>FEATURED GUIDE</span> 양곤 정착 첫 주에 필요한 준비</figcaption>
-				</figure>
-			</section>
-
-			<aside class="livingtmw-home-brief" aria-labelledby="livingtmw-home-brief-title">
-				<header><h2 id="livingtmw-home-brief-title">정착 준비 순서</h2><span>CHECKLIST</span></header>
-				<ol>
-					<li><b>01</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 8 ) ); ?>"><strong>월 생활비 범위 정하기</strong><small>식비·월세·교통비 분리</small></a></li>
-					<li><b>02</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 11 ) ); ?>"><strong>집과 전력 조건 확인</strong><small>발전기·수질·계약 점검</small></a></li>
-					<li><b>03</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 17 ) ); ?>"><strong>SIM과 인터넷 연결</strong><small>도착 당일 통신 준비</small></a></li>
-					<li><b>04</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 21 ) ); ?>"><strong>환전과 결제 준비</strong><small>은행·KBZPay 사용 확인</small></a></li>
-					<li><b>05</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>"><strong>이동 동선 시험하기</strong><small>Grab·우기 소요시간 확인</small></a></li>
-				</ol>
-			</aside>
-		</div>
 
 		<div class="livingtmw-tools__intro">
 			<p class="livingtmw-tools__eyebrow">오늘의 양곤 생활 도구</p>
@@ -272,38 +232,6 @@ function livingtmw_render_living_tools(): void {
 				<p><span data-market-status>최신값 확인 중</span> · EGCurrency Black Market 기준 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://egcurrency.com/en/currency/MMK/blackMarket" target="_blank" rel="noopener noreferrer">출처</a></p>
 			</article>
 		</div>
-
-		<div class="livingtmw-home-dashboard">
-			<section class="livingtmw-home-panel livingtmw-home-topics" aria-labelledby="livingtmw-home-topics-title">
-				<header><div><p class="livingtmw-tools__eyebrow">주제별 생활 정보</p><h2 id="livingtmw-home-topics-title">필요한 정보부터 찾아보세요</h2></div><a href="<?php echo esc_url( $guide_url ); ?>">전체 안내 보기 →</a></header>
-				<div class="livingtmw-home-topics__grid">
-					<a href="<?php echo esc_url( livingtmw_guide_post_url( 11 ) ); ?>"><span>01</span><strong>주거·계약</strong><small>월세, 전력, 수질 확인</small></a>
-					<a href="<?php echo esc_url( livingtmw_guide_post_url( 8 ) ); ?>"><span>02</span><strong>생활비</strong><small>예산과 실제 지출</small></a>
-					<a href="<?php echo esc_url( livingtmw_guide_post_url( 17 ) ); ?>"><span>03</span><strong>통신</strong><small>SIM과 가정 인터넷</small></a>
-					<a href="<?php echo esc_url( livingtmw_guide_post_url( 21 ) ); ?>"><span>04</span><strong>금융·환전</strong><small>계좌, 결제, 환율</small></a>
-					<a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>"><span>05</span><strong>교통</strong><small>Grab과 이동 안전</small></a>
-					<a href="<?php echo esc_url( livingtmw_guide_post_url( 27 ) ); ?>"><span>06</span><strong>장보기</strong><small>마트와 식료품 구매</small></a>
-				</div>
-			</section>
-
-			<aside class="livingtmw-home-panel livingtmw-home-trust" aria-labelledby="livingtmw-home-trust-title">
-				<p class="livingtmw-tools__eyebrow">내일의 생활 기준</p>
-				<h2 id="livingtmw-home-trust-title">직접 써보고, 다시 확인합니다</h2>
-				<ul><li>양곤 현지 생활 경험 구분</li><li>변동 정보의 확인 시점 표시</li><li>공식 자료와 참고 출처 연결</li><li>광고와 편집 콘텐츠 분리</li></ul>
-				<a href="<?php echo esc_url( home_url( '/editorial-policy/' ) ); ?>">콘텐츠 제작·검수 원칙 →</a>
-			</aside>
-		</div>
-
-		<?php if ( $latest_posts ) : ?>
-		<section class="livingtmw-home-panel livingtmw-home-latest" aria-labelledby="livingtmw-home-latest-title">
-			<header><div><p class="livingtmw-tools__eyebrow">최근 업데이트</p><h2 id="livingtmw-home-latest-title">최신 양곤 생활 가이드</h2></div><a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">전체 글 보기 →</a></header>
-			<ol>
-				<?php foreach ( $latest_posts as $index => $latest_post ) : ?>
-				<li><span><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><a href="<?php echo esc_url( get_permalink( $latest_post ) ); ?>"><?php echo esc_html( get_the_title( $latest_post ) ); ?></a><time datetime="<?php echo esc_attr( get_the_date( 'c', $latest_post ) ); ?>"><?php echo esc_html( get_the_date( 'Y.m.d', $latest_post ) ); ?></time></li>
-				<?php endforeach; ?>
-			</ol>
-		</section>
-		<?php endif; ?>
 	</section>
 	<?php
 }
