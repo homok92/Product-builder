@@ -315,7 +315,7 @@ function livingtmw_render_interior_chrome(): void {
 	$guide_url   = home_url( '/myanmar-life-guide/' );
 	?>
 	<style id="livingtmw-interior-chrome-inline">body:not(.home):not(.blog) header#masthead,body:not(.home):not(.blog) .site-header,body:not(.home):not(.blog) nav#site-navigation,body:not(.home):not(.blog) .main-navigation,body:not(.home):not(.blog) .site-branding,body:not(.home):not(.blog) .site-logo{display:none!important}.livingtmw-shared-chrome{box-sizing:border-box!important;margin-left:auto!important;margin-right:auto!important;max-width:1280px!important;padding-left:20px!important;padding-right:20px!important;width:100%!important}@media(max-width:768px){.livingtmw-shared-chrome{padding-left:12px!important;padding-right:12px!important}}</style>
-	<style id="livingtmw-interior-width-inline">.livingtmw-shared-chrome{max-width:1240px!important}body:not(.home):not(.blog) .site-content{max-width:1240px!important}</style>
+	<style id="livingtmw-interior-width-inline">.livingtmw-shared-chrome{max-width:1200px!important;padding-left:0!important;padding-right:0!important;width:calc(100% - 40px)!important}body:not(.home):not(.blog) .site-content{max-width:1200px!important;padding-left:0!important;padding-right:0!important;width:calc(100% - 40px)!important}@media(max-width:768px){.livingtmw-shared-chrome,body:not(.home):not(.blog) .site-content{width:calc(100% - 24px)!important}}</style>
 	<section class="livingtmw-tools livingtmw-shared-chrome" aria-label="사이트 안내 및 주요 메뉴">
 		<div class="livingtmw-home-alert" role="note"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요 →</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
 		<nav class="livingtmw-home-menu" aria-label="주요 메뉴">
