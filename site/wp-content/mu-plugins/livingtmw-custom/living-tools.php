@@ -180,11 +180,10 @@ function livingtmw_render_living_tools(): void {
 	$featured_url = $featured instanceof WP_Post ? get_permalink( $featured ) : $guide_url;
 	$featured_img = $featured instanceof WP_Post ? livingtmw_seo_image( (int) $featured->ID ) : array();
 	$featured_src = $featured_img['url'] ?? content_url( 'mu-plugins/livingtmw-custom/images/articles/yangon-arrival-essentials.png' );
-	$home_logo     = get_custom_logo();
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
-			<div class="livingtmw-home-brand"><?php echo $home_logo ? wp_kses_post( $home_logo ) : '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>'; ?></div>
+			<div class="livingtmw-home-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><span class="livingtmw-home-brand__mark" aria-hidden="true">ㄴ</span><span>내일의 생활</span></a></div>
 			<div class="livingtmw-home-menu__links">
 				<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
 				<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">About</a>
@@ -192,7 +191,7 @@ function livingtmw_render_living_tools(): void {
 				<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">Articles</a>
 				<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
 				<details class="livingtmw-home-search">
-					<summary aria-label="검색 열기"><span aria-hidden="true">⌕</span><span class="screen-reader-text">검색</span></summary>
+					<summary aria-label="검색 열기"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="screen-reader-text">검색</span></summary>
 					<form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 						<label><span class="screen-reader-text">검색어</span><input type="search" name="s" placeholder="검색어를 입력하세요" required></label>
 						<button type="submit">검색</button>
