@@ -183,6 +183,13 @@ function livingtmw_render_living_tools(): void {
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<div class="livingtmw-home-alert"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
+		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
+			<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
+			<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">About</a>
+			<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
+			<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">Articles</a>
+			<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
+		</nav>
 
 		<article class="livingtmw-home-feature" aria-labelledby="livingtmw-content-picker-title">
 				<img src="<?php echo esc_url( $featured_src ); ?>" alt="" width="1200" height="800">
