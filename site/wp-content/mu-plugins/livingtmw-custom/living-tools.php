@@ -305,11 +305,65 @@ function livingtmw_render_living_tools(): void {
 
 add_action( 'generate_before_main_content', 'livingtmw_render_living_tools', 5 );
 
+/** Render the same announcement and independent navigation above interior pages. */
+function livingtmw_render_interior_chrome(): void {
+	if ( is_front_page() || is_home() ) {
+		return;
+	}
+	$fortune_url = home_url( '/today-fortune/' );
+	$guide_url   = home_url( '/myanmar-life-guide/' );
+	?>
+	<section class="livingtmw-tools livingtmw-shared-chrome" aria-label="사이트 안내 및 주요 메뉴">
+		<div class="livingtmw-home-alert" role="note"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요 →</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
+		<nav class="livingtmw-home-menu" aria-label="주요 메뉴">
+			<div class="livingtmw-home-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><img src="<?php echo esc_url( content_url( 'uploads/2026/08/cropped-logo3.png' ) ); ?>" alt="내일의 생활" width="1342" height="434"></a></div>
+			<div class="livingtmw-home-menu__links">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
+				<a<?php echo is_page( 'about-livingtmw' ) ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">사이트 소개</a>
+				<a<?php echo is_page( 'myanmar-life-guide' ) ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
+				<a<?php echo is_category( LIVINGTMW_PRIMARY_CATEGORY_SLUG ) || is_single() ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">미얀마 가이드</a>
+				<a<?php echo is_page( 'today-fortune' ) ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
+				<details class="livingtmw-home-search">
+					<summary aria-label="검색 열기"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="screen-reader-text">검색</span></summary>
+					<form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>"><label><span class="screen-reader-text">검색어</span><input type="search" name="s" placeholder="검색어를 입력하세요" required></label><button type="submit">검색</button></form>
+				</details>
+			</div>
+		</nav>
+	</section>
+	<?php
+}
+
+add_action( 'generate_after_header', 'livingtmw_render_interior_chrome', 15 );
+
+/** Render the homepage weather and exchange cards in every interior right sidebar. */
+function livingtmw_render_interior_rail(): void {
+	if ( is_front_page() || is_home() ) {
+		return;
+	}
+	$rates = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
+	?>
+	<div class="livingtmw-interior-rail" aria-label="양곤 날씨와 환율">
+		<article class="livingtmw-weather" aria-labelledby="livingtmw-sidebar-weather-title" data-latitude="16.8409" data-longitude="96.1735">
+			<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">실시간 업데이트</p><h3 id="livingtmw-sidebar-weather-title">오늘의 양곤 생활 난이도</h3></div><span class="livingtmw-weather__icon" aria-hidden="true">⛅</span></div>
+			<div class="livingtmw-weather__loading" role="status">양곤 날씨와 대기질을 불러오는 중입니다…</div>
+			<div class="livingtmw-weather__content" hidden><div class="livingtmw-weather__score-row"><strong class="livingtmw-weather__score"><span data-weather-score>--</span><small>/100</small></strong><div><span class="livingtmw-weather__level" data-weather-level>확인 중</span><p data-weather-summary></p></div></div><dl class="livingtmw-weather__metrics"><div><dt>현재</dt><dd data-weather-temperature>--</dd></div><div><dt>체감</dt><dd data-weather-apparent>--</dd></div><div><dt>비 올 확률<br>(6시간 이내)</dt><dd data-weather-rain>--</dd></div><div><dt>대기질</dt><dd data-weather-aqi>--</dd></div></dl><ul class="livingtmw-weather__tips" data-weather-tips></ul><p class="livingtmw-tool-card__meta">양곤 중심부 기준 · <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p></div>
+			<div class="livingtmw-weather__error" hidden><p>현재 날씨를 불러오지 못했습니다.</p><button type="button" data-weather-retry>다시 불러오기</button></div>
+		</article>
+		<article class="livingtmw-market-rate" aria-labelledby="livingtmw-sidebar-market-title">
+			<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">15분마다 자동 확인</p><h3 id="livingtmw-sidebar-market-title">오늘의 바깥환율</h3></div><span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span></div>
+			<div class="livingtmw-market-rate__rows"><div><strong>1 USD</strong><span><small>BUY</small><b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div><div><strong>1원</strong><span><small>BUY</small><b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div></div>
+		</article>
+	</div>
+	<?php
+}
+
+add_action( 'generate_before_right_sidebar_content', 'livingtmw_render_interior_rail', 5 );
+
 /** Use the custom full-width dashboard instead of the theme sidebar on home. */
 add_filter(
 	'generate_sidebar_layout',
 	static function ( string $layout ): string {
-		return ( is_front_page() || is_home() ) ? 'no-sidebar' : $layout;
+		return ( is_front_page() || is_home() ) ? 'no-sidebar' : 'right-sidebar';
 	}
 );
 

@@ -171,3 +171,39 @@ html[data-theme="dark"] body:not(.home):not(.blog) .widget-area .widget { box-sh
 	body:not(.home):not(.blog) .entry-content { font-size: 14px; line-height: 1.68; }
 	body:not(.home):not(.blog) .entry-content h2 { font-size: 20px; }
 }
+
+/* Homepage chrome and utility rail shared by every interior page. */
+body:not(.home):not(.blog) .site-header,
+body:not(.home):not(.blog) #site-navigation { display: none !important; }
+
+.livingtmw-shared-chrome {
+	box-sizing: border-box;
+	display: grid;
+	gap: 14px;
+	grid-template-columns: 1fr;
+	margin: 0 auto;
+	max-width: 1280px;
+	padding: 18px 20px 0;
+}
+.livingtmw-shared-chrome .livingtmw-home-alert,
+.livingtmw-shared-chrome .livingtmw-home-menu { grid-column: 1; margin: 0; }
+.livingtmw-shared-chrome .livingtmw-home-alert { grid-row: 1; }
+.livingtmw-shared-chrome .livingtmw-home-menu { grid-row: 2; }
+
+.livingtmw-interior-rail {
+	--livingtmw-dashboard-card: var(--livingtmw-page-card);
+	--livingtmw-dashboard-line: var(--livingtmw-page-line);
+	display: grid;
+	gap: 14px;
+}
+.livingtmw-interior-rail .livingtmw-weather,
+.livingtmw-interior-rail .livingtmw-market-rate { margin: 0; padding: 18px; }
+.livingtmw-interior-rail .livingtmw-weather__metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.livingtmw-interior-rail .livingtmw-market-rate__rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.livingtmw-interior-rail .livingtmw-market-rate__rows > div { grid-template-columns: 1fr; }
+body:not(.home):not(.blog) .widget-area > .widget { display: none; }
+
+@media (max-width: 768px) {
+	.livingtmw-shared-chrome { padding: 12px 12px 0; }
+	.livingtmw-interior-rail { margin-top: 14px; }
+}

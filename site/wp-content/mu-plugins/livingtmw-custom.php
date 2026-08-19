@@ -56,7 +56,7 @@ add_action(
 			);
 		}
 
-		if ( is_readable( $tools ) && ( is_front_page() || is_home() ) ) {
+		if ( is_readable( $tools ) && ! is_admin() ) {
 			wp_enqueue_script(
 				'livingtmw-living-tools',
 				content_url( 'mu-plugins/livingtmw-custom/living-market-v2.js' ),
