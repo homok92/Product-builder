@@ -18,15 +18,16 @@ require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v22.css';
+		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v23.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
 		$tools      = __DIR__ . '/livingtmw-custom/living-market-v2.js';
+		$carousel   = __DIR__ . '/livingtmw-custom/home-carousel.js';
 		$fortune    = __DIR__ . '/livingtmw-custom/daily-fortune-v4.js';
 
 		if ( is_readable( $stylesheet ) ) {
 			wp_enqueue_style(
 				'livingtmw-custom',
-				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v22.css' ),
+				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v23.css' ),
 				array(),
 				(string) filemtime( $stylesheet )
 			);
@@ -48,6 +49,16 @@ add_action(
 				content_url( 'mu-plugins/livingtmw-custom/living-market-v2.js' ),
 				array(),
 				(string) filemtime( $tools ),
+				true
+			);
+		}
+
+		if ( is_readable( $carousel ) && ( is_front_page() || is_home() ) ) {
+			wp_enqueue_script(
+				'livingtmw-home-carousel',
+				content_url( 'mu-plugins/livingtmw-custom/home-carousel.js' ),
+				array(),
+				(string) filemtime( $carousel ),
 				true
 			);
 		}
