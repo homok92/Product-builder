@@ -400,14 +400,125 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 }
 
 .livingtmw-tools {
+	--livingtmw-dashboard: #f5f7fb;
+	--livingtmw-dashboard-card: #ffffff;
+	--livingtmw-dashboard-soft: #eef1f7;
+	--livingtmw-dashboard-line: #dfe4ed;
+	--livingtmw-dashboard-gold: #a87516;
+	--livingtmw-dashboard-gold-soft: #fff5d9;
 	margin: 0 auto 42px;
-	max-width: 1180px;
+	max-width: 1280px;
 	padding: 28px 20px 0;
 	width: 100%;
 }
 
+html[data-theme="dark"] .livingtmw-tools {
+	--livingtmw-dashboard: #090c18;
+	--livingtmw-dashboard-card: #111526;
+	--livingtmw-dashboard-soft: #171c2e;
+	--livingtmw-dashboard-line: #282e43;
+	--livingtmw-dashboard-gold: #d4aa4f;
+	--livingtmw-dashboard-gold-soft: #292416;
+}
+
+.livingtmw-home-alert {
+	align-items: center;
+	background: var(--livingtmw-dashboard-gold-soft);
+	border: 1px solid color-mix(in srgb, var(--livingtmw-dashboard-gold) 34%, var(--livingtmw-dashboard-line));
+	border-radius: 10px;
+	color: var(--livingtmw-text);
+	display: flex;
+	font-size: 13px;
+	gap: 12px;
+	margin-bottom: 12px;
+	padding: 11px 15px;
+}
+
+.livingtmw-home-alert strong {
+	background: var(--livingtmw-dashboard-gold);
+	border-radius: 999px;
+	color: #fff;
+	font-size: 11px;
+	padding: 5px 9px;
+	white-space: nowrap;
+}
+
+.livingtmw-home-alert a { color: var(--livingtmw-text) !important; font-weight: 800; text-decoration: none; }
+.livingtmw-home-alert span { color: var(--livingtmw-muted); font-size: 11px; margin-left: auto; }
+
+.livingtmw-home-menu {
+	align-items: center;
+	background: var(--livingtmw-dashboard-card);
+	border: 1px solid var(--livingtmw-dashboard-line);
+	border-bottom: 2px solid var(--livingtmw-dashboard-gold);
+	border-radius: 10px 10px 0 0;
+	display: flex;
+	gap: 4px;
+	justify-content: flex-end;
+	margin-bottom: 18px;
+	overflow-x: auto;
+	padding: 9px 12px;
+}
+
+.livingtmw-home-menu a {
+	border-radius: 8px;
+	color: var(--livingtmw-muted) !important;
+	font-size: 13px;
+	font-weight: 750;
+	padding: 9px 12px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.livingtmw-home-menu a:hover,
+.livingtmw-home-menu a:focus-visible,
+.livingtmw-home-menu .is-current { background: var(--livingtmw-dashboard-soft); color: var(--livingtmw-dashboard-gold) !important; }
+
+.livingtmw-home-lead { display: grid; gap: 18px; grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr); }
+
+.livingtmw-home-feature {
+	background: #111526;
+	border: 1px solid var(--livingtmw-dashboard-line);
+	border-radius: 16px;
+	min-height: 410px;
+	overflow: hidden;
+	position: relative;
+}
+
+.livingtmw-home-feature > img { height: 100%; inset: 0; object-fit: cover; position: absolute; width: 100%; }
+.livingtmw-home-feature__shade { background: linear-gradient(90deg, rgb(8 12 26 / 96%) 0%, rgb(10 14 29 / 80%) 42%, rgb(10 14 29 / 18%) 78%), linear-gradient(0deg, rgb(7 10 22 / 66%), transparent 55%); inset: 0; position: absolute; }
+.livingtmw-home-feature__content { color: #fff; max-width: 590px; padding: clamp(30px, 5vw, 62px); position: relative; z-index: 1; }
+.livingtmw-home-feature__content h1 { color: #fff !important; font-size: clamp(34px, 4.2vw, 57px); letter-spacing: -.045em; line-height: 1.1; margin: 10px 0 18px; }
+.livingtmw-home-feature__content > p:not(.livingtmw-tools__eyebrow) { color: #c5cad7 !important; line-height: 1.7; max-width: 480px; }
+.livingtmw-home-feature__content > a { background: var(--livingtmw-dashboard-gold); border-radius: 9px; color: #fff !important; display: inline-flex; font-size: 13px; font-weight: 800; gap: 12px; margin-top: 8px; max-width: 100%; overflow: hidden; padding: 12px 16px; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+
+.livingtmw-home-steps,
+.livingtmw-home-news {
+	background: var(--livingtmw-dashboard-card);
+	border: 1px solid var(--livingtmw-dashboard-line);
+	border-radius: 16px;
+	color: var(--livingtmw-text);
+	overflow: hidden;
+}
+
+.livingtmw-home-steps header,
+.livingtmw-home-news > header { align-items: center; border-bottom: 1px solid var(--livingtmw-dashboard-line); display: flex; justify-content: space-between; padding: 18px 20px; }
+.livingtmw-home-steps h2,
+.livingtmw-home-news h2 { color: var(--livingtmw-text); font-size: 18px; margin: 0; }
+.livingtmw-home-steps header span { background: var(--livingtmw-dashboard-soft); border-radius: 5px; color: var(--livingtmw-muted); font-size: 10px; padding: 6px 8px; }
+.livingtmw-home-steps ol,
+.livingtmw-home-news ol { list-style: none; margin: 0; padding: 7px 14px; }
+.livingtmw-home-steps li { align-items: center; border-bottom: 1px solid var(--livingtmw-dashboard-line); display: grid; gap: 10px; grid-template-columns: 28px 1fr; min-height: 66px; padding: 9px 6px; }
+.livingtmw-home-steps li:last-child { border: 0; }
+.livingtmw-home-steps li > b { color: var(--livingtmw-dashboard-gold); font-size: 12px; }
+.livingtmw-home-steps li > a { display: grid; text-decoration: none; }
+.livingtmw-home-steps strong { color: var(--livingtmw-text); font-size: 13px; }
+.livingtmw-home-steps small { color: var(--livingtmw-muted); font-size: 11px; margin-top: 3px; }
+
 .livingtmw-tools__intro {
-	margin-bottom: 20px;
+	border-bottom: 1px solid var(--livingtmw-dashboard-line);
+	margin: 28px 0 16px;
+	padding-bottom: 13px;
 }
 
 .livingtmw-tools__eyebrow,
@@ -506,13 +617,21 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 
 .livingtmw-weather,
 .livingtmw-market-rate {
-	background: var(--livingtmw-surface);
-	border: 1px solid var(--livingtmw-border);
-	border-radius: 22px;
-	box-shadow: var(--livingtmw-shadow);
+	background: var(--livingtmw-dashboard-card);
+	border: 1px solid var(--livingtmw-dashboard-line);
+	border-radius: 16px;
+	box-shadow: 0 8px 24px rgb(15 23 42 / 7%);
 	color: var(--livingtmw-text);
 	padding: clamp(20px, 3vw, 30px);
 }
+
+.livingtmw-home-news { margin-top: 18px; }
+.livingtmw-home-news > header > a { color: var(--livingtmw-accent); font-size: 12px; font-weight: 800; text-decoration: none; }
+.livingtmw-home-news li { align-items: center; border-bottom: 1px solid var(--livingtmw-dashboard-line); display: grid; gap: 14px; grid-template-columns: 24px minmax(0, 1fr) auto; padding: 14px 7px; }
+.livingtmw-home-news li:last-child { border: 0; }
+.livingtmw-home-news li > b { color: var(--livingtmw-dashboard-gold); font-size: 12px; }
+.livingtmw-home-news li > a { color: var(--livingtmw-text); font-size: 14px; font-weight: 700; overflow: hidden; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.livingtmw-home-news time { color: var(--livingtmw-muted); font-size: 11px; }
 
 .livingtmw-tool-card__heading {
 	align-items: flex-start;
@@ -715,6 +834,10 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	.livingtmw-tools__grid {
 		grid-template-columns: 1fr;
 	}
+
+	.livingtmw-home-lead { grid-template-columns: 1fr; }
+	.livingtmw-home-steps ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.livingtmw-home-steps li:nth-last-child(2) { border-bottom: 0; }
 }
 
 .livingtmw-breadcrumbs {
@@ -1508,6 +1631,20 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	.livingtmw-tools {
 		padding-inline: 14px;
 	}
+
+	.livingtmw-home-alert { align-items: flex-start; flex-wrap: wrap; }
+	.livingtmw-home-alert span { flex-basis: 100%; margin-left: 0; }
+	.livingtmw-home-menu { justify-content: flex-start; }
+	.livingtmw-home-feature { min-height: 470px; }
+	.livingtmw-home-feature__shade { background: linear-gradient(0deg, rgb(7 10 22 / 98%) 0%, rgb(8 12 26 / 76%) 66%, rgb(8 12 26 / 22%) 100%); }
+	.livingtmw-home-feature__content { bottom: 0; padding: 28px 22px; position: absolute; }
+	.livingtmw-home-feature__content h1 { font-size: 35px; }
+	.livingtmw-home-feature__content > a { white-space: normal; }
+	.livingtmw-home-steps ol { grid-template-columns: 1fr; }
+	.livingtmw-home-steps li:nth-last-child(2) { border-bottom: 1px solid var(--livingtmw-dashboard-line); }
+	.livingtmw-home-news > header { align-items: flex-start; gap: 8px; }
+	.livingtmw-home-news li { grid-template-columns: 22px minmax(0, 1fr); }
+	.livingtmw-home-news time { display: none; }
 
 	.livingtmw-weather__metrics {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
