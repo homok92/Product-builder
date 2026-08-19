@@ -197,9 +197,9 @@ body:not(.home):not(.blog) .site-logo { display: none !important; }
 	display: grid;
 	gap: 14px;
 	grid-template-columns: 1fr;
-	margin: 0 auto;
-	max-width: 1240px;
-	padding: 18px 20px 0;
+	margin: 0;
+	max-width: none;
+	padding: 28px 20px 0;
 	width: 100%;
 }
 .livingtmw-shared-chrome .livingtmw-home-alert,
@@ -221,6 +221,6 @@ body:not(.home):not(.blog) .site-logo { display: none !important; }
 body:not(.home):not(.blog) .widget-area > .widget { display: none; }
 
 @media (max-width: 768px) {
-	.livingtmw-shared-chrome { padding: 12px 12px 0; }
+	.livingtmw-shared-chrome { padding: 28px 12px 0; }
 	.livingtmw-interior-rail { margin-top: 14px; }
 }
