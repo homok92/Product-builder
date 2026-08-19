@@ -446,6 +446,7 @@ html[data-theme="dark"] .livingtmw-tools {
 .livingtmw-home-alert a { color: var(--livingtmw-text) !important; font-weight: 800; text-decoration: none; }
 .livingtmw-home-alert span { color: var(--livingtmw-muted); font-size: 11px; margin-left: auto; }
 
+/* Compact navigation deployment revision: 2026-08-19. */
 .livingtmw-home-menu {
 	align-items: center;
 	background: var(--livingtmw-dashboard-card);
