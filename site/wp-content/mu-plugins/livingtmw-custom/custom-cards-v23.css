@@ -2004,6 +2004,21 @@ html[data-theme="dark"] .livingtmw-home-carousel__slide h2 { color: #fff !import
 	.livingtmw-home-carousel__slide { transition: none; }
 }
 
+body.home #page.site,
+body.blog #page.site,
+body.home .site-content,
+body.blog .site-content,
+body.home .content-area,
+body.blog .content-area {
+	box-sizing: border-box;
+	margin-left: 0;
+	margin-right: 0;
+	max-width: none;
+	padding-left: 0;
+	padding-right: 0;
+	width: 100%;
+}
+
 /* Slim announcement banner restored above the primary menu. */
 .livingtmw-home-alert {
 	background: linear-gradient(90deg, color-mix(in srgb, var(--livingtmw-dashboard-gold) 14%, var(--livingtmw-dashboard-card)), color-mix(in srgb, var(--livingtmw-dashboard-gold) 23%, var(--livingtmw-dashboard-card)), color-mix(in srgb, var(--livingtmw-dashboard-gold) 14%, var(--livingtmw-dashboard-card)));
