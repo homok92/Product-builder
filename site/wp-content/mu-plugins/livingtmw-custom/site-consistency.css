@@ -17,6 +17,14 @@ body:not(.home):not(.blog) {
 	color: var(--livingtmw-text);
 }
 
+body:not(.home):not(.blog) #page.site {
+	box-sizing: border-box;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1240px;
+	width: 100%;
+}
+
 body:not(.home):not(.blog) .site-header {
 	background: var(--livingtmw-page-card);
 	border-bottom: 2px solid var(--livingtmw-gold);
@@ -68,11 +76,9 @@ body:not(.home):not(.blog) .main-navigation .main-nav ul li a:focus {
 body:not(.home):not(.blog) .site-content {
 	box-sizing: border-box;
 	gap: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 1200px;
-	padding: 28px 0 42px;
-	width: calc(100% - 40px);
+	max-width: 1240px;
+	padding: 28px 20px 42px;
+	width: 100%;
 }
 
 body:not(.home):not(.blog) .content-area { min-width: 0; }
@@ -166,7 +172,7 @@ html[data-theme="dark"] body:not(.home):not(.blog) .widget-area .widget { box-sh
 	body:not(.home):not(.blog) .inside-header { padding: 8px 14px; }
 	body:not(.home):not(.blog) .site-logo img,
 	body:not(.home):not(.blog) .header-image { max-height: 38px; }
-	body:not(.home):not(.blog) .site-content { padding: 16px 0 30px; width: calc(100% - 24px); }
+	body:not(.home):not(.blog) .site-content { padding: 16px 12px 30px; }
 	body:not(.home):not(.blog) .inside-article,
 	body:not(.home):not(.blog) .page-header,
 	body:not(.home):not(.blog) .paging-navigation { border-radius: 12px; padding: 18px 15px; }
@@ -192,9 +198,9 @@ body:not(.home):not(.blog) .site-logo { display: none !important; }
 	gap: 14px;
 	grid-template-columns: 1fr;
 	margin: 0 auto;
-	max-width: 1200px;
-	padding: 18px 0 0;
-	width: calc(100% - 40px);
+	max-width: 1240px;
+	padding: 18px 20px 0;
+	width: 100%;
 }
 .livingtmw-shared-chrome .livingtmw-home-alert,
 .livingtmw-shared-chrome .livingtmw-home-menu { grid-column: 1; margin: 0; }
@@ -215,6 +221,6 @@ body:not(.home):not(.blog) .site-logo { display: none !important; }
 body:not(.home):not(.blog) .widget-area > .widget { display: none; }
 
 @media (max-width: 768px) {
-	.livingtmw-shared-chrome { padding: 12px 0 0; width: calc(100% - 24px); }
+	.livingtmw-shared-chrome { padding: 12px 12px 0; }
 	.livingtmw-interior-rail { margin-top: 14px; }
 }
