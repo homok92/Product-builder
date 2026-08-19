@@ -410,7 +410,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	gap: 18px;
 	grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr);
 	margin: 0 auto 42px;
-	max-width: 1280px;
+	max-width: none;
 	padding: 28px 20px 0;
 	width: 100%;
 }
