@@ -183,7 +183,7 @@ function livingtmw_render_living_tools(): void {
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
-			<div class="livingtmw-home-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><img src="<?php echo esc_url( content_url( 'mu-plugins/livingtmw-custom/images/logo-light.png' ) ); ?>" alt="내일의 생활" width="1342" height="434"></a></div>
+			<div class="livingtmw-home-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><img src="<?php echo esc_url( content_url( 'uploads/2026/08/cropped-logo3.png' ) ); ?>" alt="내일의 생활" width="1342" height="434"></a></div>
 			<div class="livingtmw-home-menu__links">
 				<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
 				<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">About</a>
