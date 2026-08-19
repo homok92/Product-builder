@@ -408,7 +408,7 @@ html[data-theme="dark"] .livingtmw-theme-toggle__icon::before {
 	--livingtmw-dashboard-gold-soft: #fff5d9;
 	display: grid;
 	gap: 18px;
-	grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr);
+	grid-template-columns: minmax(0, 2.32fr) minmax(300px, .68fr);
 	margin: 0 auto 42px;
 	max-width: none;
 	padding: 28px 20px 0;
@@ -2013,6 +2013,7 @@ body.blog .content-area {
 	box-sizing: border-box;
 	margin-left: 0;
 	margin-right: 0;
+	margin-top: 0;
 	max-width: none;
 	padding-left: 0;
 	padding-right: 0;
@@ -2022,6 +2023,12 @@ body.blog .content-area {
 body.home .site-content,
 body.blog .site-content {
 	padding-top: 0;
+}
+
+body.home .livingtmw-tools,
+body.blog .livingtmw-tools {
+	margin-top: 0;
+	padding-top: 28px;
 }
 
 /* Slim announcement banner restored above the primary menu. */
