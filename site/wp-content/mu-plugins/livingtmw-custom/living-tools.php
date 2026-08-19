@@ -194,7 +194,8 @@ function livingtmw_render_living_tools(): void {
 			<a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>">교통</a>
 		</nav>
 
-		<div class="livingtmw-home-lead">
+		<div class="livingtmw-home-layout">
+			<div class="livingtmw-home-stream">
 			<article class="livingtmw-home-feature" aria-labelledby="livingtmw-content-picker-title">
 				<img src="<?php echo esc_url( $featured_src ); ?>" alt="" width="1200" height="800">
 				<div class="livingtmw-home-feature__shade"></div>
@@ -205,18 +206,6 @@ function livingtmw_render_living_tools(): void {
 					<a href="<?php echo esc_url( $featured_url ); ?>"><?php echo $featured instanceof WP_Post ? esc_html( get_the_title( $featured ) ) : '생활 준비 가이드 읽기'; ?> <span aria-hidden="true">→</span></a>
 				</div>
 			</article>
-
-			<aside class="livingtmw-home-steps" aria-labelledby="livingtmw-home-steps-title">
-				<header><h2 id="livingtmw-home-steps-title">정착 준비 순서</h2><span>START HERE</span></header>
-				<ol>
-					<li><b>01</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 8 ) ); ?>"><strong>예산 범위 정하기</strong><small>생활비와 비상금 계산</small></a></li>
-					<li><b>02</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 11 ) ); ?>"><strong>주거 조건 확인</strong><small>전력·수질·계약 점검</small></a></li>
-					<li><b>03</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 17 ) ); ?>"><strong>통신 연결</strong><small>SIM·인터넷 개통</small></a></li>
-					<li><b>04</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 21 ) ); ?>"><strong>금융 준비</strong><small>환전·계좌·결제</small></a></li>
-					<li><b>05</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>"><strong>생활 동선 만들기</strong><small>교통·마트·병원</small></a></li>
-				</ol>
-			</aside>
-		</div>
 
 		<div class="livingtmw-tools__intro">
 			<p class="livingtmw-tools__eyebrow">오늘의 양곤 생활 도구</p>
@@ -235,33 +224,16 @@ function livingtmw_render_living_tools(): void {
 				</div>
 				<div class="livingtmw-weather__loading" role="status">양곤 날씨와 대기질을 불러오는 중입니다…</div>
 				<div class="livingtmw-weather__content" hidden>
-					<div class="livingtmw-weather__score-row">
-						<strong class="livingtmw-weather__score"><span data-weather-score>--</span><small>/100</small></strong>
-						<div><span class="livingtmw-weather__level" data-weather-level>확인 중</span><p data-weather-summary></p></div>
-					</div>
-					<dl class="livingtmw-weather__metrics">
-						<div><dt>현재</dt><dd data-weather-temperature>--</dd></div>
-						<div><dt>체감</dt><dd data-weather-apparent>--</dd></div>
-						<div><dt>6시간 비</dt><dd data-weather-rain>--</dd></div>
-						<div><dt>대기질</dt><dd data-weather-aqi>--</dd></div>
-					</dl>
+					<div class="livingtmw-weather__score-row"><strong class="livingtmw-weather__score"><span data-weather-score>--</span><small>/100</small></strong><div><span class="livingtmw-weather__level" data-weather-level>확인 중</span><p data-weather-summary></p></div></div>
+					<dl class="livingtmw-weather__metrics"><div><dt>현재</dt><dd data-weather-temperature>--</dd></div><div><dt>체감</dt><dd data-weather-apparent>--</dd></div><div><dt>6시간 비</dt><dd data-weather-rain>--</dd></div><div><dt>대기질</dt><dd data-weather-aqi>--</dd></div></dl>
 					<ul class="livingtmw-weather__tips" data-weather-tips></ul>
 					<p class="livingtmw-tool-card__meta">양곤 중심부 기준 · 예보 모델은 실제 골목별 침수를 측정하지 않습니다. <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
 				</div>
-				<div class="livingtmw-weather__error" hidden>
-					<p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p>
-					<button type="button" data-weather-retry>다시 불러오기</button>
-				</div>
+				<div class="livingtmw-weather__error" hidden><p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p><button type="button" data-weather-retry>다시 불러오기</button></div>
 			</article>
 
 			<article class="livingtmw-market-rate" aria-labelledby="livingtmw-market-title">
-				<div class="livingtmw-tool-card__heading">
-					<div>
-						<p class="livingtmw-tool-card__kicker">15분마다 자동 확인</p>
-						<h3 id="livingtmw-market-title">오늘의 바깥환율</h3>
-					</div>
-					<span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span>
-				</div>
+				<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">15분마다 자동 확인</p><h3 id="livingtmw-market-title">오늘의 바깥환율</h3></div><span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span></div>
 				<div class="livingtmw-market-rate__rows">
 					<div><strong>1 USD</strong><span><small>BUY</small><b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div>
 					<div><strong>1원</strong><span><small>BUY</small><b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div>
@@ -269,7 +241,18 @@ function livingtmw_render_living_tools(): void {
 				<p><span data-market-status>최신값 확인 중</span> · EGCurrency Black Market 기준 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://egcurrency.com/en/currency/MMK/blackMarket" target="_blank" rel="noopener noreferrer">출처</a></p>
 			</article>
 		</div>
+			</div>
 
+			<aside class="livingtmw-home-rail" aria-label="홈페이지 보조 정보">
+			<section class="livingtmw-home-steps" aria-labelledby="livingtmw-home-steps-title">
+				<header><h2 id="livingtmw-home-steps-title">정착 준비 순서</h2><span>START HERE</span></header>
+				<ol>
+					<li><b>01</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 8 ) ); ?>"><strong>예산 범위 정하기</strong><small>생활비와 비상금 계산</small></a></li>
+					<li><b>02</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 11 ) ); ?>"><strong>주거 조건 확인</strong><small>전력·수질·계약 점검</small></a></li>
+					<li><b>03</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 17 ) ); ?>"><strong>통신 연결</strong><small>SIM·인터넷 개통</small></a></li>
+					<li><b>04</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 21 ) ); ?>"><strong>금융 준비</strong><small>환전·계좌·결제</small></a></li>
+					<li><b>05</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>"><strong>생활 동선 만들기</strong><small>교통·마트·병원</small></a></li>
+				</ol>
 		<?php if ( $recent_posts ) : ?>
 		<section class="livingtmw-home-news" aria-labelledby="livingtmw-home-news-title">
 			<header><div><p class="livingtmw-tools__eyebrow">LATEST ARTICLES</p><h2 id="livingtmw-home-news-title">최신 양곤 생활 가이드</h2></div><a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">전체 글 보기 →</a></header>
@@ -280,8 +263,18 @@ function livingtmw_render_living_tools(): void {
 			</ol>
 		</section>
 		<?php endif; ?>
+			</aside>
+		</div>
 	</section>
 	<?php
 }
 
 add_action( 'generate_before_main_content', 'livingtmw_render_living_tools', 5 );
+
+/** Use the custom full-width dashboard instead of the theme sidebar on home. */
+add_filter(
+	'generate_sidebar_layout',
+	static function ( string $layout ): string {
+		return ( is_front_page() || is_home() ) ? 'no-sidebar' : $layout;
+	}
+);

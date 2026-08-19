@@ -474,7 +474,9 @@ html[data-theme="dark"] .livingtmw-tools {
 .livingtmw-home-menu a:focus-visible,
 .livingtmw-home-menu .is-current { background: var(--livingtmw-dashboard-soft); color: var(--livingtmw-dashboard-gold) !important; }
 
-.livingtmw-home-lead { display: grid; gap: 18px; grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr); }
+.livingtmw-home-layout { align-items: start; display: grid; gap: 18px; grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr); }
+.livingtmw-home-stream { min-width: 0; }
+.livingtmw-home-rail { display: grid; gap: 18px; min-width: 0; }
 
 .livingtmw-home-feature {
 	background: #111526;
@@ -544,8 +546,8 @@ html[data-theme="dark"] .livingtmw-tools {
 
 .livingtmw-tools__grid {
 	display: grid;
-	gap: 20px;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	grid-template-columns: minmax(0, 1fr);
 }
 
 .livingtmw-content-picker {
@@ -625,7 +627,7 @@ html[data-theme="dark"] .livingtmw-tools {
 	padding: clamp(20px, 3vw, 30px);
 }
 
-.livingtmw-home-news { margin-top: 18px; }
+.livingtmw-home-news { margin-top: 0; }
 .livingtmw-home-news > header > a { color: var(--livingtmw-accent); font-size: 12px; font-weight: 800; text-decoration: none; }
 .livingtmw-home-news li { align-items: center; border-bottom: 1px solid var(--livingtmw-dashboard-line); display: grid; gap: 14px; grid-template-columns: 24px minmax(0, 1fr) auto; padding: 14px 7px; }
 .livingtmw-home-news li:last-child { border: 0; }
@@ -835,10 +837,24 @@ html[data-theme="dark"] .livingtmw-tools {
 		grid-template-columns: 1fr;
 	}
 
-	.livingtmw-home-lead { grid-template-columns: 1fr; }
+	.livingtmw-home-layout { grid-template-columns: 1fr; }
 	.livingtmw-home-steps ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.livingtmw-home-steps li:nth-last-child(2) { border-bottom: 0; }
 }
+
+/* The custom dashboard owns the blog index; articles remain accessible from Latest Guides. */
+body.home .site-content,
+body.blog .site-content { max-width: 1320px; width: 100%; }
+
+body.home .content-area,
+body.blog .content-area { width: 100%; }
+
+body.home .widget-area,
+body.blog .widget-area,
+body.home .site-main > article,
+body.blog .site-main > article,
+body.home .site-main > .paging-navigation,
+body.blog .site-main > .paging-navigation { display: none !important; }
 
 .livingtmw-breadcrumbs {
 	align-items: center;
