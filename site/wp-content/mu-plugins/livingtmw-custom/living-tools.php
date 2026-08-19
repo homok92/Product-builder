@@ -186,9 +186,9 @@ function livingtmw_render_living_tools(): void {
 			<div class="livingtmw-home-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><img src="<?php echo esc_url( content_url( 'uploads/2026/08/cropped-logo3.png' ) ); ?>" alt="내일의 생활" width="1342" height="434"></a></div>
 			<div class="livingtmw-home-menu__links">
 				<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
-				<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">About</a>
-				<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
-				<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">Articles</a>
+				<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">사이트 소개</a>
+				<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">미얀마 생활</a>
+				<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 가이드</a>
 				<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
 				<details class="livingtmw-home-search">
 					<summary aria-label="검색 열기"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="screen-reader-text">검색</span></summary>
@@ -297,9 +297,9 @@ add_filter(
 
 		$links = array(
 			'홈'         => home_url( '/' ),
-			'About'      => home_url( '/about-livingtmw/' ),
-			'미얀마 생활' => home_url( '/myanmar-life-guide/' ),
-			'Articles'   => home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ),
+			'사이트 소개'   => home_url( '/about-livingtmw/' ),
+			'미얀마 생활'   => home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ),
+			'미얀마 가이드' => home_url( '/myanmar-life-guide/' ),
 			'오늘의 운세' => home_url( '/today-fortune/' ),
 		);
 		$html = '';
