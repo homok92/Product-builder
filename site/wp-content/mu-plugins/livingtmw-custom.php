@@ -1,4 +1,5 @@
 <?php
+/* Runtime refresh: 2026-08-19 11:00 MMT. */
 /**
  * Plugin Name: LivingTMW Customizations
  * Description: Version-controlled custom code for livingtmw.com.

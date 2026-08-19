@@ -1,4 +1,5 @@
 <?php
+/* Runtime refresh: 2026-08-19 11:00 MMT. */
 /**
  * Interactive Yangon weather and living-cost tools for the front page.
  */
