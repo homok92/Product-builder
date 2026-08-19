@@ -75,13 +75,26 @@ body:not(.home):not(.blog) .main-navigation .main-nav ul li a:focus {
 
 body:not(.home):not(.blog) .site-content {
 	box-sizing: border-box;
-	gap: 20px;
-	max-width: 1240px;
+	display: grid;
+	gap: 14px;
+	grid-template-columns: minmax(0, 2.32fr) minmax(300px, .68fr);
+	max-width: none;
 	padding: 28px 20px 42px;
 	width: 100%;
 }
 
-body:not(.home):not(.blog) .content-area { min-width: 0; }
+body:not(.home):not(.blog) .content-area,
+body:not(.home):not(.blog) .widget-area {
+	box-sizing: border-box;
+	margin: 0;
+	min-width: 0;
+	padding-left: 0;
+	padding-right: 0;
+	width: auto;
+}
+body:not(.home):not(.blog) .content-area { grid-column: 1; }
+body:not(.home):not(.blog) .widget-area { grid-column: 2; }
+body:not(.home):not(.blog) .inside-right-sidebar { margin: 0; }
 
 body:not(.home):not(.blog) .inside-article,
 body:not(.home):not(.blog) .page-header,
@@ -167,6 +180,12 @@ html[data-theme="dark"] body:not(.home):not(.blog) .inside-article,
 html[data-theme="dark"] body:not(.home):not(.blog) .page-header,
 html[data-theme="dark"] body:not(.home):not(.blog) .paging-navigation,
 html[data-theme="dark"] body:not(.home):not(.blog) .widget-area .widget { box-shadow: 0 8px 26px rgb(0 0 0 / 22%); }
+
+@media (max-width: 860px) {
+	body:not(.home):not(.blog) .site-content { grid-template-columns: 1fr; }
+	body:not(.home):not(.blog) .content-area,
+	body:not(.home):not(.blog) .widget-area { grid-column: 1; }
+}
 
 @media (max-width: 768px) {
 	body:not(.home):not(.blog) .inside-header { padding: 8px 14px; }
