@@ -174,7 +174,14 @@ html[data-theme="dark"] body:not(.home):not(.blog) .widget-area .widget { box-sh
 
 /* Homepage chrome and utility rail shared by every interior page. */
 body:not(.home):not(.blog) .site-header,
-body:not(.home):not(.blog) #site-navigation { display: none !important; }
+body:not(.home):not(.blog) header#masthead,
+body:not(.home):not(.blog) #site-navigation,
+body:not(.home):not(.blog) nav#site-navigation,
+body:not(.home):not(.blog) .main-navigation,
+body:not(.home):not(.blog) .site-branding,
+body:not(.home):not(.blog) .site-logo { display: none !important; }
+
+.livingtmw-tools { box-sizing: border-box; }
 
 .livingtmw-shared-chrome {
 	box-sizing: border-box;
