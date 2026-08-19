@@ -214,7 +214,11 @@ function livingtmw_render_living_tools(): void {
 					<div class="livingtmw-home-feature__shade"></div>
 					<div class="livingtmw-home-feature__content">
 						<p class="livingtmw-tools__eyebrow">LATEST ARTICLE · <?php echo esc_html( (string) ( $index + 1 ) ); ?>/3</p>
+						<?php if ( 0 === $index ) : ?>
+						<h1><?php echo esc_html( get_the_title( $featured_post ) ); ?></h1>
+						<?php else : ?>
 						<h2><?php echo esc_html( get_the_title( $featured_post ) ); ?></h2>
+						<?php endif; ?>
 						<p><?php echo esc_html( $featured_excerpt ); ?></p>
 						<a href="<?php echo esc_url( get_permalink( $featured_post ) ); ?>">글 읽기 <span aria-hidden="true">→</span></a>
 					</div>

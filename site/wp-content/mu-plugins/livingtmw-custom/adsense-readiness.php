@@ -411,16 +411,37 @@ function livingtmw_quality_head(): void {
 				'@id'       => home_url( '/#website' ),
 				'url'       => home_url( '/' ),
 				'name'      => get_bloginfo( 'name' ),
+				'inLanguage' => 'ko-KR',
 				'publisher' => array( '@id' => home_url( '/#organization' ) ),
 			),
 		),
 	);
+
+	if ( is_front_page() || is_home() || is_category() || is_singular() ) {
+		$page_url         = is_singular() ? get_permalink() : ( is_category() ? get_category_link( get_queried_object_id() ) : home_url( '/' ) );
+		$page_description = livingtmw_social_description();
+		$page_type        = is_page( 'about-livingtmw' ) ? 'AboutPage' : ( is_singular( 'post' ) ? 'WebPage' : 'CollectionPage' );
+		$webpage          = array(
+			'@type'      => $page_type,
+			'@id'        => $page_url . '#webpage',
+			'url'        => $page_url,
+			'name'       => wp_get_document_title(),
+			'inLanguage' => 'ko-KR',
+			'isPartOf'   => array( '@id' => home_url( '/#website' ) ),
+		);
+		if ( '' !== $page_description ) {
+			$webpage['description'] = $page_description;
+		}
+		$schema['@graph'][] = $webpage;
+	}
 
 	if ( is_singular( 'post' ) ) {
 		$seo_image = livingtmw_seo_image();
 		$article = array(
 			'@type'            => 'Article',
 			'headline'         => get_the_title(),
+			'description'      => livingtmw_social_description(),
+			'inLanguage'       => 'ko-KR',
 			'datePublished'    => get_the_date( DATE_W3C ),
 			'dateModified'     => get_the_modified_date( DATE_W3C ),
 			'mainEntityOfPage' => get_permalink(),
@@ -431,6 +452,10 @@ function livingtmw_quality_head(): void {
 			),
 			'publisher'        => array( '@id' => home_url( '/#organization' ) ),
 		);
+		$categories = get_the_category();
+		if ( ! empty( $categories ) ) {
+			$article['articleSection'] = $categories[0]->name;
+		}
 		if ( ! empty( $seo_image['url'] ) ) {
 			$article['image'] = array( $seo_image['url'] );
 		} elseif ( has_post_thumbnail() ) {
@@ -438,7 +463,6 @@ function livingtmw_quality_head(): void {
 		}
 		$schema['@graph'][] = $article;
 
-		$categories = get_the_category();
 		$items      = array(
 			array( '@type' => 'ListItem', 'position' => 1, 'name' => '홈', 'item' => home_url( '/' ) ),
 		);
