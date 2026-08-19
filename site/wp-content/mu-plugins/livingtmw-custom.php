@@ -22,6 +22,7 @@ add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
 		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v23.css';
+		$site_theme = __DIR__ . '/livingtmw-custom/site-consistency.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
 		$tools      = __DIR__ . '/livingtmw-custom/living-market-v2.js';
 		$carousel   = __DIR__ . '/livingtmw-custom/home-carousel.js';
@@ -33,6 +34,15 @@ add_action(
 				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v23.css' ),
 				array(),
 				(string) filemtime( $stylesheet )
+			);
+		}
+
+		if ( is_readable( $site_theme ) ) {
+			wp_enqueue_style(
+				'livingtmw-site-consistency',
+				content_url( 'mu-plugins/livingtmw-custom/site-consistency.css' ),
+				array( 'livingtmw-custom' ),
+				(string) filemtime( $site_theme )
 			);
 		}
 
