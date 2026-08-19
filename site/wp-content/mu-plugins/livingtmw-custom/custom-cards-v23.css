@@ -2003,3 +2003,29 @@ html[data-theme="dark"] .livingtmw-home-carousel__slide h2 { color: #fff !import
 @media (prefers-reduced-motion: reduce) {
 	.livingtmw-home-carousel__slide { transition: none; }
 }
+
+/* Slim announcement banner restored above the primary menu. */
+.livingtmw-home-alert {
+	background: linear-gradient(90deg, color-mix(in srgb, var(--livingtmw-dashboard-gold) 14%, var(--livingtmw-dashboard-card)), color-mix(in srgb, var(--livingtmw-dashboard-gold) 23%, var(--livingtmw-dashboard-card)), color-mix(in srgb, var(--livingtmw-dashboard-gold) 14%, var(--livingtmw-dashboard-card)));
+	border-color: color-mix(in srgb, var(--livingtmw-dashboard-gold) 46%, var(--livingtmw-dashboard-line));
+	border-radius: 9px;
+	box-sizing: border-box;
+	grid-column: 1 / -1;
+	justify-content: center;
+	margin: 0 0 -8px;
+	min-height: 34px;
+	padding: 5px 12px;
+	text-align: center;
+}
+.livingtmw-home-alert strong { padding: 3px 8px; }
+.livingtmw-home-alert > span { margin-left: 10px; }
+html[data-theme="dark"] .livingtmw-home-alert {
+	background: linear-gradient(90deg, #211a0d, #38290c, #211a0d);
+	border-color: #71551b;
+}
+
+@media (max-width: 560px) {
+	.livingtmw-home-alert { flex-wrap: nowrap; font-size: 11px; justify-content: flex-start; overflow: hidden; white-space: nowrap; }
+	.livingtmw-home-alert strong { font-size: 9px; }
+	.livingtmw-home-alert > span { display: none; }
+}
