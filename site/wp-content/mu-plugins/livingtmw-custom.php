@@ -13,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/livingtmw-custom/adsense-readiness.php';
 require_once __DIR__ . '/livingtmw-custom/content-enhancements.php';
 require_once __DIR__ . '/livingtmw-custom/content-strategy.php';
-require_once __DIR__ . '/livingtmw-custom/living-tools.php';
+if ( ! function_exists( 'livingtmw_default_market_rates' ) ) {
+	require_once __DIR__ . '/livingtmw-custom/living-tools.php';
+}
 require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 
 add_action(
