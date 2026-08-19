@@ -453,14 +453,22 @@ html[data-theme="dark"] .livingtmw-tools {
 	border-bottom: 2px solid var(--livingtmw-dashboard-gold);
 	border-radius: 10px 10px 0 0;
 	display: flex;
-	gap: 4px;
-	justify-content: flex-end;
+	gap: 20px;
+	justify-content: space-between;
 	margin-bottom: 18px;
-	overflow-x: auto;
+	overflow: visible;
 	padding: 9px 12px;
 }
 
-.livingtmw-home-menu a {
+.livingtmw-home-brand { align-items: center; display: flex; flex: 0 0 auto; }
+.livingtmw-home-brand .custom-logo-link { background: transparent !important; display: block; padding: 0; }
+.livingtmw-home-brand img { display: block; height: 42px; object-fit: contain; width: auto; }
+html[data-theme="dark"] .livingtmw-home-brand img { content: url("images/logo-dark.png"); }
+.livingtmw-home-brand > a:not(.custom-logo-link) { color: var(--livingtmw-text) !important; font-size: 19px; font-weight: 900; text-decoration: none; }
+
+.livingtmw-home-menu__links { align-items: center; display: flex; gap: 4px; min-width: 0; }
+
+.livingtmw-home-menu__links > a {
 	border-radius: 8px;
 	color: var(--livingtmw-muted) !important;
 	font-size: 13px;
@@ -470,9 +478,24 @@ html[data-theme="dark"] .livingtmw-tools {
 	white-space: nowrap;
 }
 
-.livingtmw-home-menu a:hover,
-.livingtmw-home-menu a:focus-visible,
-.livingtmw-home-menu .is-current { background: var(--livingtmw-dashboard-soft); color: var(--livingtmw-dashboard-gold) !important; }
+.livingtmw-home-menu__links > a:hover,
+.livingtmw-home-menu__links > a:focus-visible,
+.livingtmw-home-menu__links > .is-current { background: var(--livingtmw-dashboard-soft); color: var(--livingtmw-dashboard-gold) !important; }
+
+.livingtmw-home-search { position: relative; }
+.livingtmw-home-search summary { align-items: center; background: var(--livingtmw-dashboard-soft); border: 1px solid var(--livingtmw-dashboard-line); border-radius: 8px; color: var(--livingtmw-text); cursor: pointer; display: flex; font-size: 22px; height: 38px; justify-content: center; list-style: none; width: 40px; }
+.livingtmw-home-search summary::-webkit-details-marker { display: none; }
+.livingtmw-home-search[open] summary { border-color: var(--livingtmw-dashboard-gold); color: var(--livingtmw-dashboard-gold); }
+.livingtmw-home-search form { align-items: center; background: var(--livingtmw-dashboard-card); border: 1px solid var(--livingtmw-dashboard-line); border-radius: 10px; box-shadow: var(--livingtmw-shadow); display: flex; gap: 8px; padding: 10px; position: absolute; right: 0; top: calc(100% + 9px); width: min(330px, calc(100vw - 36px)); z-index: 100; }
+.livingtmw-home-search label { flex: 1 1 auto; }
+.livingtmw-home-search input { background: var(--livingtmw-bg); border: 1px solid var(--livingtmw-dashboard-line); border-radius: 7px; color: var(--livingtmw-text); min-height: 40px; padding: 8px 10px; width: 100%; }
+.livingtmw-home-search button { background: var(--livingtmw-dashboard-gold); border: 0; border-radius: 7px; color: #fff; cursor: pointer; font-weight: 800; min-height: 40px; padding: 8px 13px; }
+
+/* The dashboard supplies its own brand/navigation bar on the homepage. */
+body.home .site-header,
+body.blog .site-header,
+body.home #site-navigation,
+body.blog #site-navigation { display: none !important; }
 
 .livingtmw-home-layout { align-items: start; display: grid; gap: 18px; grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr); margin-top: 18px; }
 .livingtmw-home-stream { min-width: 0; }
@@ -1650,7 +1673,9 @@ body.blog .site-main > .paging-navigation { display: none !important; }
 
 	.livingtmw-home-alert { align-items: flex-start; flex-wrap: wrap; }
 	.livingtmw-home-alert span { flex-basis: 100%; margin-left: 0; }
-	.livingtmw-home-menu { justify-content: flex-start; }
+	.livingtmw-home-menu { align-items: flex-start; flex-direction: column; gap: 8px; }
+	.livingtmw-home-brand img { height: 36px; }
+	.livingtmw-home-menu__links { max-width: 100%; overflow-x: auto; padding-bottom: 2px; width: 100%; }
 	.livingtmw-home-feature { min-height: 470px; }
 	.livingtmw-home-feature__shade { background: linear-gradient(0deg, rgb(7 10 22 / 98%) 0%, rgb(8 12 26 / 76%) 66%, rgb(8 12 26 / 22%) 100%); }
 	.livingtmw-home-feature__content { bottom: 0; padding: 28px 22px; position: absolute; }

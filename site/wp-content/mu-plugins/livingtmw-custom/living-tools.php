@@ -180,15 +180,25 @@ function livingtmw_render_living_tools(): void {
 	$featured_url = $featured instanceof WP_Post ? get_permalink( $featured ) : $guide_url;
 	$featured_img = $featured instanceof WP_Post ? livingtmw_seo_image( (int) $featured->ID ) : array();
 	$featured_src = $featured_img['url'] ?? content_url( 'mu-plugins/livingtmw-custom/images/articles/yangon-arrival-essentials.png' );
+	$home_logo     = get_custom_logo();
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
-		<div class="livingtmw-home-alert"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
 		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
-			<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
-			<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">About</a>
-			<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
-			<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">Articles</a>
-			<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
+			<div class="livingtmw-home-brand"><?php echo $home_logo ? wp_kses_post( $home_logo ) : '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>'; ?></div>
+			<div class="livingtmw-home-menu__links">
+				<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
+				<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">About</a>
+				<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
+				<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">Articles</a>
+				<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
+				<details class="livingtmw-home-search">
+					<summary aria-label="검색 열기"><span aria-hidden="true">⌕</span><span class="screen-reader-text">검색</span></summary>
+					<form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+						<label><span class="screen-reader-text">검색어</span><input type="search" name="s" placeholder="검색어를 입력하세요" required></label>
+						<button type="submit">검색</button>
+					</form>
+				</details>
+			</div>
 		</nav>
 
 		<article class="livingtmw-home-feature" aria-labelledby="livingtmw-content-picker-title">
