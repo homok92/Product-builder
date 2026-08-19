@@ -177,10 +177,7 @@ function livingtmw_render_living_tools(): void {
 			'order'          => 'DESC',
 		)
 	);
-	$featured     = $recent_posts[0] ?? null;
-	$featured_url = $featured instanceof WP_Post ? get_permalink( $featured ) : $guide_url;
-	$featured_img = $featured instanceof WP_Post ? livingtmw_seo_image( (int) $featured->ID ) : array();
-	$featured_src = $featured_img['url'] ?? content_url( 'mu-plugins/livingtmw-custom/images/articles/yangon-arrival-essentials.png' );
+	$featured_posts = array_slice( $recent_posts, 0, 3 );
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
@@ -201,15 +198,41 @@ function livingtmw_render_living_tools(): void {
 			</div>
 		</nav>
 
-		<article class="livingtmw-home-feature" aria-labelledby="livingtmw-content-picker-title">
-				<img src="<?php echo esc_url( $featured_src ); ?>" alt="" width="1200" height="800">
-				<div class="livingtmw-home-feature__shade"></div>
-				<div class="livingtmw-home-feature__content">
-					<p class="livingtmw-tools__eyebrow">FEATURED · MYANMAR LIFE</p>
-					<h1 id="livingtmw-content-picker-title">한국인을 위한<br>미얀마·양곤 생활 정보</h1>
-					<p>주거, 생활비, 통신, 금융과 교통 정보를 실제 양곤 생활 경험과 확인 가능한 자료로 정리합니다.</p>
-					<a href="<?php echo esc_url( $featured_url ); ?>"><?php echo $featured instanceof WP_Post ? esc_html( get_the_title( $featured ) ) : '생활 준비 가이드 읽기'; ?> <span aria-hidden="true">→</span></a>
-				</div>
+		<article class="livingtmw-home-feature livingtmw-home-carousel" aria-label="추천 콘텐츠" aria-roledescription="carousel" data-home-carousel>
+			<div class="livingtmw-home-carousel__track">
+				<?php foreach ( $featured_posts as $index => $featured_post ) :
+					$featured_img = livingtmw_seo_image( (int) $featured_post->ID );
+					$featured_src = $featured_img['url'] ?? content_url( 'mu-plugins/livingtmw-custom/images/articles/yangon-arrival-essentials.png' );
+					$featured_excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $featured_post ) ), 22, '…' );
+					?>
+				<section class="livingtmw-home-carousel__slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>" data-carousel-slide>
+					<img src="<?php echo esc_url( $featured_src ); ?>" alt="" width="1200" height="800">
+					<div class="livingtmw-home-feature__shade"></div>
+					<div class="livingtmw-home-feature__content">
+						<p class="livingtmw-tools__eyebrow">LATEST ARTICLE · <?php echo esc_html( (string) ( $index + 1 ) ); ?>/3</p>
+						<h2><?php echo esc_html( get_the_title( $featured_post ) ); ?></h2>
+						<p><?php echo esc_html( $featured_excerpt ); ?></p>
+						<a href="<?php echo esc_url( get_permalink( $featured_post ) ); ?>">글 읽기 <span aria-hidden="true">→</span></a>
+					</div>
+				</section>
+				<?php endforeach; ?>
+				<section class="livingtmw-home-carousel__slide livingtmw-home-carousel__slide--fortune" aria-hidden="true" data-carousel-slide>
+					<div class="livingtmw-home-carousel__fortune-symbol" aria-hidden="true">✦</div>
+					<div class="livingtmw-home-feature__content">
+						<p class="livingtmw-tools__eyebrow">TODAY'S FORTUNE</p>
+						<h2>오늘의 운세를<br>확인해 보세요</h2>
+						<p>생년월일을 바탕으로 오늘의 흐름과 행운 포인트를 간편하게 확인할 수 있습니다.</p>
+						<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세 보기 <span aria-hidden="true">→</span></a>
+					</div>
+				</section>
+			</div>
+			<button class="livingtmw-home-carousel__arrow livingtmw-home-carousel__arrow--prev" type="button" aria-label="이전 카드" data-carousel-prev>‹</button>
+			<button class="livingtmw-home-carousel__arrow livingtmw-home-carousel__arrow--next" type="button" aria-label="다음 카드" data-carousel-next>›</button>
+			<div class="livingtmw-home-carousel__dots" aria-label="카드 선택">
+				<?php for ( $dot = 0; $dot < count( $featured_posts ) + 1; $dot++ ) : ?>
+				<button type="button" aria-label="<?php echo esc_attr( (string) ( $dot + 1 ) ); ?>번 카드" aria-current="<?php echo 0 === $dot ? 'true' : 'false'; ?>" data-carousel-dot="<?php echo esc_attr( (string) $dot ); ?>"></button>
+				<?php endfor; ?>
+			</div>
 		</article>
 
 		<div class="livingtmw-home-layout">
