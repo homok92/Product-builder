@@ -19,9 +19,9 @@ body:not(.home):not(.blog) {
 
 body:not(.home):not(.blog) #page.site {
 	box-sizing: border-box;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 1240px;
+	margin-left: 0;
+	margin-right: 0;
+	max-width: none;
 	width: 100%;
 }
 
@@ -33,7 +33,7 @@ body:not(.home):not(.blog) .site-header {
 
 body:not(.home):not(.blog) .inside-header {
 	box-sizing: border-box;
-	max-width: 1240px;
+	max-width: none;
 	padding: 10px 20px;
 }
 
