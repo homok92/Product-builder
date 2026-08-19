@@ -184,19 +184,7 @@ function livingtmw_render_living_tools(): void {
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
 		<div class="livingtmw-home-alert"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
 
-		<nav class="livingtmw-home-menu" aria-label="홈페이지 빠른 메뉴">
-			<a class="is-current" href="<?php echo esc_url( home_url( '/' ) ); ?>">홈</a>
-			<a href="<?php echo esc_url( $guide_url ); ?>">시작 가이드</a>
-			<a href="<?php echo esc_url( livingtmw_guide_post_url( 11 ) ); ?>">주거</a>
-			<a href="<?php echo esc_url( livingtmw_guide_post_url( 8 ) ); ?>">생활비</a>
-			<a href="<?php echo esc_url( livingtmw_guide_post_url( 17 ) ); ?>">통신</a>
-			<a href="<?php echo esc_url( livingtmw_guide_post_url( 21 ) ); ?>">금융</a>
-			<a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>">교통</a>
-		</nav>
-
-		<div class="livingtmw-home-layout">
-			<div class="livingtmw-home-stream">
-			<article class="livingtmw-home-feature" aria-labelledby="livingtmw-content-picker-title">
+		<article class="livingtmw-home-feature" aria-labelledby="livingtmw-content-picker-title">
 				<img src="<?php echo esc_url( $featured_src ); ?>" alt="" width="1200" height="800">
 				<div class="livingtmw-home-feature__shade"></div>
 				<div class="livingtmw-home-feature__content">
@@ -205,7 +193,10 @@ function livingtmw_render_living_tools(): void {
 					<p>주거, 생활비, 통신, 금융과 교통 정보를 실제 양곤 생활 경험과 확인 가능한 자료로 정리합니다.</p>
 					<a href="<?php echo esc_url( $featured_url ); ?>"><?php echo $featured instanceof WP_Post ? esc_html( get_the_title( $featured ) ) : '생활 준비 가이드 읽기'; ?> <span aria-hidden="true">→</span></a>
 				</div>
-			</article>
+		</article>
+
+		<div class="livingtmw-home-layout">
+			<div class="livingtmw-home-stream">
 
 		<div class="livingtmw-tools__intro">
 			<p class="livingtmw-tools__eyebrow">오늘의 양곤 생활 도구</p>
@@ -253,6 +244,7 @@ function livingtmw_render_living_tools(): void {
 					<li><b>04</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 21 ) ); ?>"><strong>금융 준비</strong><small>환전·계좌·결제</small></a></li>
 					<li><b>05</b><a href="<?php echo esc_url( livingtmw_guide_post_url( 25 ) ); ?>"><strong>생활 동선 만들기</strong><small>교통·마트·병원</small></a></li>
 				</ol>
+			</section>
 		<?php if ( $recent_posts ) : ?>
 		<section class="livingtmw-home-news" aria-labelledby="livingtmw-home-news-title">
 			<header><div><p class="livingtmw-tools__eyebrow">LATEST ARTICLES</p><h2 id="livingtmw-home-news-title">최신 양곤 생활 가이드</h2></div><a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">전체 글 보기 →</a></header>
@@ -277,4 +269,29 @@ add_filter(
 	static function ( string $layout ): string {
 		return ( is_front_page() || is_home() ) ? 'no-sidebar' : $layout;
 	}
+);
+
+/** Keep the primary navigation concise and consistent on every screen. */
+add_filter(
+	'wp_nav_menu_items',
+	static function ( string $items, $args ): string {
+		if ( is_admin() || empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+			return $items;
+		}
+
+		$links = array(
+			'홈'         => home_url( '/' ),
+			'About'      => home_url( '/about-livingtmw/' ),
+			'미얀마 생활' => home_url( '/myanmar-life-guide/' ),
+			'Articles'   => home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ),
+			'오늘의 운세' => home_url( '/today-fortune/' ),
+		);
+		$html = '';
+		foreach ( $links as $label => $url ) {
+			$html .= '<li class="menu-item"><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
+		}
+		return $html;
+	},
+	30,
+	2
 );

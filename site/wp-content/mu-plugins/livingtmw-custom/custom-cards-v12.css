@@ -474,7 +474,7 @@ html[data-theme="dark"] .livingtmw-tools {
 .livingtmw-home-menu a:focus-visible,
 .livingtmw-home-menu .is-current { background: var(--livingtmw-dashboard-soft); color: var(--livingtmw-dashboard-gold) !important; }
 
-.livingtmw-home-layout { align-items: start; display: grid; gap: 18px; grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr); }
+.livingtmw-home-layout { align-items: start; display: grid; gap: 18px; grid-template-columns: minmax(0, 2.15fr) minmax(300px, .85fr); margin-top: 18px; }
 .livingtmw-home-stream { min-width: 0; }
 .livingtmw-home-rail { display: grid; gap: 18px; min-width: 0; }
 
@@ -765,15 +765,15 @@ html[data-theme="dark"] .livingtmw-tools {
 	border-radius: 14px;
 	display: grid;
 	gap: 10px 14px;
-	grid-template-columns: 1fr;
+	grid-template-columns: minmax(80px, .65fr) repeat(2, minmax(0, 1fr));
 	min-width: 0;
 	padding: 16px;
 }
 
 .livingtmw-market-rate__rows > div > strong {
+	align-self: center;
 	color: var(--livingtmw-text);
 	font-size: 17px;
-	grid-column: 1 / -1;
 }
 
 .livingtmw-market-rate__rows span {
@@ -788,8 +788,8 @@ html[data-theme="dark"] .livingtmw-tools {
 }
 
 .livingtmw-market-rate__rows span + span {
-	border-top: 1px solid var(--livingtmw-border);
-	padding-top: 12px;
+	border-left: 1px solid var(--livingtmw-border);
+	padding-left: 14px;
 }
 
 .livingtmw-market-rate__rows small {
@@ -1675,6 +1675,13 @@ body.blog .site-main > .paging-navigation { display: none !important; }
 	}
 
 	.livingtmw-market-rate__rows > div {
-		grid-template-columns: 1fr;
+		gap: 6px;
+		grid-template-columns: minmax(52px, .6fr) repeat(2, minmax(0, 1fr));
+		padding: 12px 9px;
 	}
+
+	.livingtmw-market-rate__rows > div > strong { font-size: 13px; }
+	.livingtmw-market-rate__rows span { font-size: 14px; }
+	.livingtmw-market-rate__rows span + span { padding-left: 7px; }
+	.livingtmw-market-rate__rows b { font-size: 15px; }
 }
