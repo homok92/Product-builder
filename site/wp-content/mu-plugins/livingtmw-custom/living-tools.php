@@ -304,7 +304,8 @@ function livingtmw_render_living_tools(): void {
 	<?php
 }
 
-add_action( 'generate_before_main_content', 'livingtmw_render_living_tools', 5 );
+// Keep the homepage dashboard anchored at the same theme position as interior chrome.
+add_action( 'generate_after_header', 'livingtmw_render_living_tools', 5 );
 
 /** Render the same announcement and independent navigation above interior pages. */
 function livingtmw_render_interior_chrome(): void {
