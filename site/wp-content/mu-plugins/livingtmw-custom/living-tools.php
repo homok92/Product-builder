@@ -232,7 +232,7 @@ function livingtmw_render_living_tools(): void {
 				<div class="livingtmw-weather__loading" role="status">양곤 날씨와 대기질을 불러오는 중입니다…</div>
 				<div class="livingtmw-weather__content" hidden>
 					<div class="livingtmw-weather__score-row"><strong class="livingtmw-weather__score"><span data-weather-score>--</span><small>/100</small></strong><div><span class="livingtmw-weather__level" data-weather-level>확인 중</span><p data-weather-summary></p></div></div>
-					<dl class="livingtmw-weather__metrics"><div><dt>현재</dt><dd data-weather-temperature>--</dd></div><div><dt>체감</dt><dd data-weather-apparent>--</dd></div><div><dt>6시간 비</dt><dd data-weather-rain>--</dd></div><div><dt>대기질</dt><dd data-weather-aqi>--</dd></div></dl>
+					<dl class="livingtmw-weather__metrics"><div><dt>현재</dt><dd data-weather-temperature>--</dd></div><div><dt>체감</dt><dd data-weather-apparent>--</dd></div><div><dt>비 올 확률 (6시간 이내)</dt><dd data-weather-rain>--</dd></div><div><dt>대기질</dt><dd data-weather-aqi>--</dd></div></dl>
 					<ul class="livingtmw-weather__tips" data-weather-tips></ul>
 					<p class="livingtmw-tool-card__meta">양곤 중심부 기준 · 예보 모델은 실제 골목별 침수를 측정하지 않습니다. <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
 				</div>
