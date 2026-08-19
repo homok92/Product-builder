@@ -21,7 +21,7 @@ require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v23.css';
+		$stylesheet = __DIR__ . '/livingtmw-custom/custom-cards-v24.css';
 		$script     = __DIR__ . '/livingtmw-custom/theme-toggle.js';
 		$tools      = __DIR__ . '/livingtmw-custom/living-market-v2.js';
 		$carousel   = __DIR__ . '/livingtmw-custom/home-carousel.js';
@@ -30,7 +30,7 @@ add_action(
 		if ( is_readable( $stylesheet ) ) {
 			wp_enqueue_style(
 				'livingtmw-custom',
-				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v23.css' ),
+				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v24.css' ),
 				array(),
 				(string) filemtime( $stylesheet )
 			);

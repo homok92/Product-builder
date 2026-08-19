@@ -180,6 +180,7 @@ function livingtmw_render_living_tools(): void {
 	$featured_posts = array_slice( $recent_posts, 0, 3 );
 	?>
 	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
+		<div class="livingtmw-home-alert" role="note"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요 →</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
 		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
 			<div class="livingtmw-home-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><img src="<?php echo esc_url( content_url( 'uploads/2026/08/cropped-logo3.png' ) ); ?>" alt="내일의 생활" width="1342" height="434"></a></div>
 			<div class="livingtmw-home-menu__links">
