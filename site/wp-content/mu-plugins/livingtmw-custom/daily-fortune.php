@@ -148,3 +148,12 @@ function livingtmw_render_daily_fortune(): string {
 	return (string) ob_get_clean();
 }
 add_shortcode( 'livingtmw_daily_fortune', 'livingtmw_render_daily_fortune' );
+
+/** Keep Myanmar mobile input choices side by side even when a cached stylesheet is served. */
+function livingtmw_fortune_mobile_choice_layout(): void {
+	if ( ! is_page( 'today-fortune' ) ) {
+		return;
+	}
+	echo '<style id="livingtmw-fortune-mobile-choice-layout">@media (max-width:760px){.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings .livingtmw-fortune__choices{display:flex!important;flex-direction:row!important;gap:8px!important;grid-template-columns:none!important;width:100%!important;max-width:none!important}.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings .livingtmw-fortune__choices>label{flex:1 1 0!important;width:50%!important;min-width:0!important}.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings .livingtmw-fortune__choices>label>span{display:block!important;width:100%!important;text-align:center!important}}</style>';
+}
+add_action( 'wp_head', 'livingtmw_fortune_mobile_choice_layout', 99 );
