@@ -266,10 +266,38 @@ function livingtmw_article_clarification( int $post_id ): string {
 		15 => '<p class="livingtmw-clarification">에어컨 필터 청소와 냉장고 문 패킹처럼 작은 관리도 소비 전력에 영향을 줍니다. 멀티탭 하나에 고출력 기기를 몰아 연결하지 말고 집의 전압 변동이 잦다면 관리인이나 전기 기술자에게 안전 상태를 확인하세요. 비용 절감보다 화재와 기기 손상을 예방하는 것이 우선입니다.</p>',
 		17 => '<p class="livingtmw-clarification">유심의 유효기간과 번호 유지 조건도 일정표에 적어 두세요. 장기 출국 중 충전이나 사용 기록이 없어 번호가 정지되면 연결된 금융 계정 복구가 어려워질 수 있습니다. 고객센터 안내를 확인하고 출국 전 필요한 유지 조치를 끝내는 편이 안전합니다.</p>',
 		19 => '<p class="livingtmw-clarification">재택근무가 중요하다면 한 회사의 최고 속도 상품보다 장애 때 사용할 휴대전화 테더링과 보조 전원을 함께 준비하세요. 실제 품질은 건물 배선과 시간대에도 영향을 받으므로 이웃의 최근 사용 경험을 확인하는 것이 유용합니다.</p>',
+		33 => '<p class="livingtmw-clarification">차량을 정기적으로 운행한다면 휴대전화에 면허증·차량등록증·보험증권의 사본과 보험사 사고 접수번호를 보관하되 원본 서류의 휴대 요건도 별도로 확인하세요. 사고 현장에서는 주변 교통을 방해하거나 위험에 노출되지 않는 범위에서 차량 위치, 차선, 신호, 파손 부위와 상대 차량 번호를 여러 각도로 기록하고 목격자 연락처를 확보합니다. 수리나 합의 전에 보험사에 먼저 접수하고 이해하지 못한 현지어 문서에는 통역 없이 서명하지 않는 편이 안전합니다.</p>',
 	);
 
 	return $clarifications[ $post_id ] ?? '';
 }
+
+/** Record the substantive 2026-08-20 driving-guide revision in WordPress. */
+function livingtmw_record_driving_guide_revision(): void {
+	$revision = '2026-08-20-driving-guide-v1';
+	if ( $revision === get_option( 'livingtmw_driving_guide_revision' ) ) {
+		return;
+	}
+
+	$post = get_post( 33 );
+	if ( ! ( $post instanceof WP_Post ) || 'publish' !== $post->post_status ) {
+		return;
+	}
+
+	$modified = current_time( 'mysql' );
+	$result   = wp_update_post(
+		array(
+			'ID'                => 33,
+			'post_modified'     => $modified,
+			'post_modified_gmt' => get_gmt_from_date( $modified ),
+		),
+		true
+	);
+	if ( ! is_wp_error( $result ) ) {
+		update_option( 'livingtmw_driving_guide_revision', $revision, false );
+	}
+}
+add_action( 'init', 'livingtmw_record_driving_guide_revision', 25 );
 
 /** Detailed, non-repeating additions for the next six prepared articles. */
 function livingtmw_upcoming_article_deep_dive( int $post_id ): string {

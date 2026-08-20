@@ -271,6 +271,15 @@ function livingtmw_quality_page_sitemap_args( array $args, string $post_type ): 
 }
 add_filter( 'wp_sitemaps_posts_query_args', 'livingtmw_quality_page_sitemap_args', 10, 2 );
 
+/** Never expose a sitemap modification date earlier than its publication date. */
+function livingtmw_quality_sitemap_post_entry( array $entry, WP_Post $post ): array {
+	$published = (int) get_post_time( 'U', true, $post );
+	$modified  = (int) get_post_modified_time( 'U', true, $post );
+	$entry['lastmod'] = wp_date( DATE_W3C, max( $published, $modified ), new DateTimeZone( 'UTC' ) );
+	return $entry;
+}
+add_filter( 'wp_sitemaps_posts_entry', 'livingtmw_quality_sitemap_post_entry', 10, 2 );
+
 /** Return the editorial image used for a post so metadata matches visible content. */
 function livingtmw_seo_image( int $post_id = 0 ): array {
 	$post_id = $post_id ?: (int) get_queried_object_id();
@@ -437,13 +446,15 @@ function livingtmw_quality_head(): void {
 
 	if ( is_singular( 'post' ) ) {
 		$seo_image = livingtmw_seo_image();
+		$published_time = (int) get_post_time( 'U', false );
+		$modified_time  = max( $published_time, (int) get_post_modified_time( 'U', false ) );
 		$article = array(
 			'@type'            => 'Article',
 			'headline'         => get_the_title(),
 			'description'      => livingtmw_social_description(),
 			'inLanguage'       => 'ko-KR',
 			'datePublished'    => get_the_date( DATE_W3C ),
-			'dateModified'     => get_the_modified_date( DATE_W3C ),
+			'dateModified'     => wp_date( DATE_W3C, $modified_time, wp_timezone() ),
 			'mainEntityOfPage' => get_permalink(),
 			'author'           => array(
 				'@type' => 'Organization',
