@@ -59,20 +59,20 @@ function livingtmw_render_daily_fortune(): string {
 		<div class="livingtmw-fortune__layout">
 			<form class="livingtmw-fortune__form" data-fortune-form>
 				<div class="livingtmw-fortune__settings">
-					<fieldset class="livingtmw-fortune__setting-row">
-						<legend>운세 기준</legend>
+					<div class="livingtmw-fortune__setting-row" role="group" aria-label="운세 기준">
+						<span class="livingtmw-fortune__setting-label">운세 기준</span>
 						<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
 							<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
 							<label><input type="radio" name="method" value="zodiac"><span>띠 직접 선택</span></label>
 						</div>
-					</fieldset>
-					<fieldset class="livingtmw-fortune__setting-row" data-calendar-fields>
-						<legend>달력 구분</legend>
+					</div>
+					<div class="livingtmw-fortune__setting-row" role="group" aria-label="달력 구분" data-calendar-fields>
+						<span class="livingtmw-fortune__setting-label">달력 구분</span>
 						<div class="livingtmw-fortune__choices">
 							<label><input type="radio" name="calendar" value="solar" checked><span>양력</span></label>
 							<label><input type="radio" name="calendar" value="lunar"><span>음력</span></label>
 						</div>
-					</fieldset>
+					</div>
 				</div>
 
 				<div class="livingtmw-fortune__birth" data-birth-fields>
