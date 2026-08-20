@@ -49,7 +49,7 @@ jobs:
           set sftp:connect-program "ssh -a -x -p $SFTP_PORT -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
           # Always sync tracked plugin files so content changes are not skipped
           # when the server preserves a newer or equal timestamp.
-          mirror --reverse --verbose --no-perms site/wp-content/mu-plugins /wp-data/wp-content/mu-plugins
+          mirror --reverse --verbose --ignore-time --no-perms site/wp-content/mu-plugins /wp-data/wp-content/mu-plugins
           put -O /wp-data site/public/robots.txt
           bye
           LFTP
