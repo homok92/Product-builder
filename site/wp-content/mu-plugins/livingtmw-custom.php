@@ -33,7 +33,7 @@ add_action(
 				'livingtmw-custom',
 				content_url( 'mu-plugins/livingtmw-custom/custom-cards-v23.css' ),
 				array(),
-				(string) filemtime( $stylesheet )
+				'20260820-fortune-controls'
 			);
 		}
 
@@ -81,7 +81,7 @@ add_action(
 				'livingtmw-daily-fortune',
 				content_url( 'mu-plugins/livingtmw-custom/daily-fortune-v4.js' ),
 				array(),
-				(string) filemtime( $fortune ),
+				'20260820-fortune-controls',
 				true
 			);
 		}
