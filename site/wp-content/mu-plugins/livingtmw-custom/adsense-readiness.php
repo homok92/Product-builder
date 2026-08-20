@@ -221,7 +221,8 @@ add_filter( 'the_content', 'livingtmw_add_article_trust_box', 20 );
  * Keep thin utility and duplicate archive screens out of the search index.
  */
 function livingtmw_quality_robots( array $robots ): array {
-	if ( is_search() || is_404() || is_author() || is_date() || is_tag() ) {
+	$indexable_tag = function_exists( 'livingtmw_is_indexable_tag_archive' ) && livingtmw_is_indexable_tag_archive();
+	if ( is_search() || is_404() || is_author() || is_date() || ( is_tag() && ! $indexable_tag ) ) {
 		$robots['noindex'] = true;
 		$robots['follow']  = true;
 	}
@@ -383,6 +384,13 @@ function livingtmw_quality_head(): void {
 		$description   = $category_descriptions[ $category_name ] ?? sprintf( '%s에 관한 내일의 생활 현지 정보와 실용 안내를 모았습니다.', $category_name );
 		echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
 		echo '<link rel="canonical" href="' . esc_url( get_category_link( get_queried_object_id() ) ) . '">' . "\n";
+	} elseif ( is_tag() && function_exists( 'livingtmw_is_indexable_tag_archive' ) && livingtmw_is_indexable_tag_archive() ) {
+		$tag = get_queried_object();
+		$description = $tag instanceof WP_Term ? sprintf( '%s 관련 미얀마 양곤 생활정보와 실용 가이드를 한곳에서 확인하세요.', $tag->name ) : '';
+		if ( '' !== $description ) {
+			echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+		}
+		echo '<link rel="canonical" href="' . esc_url( get_tag_link( get_queried_object_id() ) ) . '">' . "\n";
 	} elseif ( is_singular() ) {
 		$descriptions = array(
 			'about-livingtmw'       => '내일의 생활 운영 목적, 현지 생활정보의 확인 범위와 정정 문의 방법을 안내합니다.',

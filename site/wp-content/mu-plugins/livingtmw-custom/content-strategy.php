@@ -102,8 +102,12 @@ function livingtmw_retire_tag_feeds(): void {
 add_action( 'template_redirect', 'livingtmw_retire_tag_feeds', 0 );
 
 /** Consolidate obsolete tag archives into the single editorial category. */
+function livingtmw_is_indexable_tag_archive(): bool {
+	return is_tag() && 92 === (int) get_queried_object_id();
+}
+
 function livingtmw_redirect_tag_archives(): void {
-	if ( ! is_tag() || is_feed() ) {
+	if ( ! is_tag() || is_feed() || livingtmw_is_indexable_tag_archive() ) {
 		return;
 	}
 	$term = get_term_by( 'slug', LIVINGTMW_PRIMARY_CATEGORY_SLUG, 'category' );
