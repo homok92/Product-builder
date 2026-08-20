@@ -48,6 +48,7 @@ function livingtmw_render_daily_fortune(): string {
 	$calendar_label       = 'my' === $language ? 'ပြက္ခဒိန်အမျိုးအစား' : '달력 구분';
 	$solar_label          = 'my' === $language ? 'နေပြက္ခဒိန်' : '양력';
 	$lunar_label          = 'my' === $language ? 'လပြက္ခဒိန်' : '음력';
+	$zodiac_faq           = 'my' === $language ? 'ကံကြမ္မာတွက်ချက်ရာတွင် တိရစ္ဆာန်နှစ်ကို ရွေးပါက မွေးသက္ကရာဇ်မလိုပါ။' : '네. 운세 기준에서 ‘띠 선택’을 고르면 생년월일 없이 이용할 수 있습니다.';
 	ob_start();
 	?>
 	<section class="livingtmw-fortune" data-daily-fortune data-language="<?php echo esc_attr( $language ); ?>">
@@ -137,7 +138,7 @@ function livingtmw_render_daily_fortune(): string {
 
 		<section class="livingtmw-fortune__faq">
 			<h2>자주 묻는 질문</h2>
-			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p>네. 운세 기준에서 ‘띠 선택’을 고르면 생년월일 없이 이용할 수 있습니다.</p></details>
+			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p><?php echo esc_html( $zodiac_faq ); ?></p></details>
 			<details><summary>양력과 음력은 어떻게 구분하나요?</summary><p>주민등록이나 일반 달력에 표시된 날짜를 사용하면 보통 양력입니다. 가족이 음력 생일을 따로 기념한다면 음력을 선택하고 음력 달력의 날짜를 입력하세요.</p></details>
 			<details><summary>왜 어제와 결과가 다른가요?</summary><p>오늘 날짜가 계산에 포함되므로 날짜가 바뀌면 결과도 바뀝니다. 같은 날에는 새로고침해도 같은 선택에 동일한 결과가 표시됩니다.</p></details>
 			<details><summary>결과를 믿고 중요한 결정을 해도 되나요?</summary><p>아니요. 이 기능은 오락용입니다. 건강, 재산, 법률 및 신변 안전과 관련된 결정에는 공식 정보와 자격을 갖춘 전문가의 도움을 이용하세요.</p></details>
