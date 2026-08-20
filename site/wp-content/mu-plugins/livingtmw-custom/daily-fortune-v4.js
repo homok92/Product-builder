@@ -8,6 +8,7 @@
 	var form = root.querySelector('[data-fortune-form]');
 	var result = root.querySelector('[data-fortune-result]');
 	var birthFields = root.querySelector('[data-birth-fields]');
+	var calendarFields = root.querySelector('[data-calendar-fields]');
 	var zodiacField = root.querySelector('[data-zodiac-field]');
 	var lunarLeap = root.querySelector('[data-lunar-leap]');
 	var zodiacOrder = ['rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake', 'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig'];
@@ -250,6 +251,7 @@
 	function setMethod(method) {
 		var useBirth = method === 'birth';
 		birthFields.hidden = !useBirth;
+		calendarFields.hidden = !useBirth;
 		zodiacField.hidden = useBirth;
 		['birth_year', 'birth_month', 'birth_day'].forEach(function (name) { form.elements[name].required = useBirth; });
 		form.elements.zodiac.required = !useBirth;

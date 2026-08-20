@@ -58,22 +58,24 @@ function livingtmw_render_daily_fortune(): string {
 
 		<div class="livingtmw-fortune__layout">
 			<form class="livingtmw-fortune__form" data-fortune-form>
-				<fieldset class="livingtmw-fortune__setting-row">
-					<legend>운세 기준</legend>
-					<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
-						<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
-						<label><input type="radio" name="method" value="zodiac"><span>띠 직접 선택</span></label>
-					</div>
-				</fieldset>
-
-				<div class="livingtmw-fortune__birth" data-birth-fields>
+				<div class="livingtmw-fortune__settings">
 					<fieldset class="livingtmw-fortune__setting-row">
+						<legend>운세 기준</legend>
+						<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
+							<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
+							<label><input type="radio" name="method" value="zodiac"><span>띠 직접 선택</span></label>
+						</div>
+					</fieldset>
+					<fieldset class="livingtmw-fortune__setting-row" data-calendar-fields>
 						<legend>달력 구분</legend>
 						<div class="livingtmw-fortune__choices">
 							<label><input type="radio" name="calendar" value="solar" checked><span>양력</span></label>
 							<label><input type="radio" name="calendar" value="lunar"><span>음력</span></label>
 						</div>
 					</fieldset>
+				</div>
+
+				<div class="livingtmw-fortune__birth" data-birth-fields>
 					<div class="livingtmw-fortune__date-fields">
 						<label>태어난 해<input type="number" name="birth_year" inputmode="numeric" min="1930" max="2026" placeholder="예: 1990" required></label>
 						<label>월<input type="number" name="birth_month" inputmode="numeric" min="1" max="12" placeholder="1~12" required></label>
