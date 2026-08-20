@@ -1649,9 +1649,9 @@ body.blog .site-main > .paging-navigation { display: none !important; }
 	.livingtmw-fortune__settings > .livingtmw-fortune__setting-row + .livingtmw-fortune__setting-row {
 		align-items: center;
 		border-left: 0;
-		display: flex;
+		display: grid;
 		gap: 10px;
-		justify-content: space-between;
+		grid-template-columns: auto minmax(0, 1fr);
 		padding: 0;
 	}
 
@@ -1661,8 +1661,10 @@ body.blog .site-main > .paging-navigation { display: none !important; }
 	}
 
 	.livingtmw-fortune__settings .livingtmw-fortune__choices {
-		flex: 0 1 68%;
-		margin: 0 0 0 auto;
+		justify-self: end;
+		margin: 0;
+		max-width: 68%;
+		width: 100%;
 	}
 
 	.livingtmw-fortune__layout,
