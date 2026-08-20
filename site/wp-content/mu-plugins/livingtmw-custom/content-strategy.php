@@ -89,17 +89,17 @@ function livingtmw_redirect_legacy_categories(): void {
 add_action( 'template_redirect', 'livingtmw_redirect_legacy_categories', 1 );
 
 /** Retire obsolete tag feed URLs instead of serving duplicate 200 responses. */
-function livingtmw_retire_tag_feeds(): void {
-	if ( ! is_tag() || ! is_feed() ) {
+function livingtmw_retire_feed_urls(): void {
+	if ( ! is_feed() ) {
 		return;
 	}
 	status_header( 410 );
 	nocache_headers();
 	header( 'Content-Type: text/plain; charset=UTF-8' );
-	echo '이 태그 피드는 더 이상 제공되지 않습니다.';
+	echo 'RSS/Atom feed URLs are no longer served.';
 	exit;
 }
-add_action( 'template_redirect', 'livingtmw_retire_tag_feeds', 0 );
+add_action( 'template_redirect', 'livingtmw_retire_feed_urls', 0 );
 
 /** Consolidate obsolete tag archives into the single editorial category. */
 function livingtmw_is_indexable_tag_archive(): bool {
