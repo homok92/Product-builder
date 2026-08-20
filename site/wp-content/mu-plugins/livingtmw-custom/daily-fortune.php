@@ -42,6 +42,12 @@ function livingtmw_render_daily_fortune(): string {
 	$language   = isset( $_GET['lang'] ) && 'my' === sanitize_key( wp_unslash( $_GET['lang'] ) ) ? 'my' : 'ko';
 	$korean_url = remove_query_arg( 'lang' );
 	$myanmar_url = add_query_arg( 'lang', 'my' );
+	$fortune_method_label = 'my' === $language ? 'ကံကြမ္မာတွက်ချက်မည့် အချက်အလက်' : '운세 기준';
+	$birth_label          = 'my' === $language ? 'မွေးသက္ကရာဇ်' : '생년월일';
+	$zodiac_method_label  = 'my' === $language ? 'တိရစ္ဆာန်နှစ်ကို ရွေးမည်' : '띠 선택';
+	$calendar_label       = 'my' === $language ? 'ပြက္ခဒိန်အမျိုးအစား' : '달력 구분';
+	$solar_label          = 'my' === $language ? 'နေပြက္ခဒိန်' : '양력';
+	$lunar_label          = 'my' === $language ? 'လပြက္ခဒိန်' : '음력';
 	ob_start();
 	?>
 	<section class="livingtmw-fortune" data-daily-fortune data-language="<?php echo esc_attr( $language ); ?>">
@@ -59,18 +65,18 @@ function livingtmw_render_daily_fortune(): string {
 		<div class="livingtmw-fortune__layout">
 			<form class="livingtmw-fortune__form" data-fortune-form>
 				<div class="livingtmw-fortune__settings">
-					<div class="livingtmw-fortune__setting-row" role="group" aria-label="운세 기준">
-						<span class="livingtmw-fortune__setting-label">운세 기준</span>
+					<div class="livingtmw-fortune__setting-row" role="group" aria-label="<?php echo esc_attr( $fortune_method_label ); ?>">
+						<span class="livingtmw-fortune__setting-label"><?php echo esc_html( $fortune_method_label ); ?></span>
 						<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
-							<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
-							<label><input type="radio" name="method" value="zodiac"><span>띠 선택</span></label>
+							<label><input type="radio" name="method" value="birth" checked><span><?php echo esc_html( $birth_label ); ?></span></label>
+							<label><input type="radio" name="method" value="zodiac"><span><?php echo esc_html( $zodiac_method_label ); ?></span></label>
 						</div>
 					</div>
-					<div class="livingtmw-fortune__setting-row" role="group" aria-label="달력 구분" data-calendar-fields>
-						<span class="livingtmw-fortune__setting-label">달력 구분</span>
+					<div class="livingtmw-fortune__setting-row" role="group" aria-label="<?php echo esc_attr( $calendar_label ); ?>" data-calendar-fields>
+						<span class="livingtmw-fortune__setting-label"><?php echo esc_html( $calendar_label ); ?></span>
 						<div class="livingtmw-fortune__choices">
-							<label><input type="radio" name="calendar" value="solar" checked><span>양력</span></label>
-							<label><input type="radio" name="calendar" value="lunar"><span>음력</span></label>
+							<label><input type="radio" name="calendar" value="solar" checked><span><?php echo esc_html( $solar_label ); ?></span></label>
+							<label><input type="radio" name="calendar" value="lunar"><span><?php echo esc_html( $lunar_label ); ?></span></label>
 						</div>
 					</div>
 				</div>
