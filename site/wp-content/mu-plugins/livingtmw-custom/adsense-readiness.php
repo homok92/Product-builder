@@ -74,6 +74,15 @@ function livingtmw_ensure_trust_pages(): void {
 }
 add_action( 'init', 'livingtmw_ensure_trust_pages', 20 );
 
+/** Add Google's official data-use disclosure to the existing privacy page. */
+function livingtmw_privacy_google_disclosure( string $content ): string {
+	if ( ! is_page( 78 ) || false !== strpos( $content, 'policies.google.com/technologies/partner-sites' ) ) {
+		return $content;
+	}
+	return $content . '<h2>Google 광고 및 데이터 사용 안내</h2><p>Google과 광고 파트너는 쿠키, IP 주소, 광고 식별자 또는 유사 기술을 사용해 광고를 제공하고 측정할 수 있습니다. Google이 파트너 사이트의 데이터를 사용하는 방식은 <a href="https://policies.google.com/technologies/partner-sites?hl=ko" rel="noopener noreferrer">Google 파트너 사이트 데이터 사용 안내</a>에서 확인할 수 있습니다. 개인 맞춤 광고 설정은 <a href="https://adssettings.google.com/?hl=ko" rel="noopener noreferrer">Google 광고 설정</a>에서 관리할 수 있습니다.</p>';
+}
+add_filter( 'the_content', 'livingtmw_privacy_google_disclosure', 22 );
+
 /**
  * Publish a substantive start-here guide that helps readers navigate the
  * site's first-hand Myanmar living articles in a useful decision order.
