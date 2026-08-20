@@ -1749,6 +1749,12 @@ body.blog .site-main > .paging-navigation { display: none !important; }
 		grid-template-columns: minmax(0, 1fr);
 	}
 
+	/* The two input choices stay side by side under each Myanmar setting label. */
+	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings .livingtmw-fortune__choices {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
 	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__date-fields label:first-child {
 		grid-column: auto;
 	}
