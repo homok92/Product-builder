@@ -63,7 +63,7 @@ function livingtmw_render_daily_fortune(): string {
 						<span class="livingtmw-fortune__setting-label">운세 기준</span>
 						<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
 							<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
-							<label><input type="radio" name="method" value="zodiac"><span>띠 직접 선택</span></label>
+							<label><input type="radio" name="method" value="zodiac"><span>띠 선택</span></label>
 						</div>
 					</div>
 					<div class="livingtmw-fortune__setting-row" role="group" aria-label="달력 구분" data-calendar-fields>
@@ -131,7 +131,7 @@ function livingtmw_render_daily_fortune(): string {
 
 		<section class="livingtmw-fortune__faq">
 			<h2>자주 묻는 질문</h2>
-			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p>네. 운세 기준에서 ‘띠 직접 선택’을 고르면 생년월일 없이 이용할 수 있습니다.</p></details>
+			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p>네. 운세 기준에서 ‘띠 선택’을 고르면 생년월일 없이 이용할 수 있습니다.</p></details>
 			<details><summary>양력과 음력은 어떻게 구분하나요?</summary><p>주민등록이나 일반 달력에 표시된 날짜를 사용하면 보통 양력입니다. 가족이 음력 생일을 따로 기념한다면 음력을 선택하고 음력 달력의 날짜를 입력하세요.</p></details>
 			<details><summary>왜 어제와 결과가 다른가요?</summary><p>오늘 날짜가 계산에 포함되므로 날짜가 바뀌면 결과도 바뀝니다. 같은 날에는 새로고침해도 같은 선택에 동일한 결과가 표시됩니다.</p></details>
 			<details><summary>결과를 믿고 중요한 결정을 해도 되나요?</summary><p>아니요. 이 기능은 오락용입니다. 건강, 재산, 법률 및 신변 안전과 관련된 결정에는 공식 정보와 자격을 갖춘 전문가의 도움을 이용하세요.</p></details>

@@ -1667,6 +1667,21 @@ body.blog .site-main > .paging-navigation { display: none !important; }
 		min-width: max-content;
 	}
 
+	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings > .livingtmw-fortune__setting-row,
+	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings > .livingtmw-fortune__setting-row + .livingtmw-fortune__setting-row {
+		display: block;
+	}
+
+	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__setting-label {
+		display: block;
+		margin-bottom: 6px;
+	}
+
+	.livingtmw-fortune[data-language="my"] .livingtmw-fortune__settings .livingtmw-fortune__choices {
+		max-width: none;
+		width: 100%;
+	}
+
 	.livingtmw-fortune__settings .livingtmw-fortune__choices {
 		justify-self: end;
 		margin: 0;
