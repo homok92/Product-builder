@@ -58,7 +58,7 @@ function livingtmw_render_daily_fortune(): string {
 
 		<div class="livingtmw-fortune__layout">
 			<form class="livingtmw-fortune__form" data-fortune-form>
-				<fieldset>
+				<fieldset class="livingtmw-fortune__setting-row">
 					<legend>운세 기준</legend>
 					<div class="livingtmw-fortune__choices livingtmw-fortune__choices--method">
 						<label><input type="radio" name="method" value="birth" checked><span>생년월일</span></label>
@@ -67,7 +67,7 @@ function livingtmw_render_daily_fortune(): string {
 				</fieldset>
 
 				<div class="livingtmw-fortune__birth" data-birth-fields>
-					<fieldset>
+					<fieldset class="livingtmw-fortune__setting-row">
 						<legend>달력 구분</legend>
 						<div class="livingtmw-fortune__choices">
 							<label><input type="radio" name="calendar" value="solar" checked><span>양력</span></label>
@@ -79,7 +79,6 @@ function livingtmw_render_daily_fortune(): string {
 						<label>월<input type="number" name="birth_month" inputmode="numeric" min="1" max="12" placeholder="1~12" required></label>
 						<label>일<input type="number" name="birth_day" inputmode="numeric" min="1" max="31" placeholder="1~31" required></label>
 					</div>
-					<label class="livingtmw-fortune__leap" data-lunar-leap hidden><input type="checkbox" name="leap_month" value="1"> 음력 윤달 생일입니다</label>
 					<p class="livingtmw-fortune__field-note">양력 생일은 음력 새해 경계를 반영해 띠를 계산합니다. 음력은 음력 달력에 적힌 연·월·일을 입력하세요.</p>
 				</div>
 
@@ -131,7 +130,7 @@ function livingtmw_render_daily_fortune(): string {
 		<section class="livingtmw-fortune__faq">
 			<h2>자주 묻는 질문</h2>
 			<details><summary>생년월일을 입력하지 않아도 되나요?</summary><p>네. 운세 기준에서 ‘띠 직접 선택’을 고르면 생년월일 없이 이용할 수 있습니다.</p></details>
-			<details><summary>양력과 음력은 어떻게 구분하나요?</summary><p>주민등록이나 일반 달력에 표시된 날짜를 사용하면 보통 양력입니다. 가족이 음력 생일을 따로 기념한다면 음력을 선택하고 음력 달력의 날짜를 입력하세요. 윤달에 태어난 경우에만 윤달 항목을 선택합니다.</p></details>
+			<details><summary>양력과 음력은 어떻게 구분하나요?</summary><p>주민등록이나 일반 달력에 표시된 날짜를 사용하면 보통 양력입니다. 가족이 음력 생일을 따로 기념한다면 음력을 선택하고 음력 달력의 날짜를 입력하세요.</p></details>
 			<details><summary>왜 어제와 결과가 다른가요?</summary><p>오늘 날짜가 계산에 포함되므로 날짜가 바뀌면 결과도 바뀝니다. 같은 날에는 새로고침해도 같은 선택에 동일한 결과가 표시됩니다.</p></details>
 			<details><summary>결과를 믿고 중요한 결정을 해도 되나요?</summary><p>아니요. 이 기능은 오락용입니다. 건강, 재산, 법률 및 신변 안전과 관련된 결정에는 공식 정보와 자격을 갖춘 전문가의 도움을 이용하세요.</p></details>
 		</section>

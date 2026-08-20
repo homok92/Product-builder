@@ -256,8 +256,7 @@
 	}
 
 	function setCalendar(calendar) {
-		lunarLeap.hidden = calendar !== 'lunar';
-		if (calendar !== 'lunar') form.elements.leap_month.checked = false;
+		/* Lunar leap-month input was intentionally removed; calendar selection is sufficient. */
 	}
 
 	function validDate(year, month, day, calendar) {
@@ -351,7 +350,7 @@
 				return;
 			}
 			zodiac = zodiacForYear(zodiacYear);
-			birthKey = [calendar, year, month, day, form.elements.leap_month.checked ? 'leap' : 'normal'].join('-');
+			birthKey = [calendar, year, month, day].join('-');
 			label = language === 'my' ? year + ' ခုနှစ် ' + month + ' လ ' + day + ' ရက်' : (calendar === 'solar' ? '양력 ' : '음력 ') + year + '년 ' + month + '월 ' + day + '일';
 		} else if (!zodiac) {
 			form.elements.zodiac.focus();
