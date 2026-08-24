@@ -3,7 +3,7 @@
 /**
  * Plugin Name: LivingTMW Customizations
  * Description: Version-controlled custom code for livingtmw.com.
- * Version: 1.1.0
+ * Version: 1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,7 +16,7 @@ require_once __DIR__ . '/livingtmw-custom/content-strategy.php';
 require_once __DIR__ . '/livingtmw-custom/scheduled-experience-posts.php';
 require_once __DIR__ . '/livingtmw-custom/adsense-content-curation.php';
 if ( ! function_exists( 'livingtmw_default_market_rates' ) ) {
-	require_once __DIR__ . '/livingtmw-custom/living-tools.php';
+	require_once __DIR__ . '/livingtmw-custom/living-tools-v2.php';
 }
 require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 
