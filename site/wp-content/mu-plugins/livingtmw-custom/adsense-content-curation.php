@@ -33,7 +33,7 @@ function livingtmw_retired_post_targets(): array {
  * post content, comments, media, or metadata are deleted.
  */
 function livingtmw_apply_adsense_content_curation(): void {
-	$revision = '2026-08-24-first-hand-v2';
+	$revision = '2026-08-24-first-hand-v3';
 	if ( $revision === get_option( 'livingtmw_adsense_curation_revision' ) ) {
 		return;
 	}
@@ -51,6 +51,25 @@ function livingtmw_apply_adsense_content_curation(): void {
 				)
 			);
 		}
+	}
+
+	$titles_and_excerpts = array(
+		11 => array( '양곤 Inno City·Thiri Condo 거주와 매도 경험: 집 구하기 기준', 'Inno City와 Thiri Condo의 전력·수질·이동 조건, 약 1년이 걸린 실제 매도 경험과 월세를 선택한 이유를 비교합니다.' ),
+		15 => array( '양곤 전기요금 실제 청구: Inno City 24시간 전력과 900 MMK/kWh', 'Inno City의 계량 사용량과 청구 경험을 2026년 공식 고시와 대조해 일반 가정용과 24시간 전용선 요금을 구분합니다.' ),
+		17 => array( '양곤 ATOM eSIM 개통 후기: 외국인 여권 등록과 실제 비용', 'ATOM 대리점에서 외국인이 eSIM을 직접 발급받은 비용, 여권 등록 과정과 약 1년간 사용한 월 통신비를 정리합니다.' ),
+		19 => array( '양곤 APN·MPT 인터넷 사용기: 월요금·속도와 정전 대비', '집에서 APN, 회사에서 MPT를 사용하며 확인한 월요금, 체감 속도, 건물별 설치 제한과 공유기 정전 대비 방법입니다.' ),
+		21 => array( '양곤 KBZPay 실제 사용 후기: 외국인 계좌·QR 결제와 인터넷 주의사항', 'KBZ Bank 계좌 개설 준비서류와 KBZPay QR 결제, Grab 송금, 인터넷이 약한 매장에서 겪은 결제 실패를 기록했습니다.' ),
+		25 => array( '양곤 Grab 택시 실제 이용: 20~30분 요금·현금 결제와 안전 확인', '양곤 Grab의 20~30분 거리 실제 요금, 시내와 외곽 차량 차이, 현금 결제와 탑승 전 안전 확인 순서를 설명합니다.' ),
+		35 => array( '양곤 현대 H-1 출퇴근 유지비: 실제 월 연료비와 이동 경로', 'Inno City에서 Hlaing Tharyar까지 10년 된 현대 H-1으로 출퇴근하며 기록한 월 연료비와 정비 변동 요인입니다.' ),
+		37 => array( '양곤 우기 침수·정전 실제 경험: 출근 중단과 가정 대비', '우기 침수로 출근하지 못했던 날과 2025년 시간제 정전 경험을 바탕으로 이동 전 확인사항과 가정 대비책을 정리합니다.' ),
+		41 => array( '양곤 GrabFood 실제 이용: 저녁 7시 이후 배달과 KBZPay 결제', 'GrabFood의 실제 배달 가능 시간, 평균 배달비, 현금 주문 제한과 배달원에게 KBZPay로 결제한 사례를 기록했습니다.' ),
+	);
+	foreach ( $titles_and_excerpts as $post_id => $seo ) {
+		$post = get_post( (int) $post_id );
+		if ( ! ( $post instanceof WP_Post ) || 'publish' !== $post->post_status ) {
+			continue;
+		}
+		wp_update_post( array( 'ID' => (int) $post_id, 'post_title' => $seo[0], 'post_excerpt' => $seo[1] ) );
 	}
 
 	update_option( 'livingtmw_adsense_curation_revision', $revision, false );
@@ -94,6 +113,23 @@ function livingtmw_curated_archive_excerpt( string $excerpt, $post = null ): str
 	return wp_html_excerpt( wp_strip_all_tags( $intros[ $post_id ] ), 180, '…' );
 }
 add_filter( 'get_the_excerpt', 'livingtmw_curated_archive_excerpt', 20, 2 );
+
+/** Show readers exactly who gathered the site's first-hand evidence. */
+function livingtmw_about_fieldwork_profile( string $content ): string {
+	if ( ! is_page( 'about-livingtmw' ) || false !== strpos( $content, 'livingtmw-about-fieldwork' ) ) {
+		return $content;
+	}
+
+	$profile = '<section id="livingtmw-about-fieldwork" class="livingtmw-about-fieldwork">'
+		. '<h2>누가 어떻게 확인하나요?</h2>'
+		. '<p>내일의 생활은 양곤 Inno City에서 약 1년간 생활한 한국인 운영자의 가족생활 기록을 바탕으로 합니다. 운영자는 ATOM eSIM, APN·MPT 인터넷, KBZ Bank·KBZPay, Grab 택시와 음식 배달, 현지 병원, 마트와 시장 배달을 직접 이용했습니다.</p>'
+		. '<p>직접 경험한 금액과 시기는 본문에 구체적으로 표시하고, 다른 사람에게 들은 정보나 업체 설명은 직접 경험과 구분합니다. 금융·전력·통신·안전처럼 바뀔 수 있는 내용은 가능한 경우 관계기관이나 서비스 제공자의 공개 자료와 대조합니다.</p>'
+		. '<ul><li>앱 화면과 현장 사진은 개인정보·잔액·정확한 위치를 가린 뒤 사용합니다.</li><li>AI 설명 이미지는 실제 사진으로 오해하지 않도록 캡션에 제작 방식을 표시합니다.</li><li>가격을 모든 이용자에게 적용되는 평균처럼 표현하지 않고 가족 구성, 이용 시점과 예외를 함께 밝힙니다.</li><li>오류와 변경 제보는 help@livingtmw.com으로 받아 확인 후 수정합니다.</li></ul>'
+		. '</section>';
+
+	return $content . $profile;
+}
+add_filter( 'the_content', 'livingtmw_about_fieldwork_profile', 17 );
 
 /** Resolve a post ID or slug to a durable public destination. */
 function livingtmw_curation_target_url( $target ): string {

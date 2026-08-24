@@ -143,19 +143,17 @@ function livingtmw_guide_post_url( int $post_id ): string {
 function livingtmw_render_life_guide(): string {
 	$links = array(
 		'housing'     => livingtmw_guide_post_url( 11 ),
-		'rent'        => livingtmw_guide_post_url( 13 ),
 		'electricity' => livingtmw_guide_post_url( 15 ),
 		'sim'         => livingtmw_guide_post_url( 17 ),
 		'internet'    => livingtmw_guide_post_url( 19 ),
 		'bank'        => livingtmw_guide_post_url( 21 ),
-		'exchange'    => livingtmw_guide_post_url( 23 ),
 		'taxi'        => livingtmw_guide_post_url( 25 ),
-		'grocery'     => livingtmw_guide_post_url( 27 ),
-		'shopping'    => livingtmw_guide_post_url( 29 ),
-		'korean_food' => livingtmw_guide_post_url( 31 ),
-		'driving'     => livingtmw_guide_post_url( 33 ),
 		'car_cost'    => livingtmw_guide_post_url( 35 ),
-		'budget'      => livingtmw_guide_post_url( 8 ),
+		'monsoon'     => livingtmw_guide_post_url( 37 ),
+		'food'        => livingtmw_guide_post_url( 41 ),
+		'market'      => home_url( '/myanmar-plaza-market-place-family-shopping/' ),
+		'vegetables'  => home_url( '/yangon-viber-vegetable-delivery-maso/' ),
+		'water'       => home_url( '/yangon-coway-wave-water-cost-comparison/' ),
 	);
 
 	ob_start();
@@ -178,19 +176,19 @@ function livingtmw_render_life_guide(): string {
 		<section id="guide-budget" class="livingtmw-life-guide__section">
 			<div><span>STEP 1</span><h2>먼저 월 예산의 범위를 잡습니다</h2></div>
 			<p>양곤에서는 현지식과 대중교통만 이용할 때와 외국인 선호 아파트, 에어컨, 수입 식품, Grab을 자주 이용할 때의 비용 차이가 큽니다. 월세를 제외한 생활비만 보거나 공식 환율만 적용하면 실제 필요한 현금을 과소평가할 수 있습니다. 식비·주거·전기·교통을 따로 기록하고 최소 예산과 여유 예산을 함께 준비하세요.</p>
-			<ul><li><a href="<?php echo esc_url( $links['budget'] ); ?>">2026년 양곤 한 달 생활비 실제 기준</a></li><li><a href="<?php echo esc_url( $links['electricity'] ); ?>">미얀마 전기세와 냉방 비용 확인하기</a></li><li><a href="<?php echo esc_url( $links['car_cost'] ); ?>">자가용을 이용할 때 드는 월 유지비</a></li></ul>
+			<ul><li><a href="<?php echo esc_url( $links['electricity'] ); ?>">Inno City 전기요금 실제 청구 기록</a></li><li><a href="<?php echo esc_url( $links['car_cost'] ); ?>">현대 H-1 출퇴근 월 연료비</a></li><li><a href="<?php echo esc_url( $links['water'] ); ?>">Coway 정수기와 Wave 생수 총비용</a></li></ul>
 		</section>
 
 		<section id="guide-home" class="livingtmw-life-guide__section">
 			<div><span>STEP 2</span><h2>집은 월세보다 전력·물·이동 조건을 함께 봅니다</h2></div>
 			<p>정전이 잦은 건물은 발전기 가동 범위와 별도 요금에 따라 생활의 질과 비용이 크게 달라집니다. 계약 전에 에어컨과 엘리베이터까지 백업 전력이 공급되는지, 수돗물의 색과 냄새, 물탱크 청소 주기와 필터 설치 가능 여부를 직접 확인하세요. 마트와 직장까지의 Grab 비용과 이동 시간도 사실상 주거비의 일부입니다.</p>
-			<ul><li><a href="<?php echo esc_url( $links['housing'] ); ?>">한국인이 미얀마에서 집을 구할 때 확인할 것</a></li><li><a href="<?php echo esc_url( $links['rent'] ); ?>">양곤 아파트 월세와 관리비 비교</a></li></ul>
+			<ul><li><a href="<?php echo esc_url( $links['housing'] ); ?>">Inno City·Thiri Condo 거주와 매도 경험</a></li><li><a href="<?php echo esc_url( $links['water'] ); ?>">장기 거주 전 정수기 계약비 계산</a></li></ul>
 		</section>
 
 		<section id="guide-money" class="livingtmw-life-guide__section">
 			<div><span>STEP 3</span><h2>환율과 계좌는 공식 조건을 다시 확인합니다</h2></div>
 			<p>미얀마에서는 환율과 금융 조건이 빠르게 달라질 수 있습니다. 온라인에서 본 숫자만 믿지 말고 허가된 은행·환전소의 당일 고시, 수수료와 실제 수령액을 확인하세요. 외국인의 계좌 개설 서류와 지점별 심사도 달라질 수 있으므로 여권, 비자, 주소와 재직 증빙을 준비하고 방문할 지점에 먼저 문의하는 편이 안전합니다.</p>
-			<ul><li><a href="<?php echo esc_url( $links['exchange'] ); ?>">미얀마 현지 환전 시 확인할 기본 정보</a></li><li><a href="<?php echo esc_url( $links['bank'] ); ?>">한국인의 미얀마 은행 계좌 개설 준비</a></li></ul>
+			<ul><li><a href="<?php echo esc_url( $links['bank'] ); ?>">KBZ 계좌 개설과 KBZPay 실제 사용</a></li></ul>
 		</section>
 
 		<section id="guide-connect" class="livingtmw-life-guide__section">
@@ -202,7 +200,7 @@ function livingtmw_render_life_guide(): string {
 		<section id="guide-move" class="livingtmw-life-guide__section">
 			<div><span>STEP 5</span><h2>교통과 장보기 동선을 실제로 시험합니다</h2></div>
 			<p>양곤은 같은 거리라도 시간대와 우기 침수에 따라 이동 시간이 크게 달라집니다. 집을 결정하기 전에 출퇴근 시간에 실제 경로를 이동해 보고, Grab 요금과 우회로를 확인하세요. 식료품은 대형마트, 현지 시장과 배달을 품목별로 나누면 비용과 시간을 줄일 수 있습니다. 냉장 식품은 정전 이력과 포장 상태도 함께 살펴야 합니다.</p>
-			<ul><li><a href="<?php echo esc_url( $links['taxi'] ); ?>">양곤 택시와 Grab 이용 방법</a></li><li><a href="<?php echo esc_url( $links['driving'] ); ?>">미얀마 자동차 운전 기본 상식</a></li><li><a href="<?php echo esc_url( $links['grocery'] ); ?>">식료품과 생필품 구매처 정리</a></li><li><a href="<?php echo esc_url( $links['shopping'] ); ?>">양곤 대형마트와 쇼핑몰 비교</a></li><li><a href="<?php echo esc_url( $links['korean_food'] ); ?>">한국 식재료를 구하는 방법</a></li></ul>
+			<ul><li><a href="<?php echo esc_url( $links['taxi'] ); ?>">Grab 택시 실제 요금과 차량 확인</a></li><li><a href="<?php echo esc_url( $links['car_cost'] ); ?>">H-1 장거리 출퇴근 비용</a></li><li><a href="<?php echo esc_url( $links['monsoon'] ); ?>">우기 침수로 출근하지 못한 경험</a></li><li><a href="<?php echo esc_url( $links['market'] ); ?>">Myanmar Plaza 장보기와 아이 동선</a></li><li><a href="<?php echo esc_url( $links['vegetables'] ); ?>">Viber 채소 당일 배달 경험</a></li><li><a href="<?php echo esc_url( $links['food'] ); ?>">GrabFood 배달 시간과 KBZPay 결제</a></li></ul>
 		</section>
 
 		<aside class="livingtmw-life-guide__notice"><strong>정보를 이용하기 전에</strong><p>이 안내서는 작성자의 현지 생활 경험과 공개 자료를 바탕으로 한 출발점입니다. 환율, 요금, 법률, 입국·금융 조건과 업체 서비스는 달라질 수 있으므로 계약이나 결제 전에 관계 기관과 서비스 제공자의 최신 안내를 확인하세요.</p></aside>

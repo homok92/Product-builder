@@ -12,7 +12,7 @@ const LIVINGTMW_PRIMARY_CATEGORY_SLUG = 'yangon-korean-local-services';
 
 /** Consolidate published and scheduled posts into one durable category. */
 function livingtmw_consolidate_categories(): void {
-	$revision = '2026-08-yangon-services-v2';
+	$revision = '2026-08-yangon-services-v3';
 	if ( $revision === get_option( 'livingtmw_category_revision' ) ) {
 		return;
 	}
@@ -33,6 +33,14 @@ function livingtmw_consolidate_categories(): void {
 	}
 
 	$term_id = (int) ( is_array( $term ) ? $term['term_id'] : $term );
+	wp_update_term(
+		$term_id,
+		'category',
+		array(
+			'name'        => LIVINGTMW_PRIMARY_CATEGORY_NAME,
+			'description' => '양곤에서 약 1년간 생활한 한국인 운영자가 Grab, KBZPay, ATOM, APN·MPT, 주거·전기·병원과 가족생활 서비스를 직접 이용하며 기록한 비용, 실패 사례와 확인 방법을 모았습니다.',
+		)
+	);
 	$post_ids = get_posts(
 		array(
 			'post_type'        => 'post',
@@ -103,11 +111,11 @@ add_action( 'template_redirect', 'livingtmw_retire_feed_urls', 0 );
 
 /** Consolidate obsolete tag archives into the single editorial category. */
 function livingtmw_is_indexable_tag_archive(): bool {
-	return is_tag() && 92 === (int) get_queried_object_id();
+	return false;
 }
 
 function livingtmw_redirect_tag_archives(): void {
-	if ( ! is_tag() || is_feed() || livingtmw_is_indexable_tag_archive() ) {
+	if ( ! is_tag() || is_feed() ) {
 		return;
 	}
 	$term = get_term_by( 'slug', LIVINGTMW_PRIMARY_CATEGORY_SLUG, 'category' );
