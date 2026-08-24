@@ -315,6 +315,13 @@ function livingtmw_seo_image( int $post_id = 0 ): array {
 		45 => array( 'articles', 'yangon-hospital-visit.png' ),
 		47 => array( 'articles', 'yangon-korea-cost-comparison.png' ),
 	);
+	if ( ! isset( $images[ $post_id ] ) && function_exists( 'livingtmw_experience_post_image' ) ) {
+		$post_slug = (string) get_post_field( 'post_name', $post_id );
+		$calendar_image = livingtmw_experience_post_image( $post_slug );
+		if ( ! empty( $calendar_image ) ) {
+			$images[ $post_id ] = array( 'articles', $calendar_image[0] );
+		}
+	}
 
 	if ( ! isset( $images[ $post_id ] ) ) {
 		return array();

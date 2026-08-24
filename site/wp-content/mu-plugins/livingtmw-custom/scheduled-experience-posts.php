@@ -7,6 +7,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/** Return the editorial image assigned to each post in this calendar. */
+function livingtmw_experience_post_image( string $slug ): array {
+	$images = array(
+		'myanmar-plaza-market-place-family-shopping' => array( 'myanmar-plaza-family-shopping.png', '아이와 함께 양곤의 대형마트에서 장보는 가족 참고 이미지' ),
+		'yangon-viber-vegetable-delivery-maso'        => array( 'yangon-viber-vegetable-delivery.png', '양곤 아파트에서 신선 채소를 배달받는 참고 이미지' ),
+		'yangon-coway-wave-water-cost-comparison'    => array( 'yangon-water-cost-comparison.png', '양곤 가정의 정수기와 생수 이용을 비교한 참고 이미지' ),
+		'yangon-korean-family-medicine-kit-cll'      => array( 'yangon-family-medicine-kit.png', '양곤 생활을 위해 정리한 가족 상비약 참고 이미지' ),
+		'yangon-live-in-nanny-hiring-experience'     => array( 'yangon-live-in-nanny-interview.png', '양곤 가정에서 상주 내니 면접을 진행하는 참고 이미지' ),
+		'korea-to-yangon-duro-air-shipping'          => array( 'korea-yangon-shipping.png', '한국에서 양곤으로 항공 및 해상 운송을 준비하는 참고 이미지' ),
+		'time-city-coco-kids-playground-review'      => array( 'yangon-kids-playground.png', '양곤 실내 키즈카페에서 보호자와 아이가 이용하는 참고 이미지' ),
+		'yangon-dog-allergy-food-and-grooming'       => array( 'yangon-allergy-dog-care.png', '양곤에서 알레르기 반려견 용품을 관리하는 참고 이미지' ),
+		'yangon-korean-baby-supplies-buying-plan'    => array( 'yangon-baby-supplies.png', '양곤 생활을 위한 아기용품과 이유식 재료 준비 참고 이미지' ),
+	);
+
+	return $images[ $slug ] ?? array();
+}
+
 /** Build a consistent disclosure and source block without claiming that prices are current forever. */
 function livingtmw_experience_post_footer( string $checked, array $sources = array() ): string {
 	$html  = '<div class="livingtmw-field-note"><strong>경험 범위</strong> 이 글의 가격과 조건은 작성자가 양곤에서 직접 이용하며 확인한 사례입니다. 지점, 재고, 계약, 환율과 시기에 따라 달라질 수 있으므로 결제·계약 전 판매처에 다시 확인하세요.</div>';
@@ -96,7 +113,7 @@ function livingtmw_august_experience_posts(): array {
 
 /** Insert or update the calendar exactly once per content revision. */
 function livingtmw_seed_august_experience_posts(): void {
-	$revision = '2026-08-22-experience-calendar-v1';
+	$revision = '2026-08-24-experience-calendar-images-v2';
 	if ( $revision === get_option( 'livingtmw_august_experience_posts_revision' ) ) {
 		return;
 	}
@@ -107,13 +124,18 @@ function livingtmw_seed_august_experience_posts(): void {
 
 	foreach ( livingtmw_august_experience_posts() as $entry ) {
 		$existing = get_page_by_path( $entry['slug'], OBJECT, 'post' );
-		$is_today = '2026-08-22' === substr( $entry['date'], 0, 10 );
+		$is_due   = strtotime( $entry['date'] ) <= current_time( 'timestamp' );
+		$image    = livingtmw_experience_post_image( $entry['slug'] );
+		$content  = $entry['content'];
+		if ( ! empty( $image ) ) {
+			$content = livingtmw_article_image( $image[0], $image[1] ) . $content;
+		}
 		$postarr = array(
 			'post_title'    => $entry['title'],
 			'post_name'     => $entry['slug'],
 			'post_excerpt'  => $entry['excerpt'],
-			'post_content'  => $entry['content'],
-			'post_status'   => $is_today ? 'publish' : 'future',
+			'post_content'  => $content,
+			'post_status'   => $is_due ? 'publish' : 'future',
 			'post_date'     => $entry['date'],
 			'post_date_gmt' => get_gmt_from_date( $entry['date'] ),
 			'post_type'     => 'post',
