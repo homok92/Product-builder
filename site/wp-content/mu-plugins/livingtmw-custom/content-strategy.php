@@ -135,6 +135,31 @@ function livingtmw_refresh_versioned_module_cache(): void {
 }
 add_action( 'init', 'livingtmw_refresh_versioned_module_cache', 2 );
 
+/** Consolidate the retired fortune URL even while an old dashboard opcode is draining. */
+function livingtmw_redirect_retired_fortune(): void {
+	$request_uri = (string) wp_unslash( $_SERVER['REQUEST_URI'] ?? '' );
+	if ( str_starts_with( $request_uri, '/today-fortune/' ) || ( isset( $_GET['page_id'] ) && 104 === (int) $_GET['page_id'] ) ) {
+		wp_safe_redirect( home_url( '/' ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'livingtmw_redirect_retired_fortune', 1 );
+
+/** Remove stale off-topic navigation emitted by a host-level cached callback. */
+function livingtmw_strip_retired_fortune_markup( string $html ): string {
+	$html = (string) preg_replace( '#<section\b[^>]*class=["\'][^"\']*livingtmw-home-carousel__slide--fortune[^"\']*["\'][^>]*>.*?</section>#uis', '', $html );
+	$html = (string) preg_replace( '#<a\b[^>]*href=["\'][^"\']*(?:today-fortune|(?:\?|&amp;|&)page_id=104)[^"\']*["\'][^>]*>.*?</a>#uis', '', $html );
+	$html = (string) preg_replace( '#<button\b[^>]*data-carousel-dot=["\']3["\'][^>]*>.*?</button>#uis', '', $html );
+	return $html;
+}
+
+function livingtmw_start_quality_output_buffer(): void {
+	if ( ! is_admin() && ! wp_is_json_request() && ! is_feed() ) {
+		ob_start( 'livingtmw_strip_retired_fortune_markup' );
+	}
+}
+add_action( 'template_redirect', 'livingtmw_start_quality_output_buffer', 5 );
+
 /** Consolidate obsolete tag archives into the single editorial category. */
 function livingtmw_is_indexable_tag_archive(): bool {
 	return false;
