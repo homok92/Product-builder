@@ -123,6 +123,19 @@ function livingtmw_ensure_life_guide_page(): void {
 add_action( 'init', 'livingtmw_ensure_life_guide_page', 22 );
 
 function livingtmw_guide_post_url( int $post_id ): string {
+	$post = get_post( $post_id );
+	if (
+		$post instanceof WP_Post
+		&& 'publish' !== $post->post_status
+		&& function_exists( 'livingtmw_retired_post_targets' )
+		&& function_exists( 'livingtmw_curation_target_url' )
+	) {
+		$targets = livingtmw_retired_post_targets();
+		if ( isset( $targets[ $post_id ] ) ) {
+			return livingtmw_curation_target_url( $targets[ $post_id ] );
+		}
+	}
+
 	$url = get_permalink( $post_id );
 	return $url ? $url : home_url( '/' );
 }

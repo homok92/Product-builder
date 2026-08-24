@@ -31,3 +31,15 @@ Approval is decided by Google and cannot be guaranteed by code. Before applying,
 7. A factual review for policy, finance, legal, and safety claims.
 
 Do not invent first-hand experience, sources, credentials, prices, or update dates. Do not bulk-generate near-duplicate articles merely to increase the post count.
+
+## 2026-08-24 content curation
+
+The following overlapping or mainly generic legacy posts are automatically
+moved to draft by `adsense-content-curation.php`: 23, 27, 31, 33, 43, and 47.
+Their former URLs permanently redirect to a stronger first-hand guide with the
+same reader intent. Nothing is deleted, and increasing the curation revision
+allows a future editorial pass to change the selection safely.
+
+Public author labels now use `내일의 생활 편집팀` without modifying the
+WordPress administrator account. The fortune tool remains `noindex` and is
+excluded from the XML sitemap.
