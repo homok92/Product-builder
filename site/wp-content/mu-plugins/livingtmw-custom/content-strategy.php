@@ -121,6 +121,20 @@ add_filter( 'comments_open', '__return_false', 20 );
 add_filter( 'pings_open', '__return_false', 20 );
 add_action( 'template_redirect', 'livingtmw_retire_feed_urls', 0 );
 
+/** Clear stale host opcode entries after the dashboard module was versioned. */
+function livingtmw_refresh_versioned_module_cache(): void {
+	if ( '2' === get_option( 'livingtmw_dashboard_opcode_revision' ) ) {
+		return;
+	}
+	if ( function_exists( 'opcache_invalidate' ) ) {
+		opcache_invalidate( dirname( __DIR__ ) . '/livingtmw-custom.php', true );
+		opcache_invalidate( __DIR__ . '/living-tools.php', true );
+		opcache_invalidate( __DIR__ . '/living-tools-v2.php', true );
+	}
+	update_option( 'livingtmw_dashboard_opcode_revision', '2', false );
+}
+add_action( 'init', 'livingtmw_refresh_versioned_module_cache', 2 );
+
 /** Consolidate obsolete tag archives into the single editorial category. */
 function livingtmw_is_indexable_tag_archive(): bool {
 	return false;
