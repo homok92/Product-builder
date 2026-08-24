@@ -108,6 +108,17 @@ function livingtmw_retire_feed_urls(): void {
 	echo 'RSS/Atom feed URLs are no longer served.';
 	exit;
 }
+
+/** Stop publishing discovery links for feed endpoints that deliberately return 410. */
+function livingtmw_remove_feed_discovery(): void {
+	remove_action( 'wp_head', 'feed_links', 2 );
+	remove_action( 'wp_head', 'feed_links_extra', 3 );
+}
+add_action( 'init', 'livingtmw_remove_feed_discovery', 1 );
+
+/** This editorial site does not accept public comments or pingbacks. */
+add_filter( 'comments_open', '__return_false', 20 );
+add_filter( 'pings_open', '__return_false', 20 );
 add_action( 'template_redirect', 'livingtmw_retire_feed_urls', 0 );
 
 /** Consolidate obsolete tag archives into the single editorial category. */

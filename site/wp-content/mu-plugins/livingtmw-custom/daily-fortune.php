@@ -10,14 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 function livingtmw_ensure_fortune_page(): void {
 	$page = get_page_by_path( 'today-fortune', OBJECT, 'page' );
 	if ( $page ) {
-		if ( '2' !== get_option( 'livingtmw_fortune_page_version' ) ) {
+		if ( 'draft' !== $page->post_status || '3' !== get_option( 'livingtmw_fortune_page_version' ) ) {
 			wp_update_post(
 				array(
 					'ID'           => (int) $page->ID,
 					'post_content' => '[livingtmw_daily_fortune]',
+					'post_status'  => 'draft',
 				)
 			);
-			update_option( 'livingtmw_fortune_page_version', '2', false );
+			update_option( 'livingtmw_fortune_page_version', '3', false );
 		}
 		return;
 	}
@@ -27,13 +28,13 @@ function livingtmw_ensure_fortune_page(): void {
 			'post_title'     => '오늘의 운세',
 			'post_name'      => 'today-fortune',
 			'post_content'   => '[livingtmw_daily_fortune]',
-			'post_status'    => 'publish',
+			'post_status'    => 'draft',
 			'post_type'      => 'page',
 			'comment_status' => 'closed',
 		)
 	);
 	if ( $post_id && ! is_wp_error( $post_id ) ) {
-		update_option( 'livingtmw_fortune_page_version', '2', false );
+		update_option( 'livingtmw_fortune_page_version', '3', false );
 	}
 }
 add_action( 'init', 'livingtmw_ensure_fortune_page', 25 );

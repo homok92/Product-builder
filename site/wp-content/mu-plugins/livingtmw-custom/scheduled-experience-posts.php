@@ -141,7 +141,8 @@ function livingtmw_seed_august_experience_posts(): void {
 			'post_type'     => 'post',
 			'post_author'   => 1,
 			'post_category' => $category_id > 0 ? array( $category_id ) : array(),
-			'comment_status' => 'open',
+			'comment_status' => 'closed',
+			'ping_status'    => 'closed',
 		);
 		if ( $existing instanceof WP_Post ) {
 			$postarr['ID'] = $existing->ID;

@@ -164,8 +164,6 @@ function livingtmw_render_living_tools(): void {
 		return;
 	}
 	$rates = get_option( 'livingtmw_market_rates', livingtmw_default_market_rates() );
-	$fortune_page = get_page_by_path( 'today-fortune', OBJECT, 'page' );
-	$fortune_url  = $fortune_page ? get_permalink( $fortune_page ) : home_url( '/today-fortune/' );
 	$guide_page   = get_page_by_path( 'myanmar-life-guide', OBJECT, 'page' );
 	$guide_url    = $guide_page ? get_permalink( $guide_page ) : home_url( '/myanmar-life-guide/' );
 	$recent_posts = get_posts(
@@ -191,7 +189,6 @@ function livingtmw_render_living_tools(): void {
 				<a href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">사이트 소개</a>
 				<a href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
 				<a href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">미얀마 가이드</a>
-				<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
 				<details class="livingtmw-home-search">
 					<summary aria-label="검색 열기"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="screen-reader-text">검색</span></summary>
 					<form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
@@ -224,20 +221,11 @@ function livingtmw_render_living_tools(): void {
 					</div>
 				</section>
 				<?php endforeach; ?>
-				<section class="livingtmw-home-carousel__slide livingtmw-home-carousel__slide--fortune" aria-hidden="true" data-carousel-slide>
-					<div class="livingtmw-home-carousel__fortune-symbol" aria-hidden="true">✦</div>
-					<div class="livingtmw-home-feature__content">
-						<p class="livingtmw-tools__eyebrow">TODAY'S FORTUNE</p>
-						<h2>오늘의 운세를<br>확인해 보세요</h2>
-						<p>생년월일을 바탕으로 오늘의 흐름과 행운 포인트를 간편하게 확인할 수 있습니다.</p>
-						<a href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세 보기 <span aria-hidden="true">→</span></a>
-					</div>
-				</section>
 			</div>
 			<button class="livingtmw-home-carousel__arrow livingtmw-home-carousel__arrow--prev" type="button" aria-label="이전 카드" data-carousel-prev>‹</button>
 			<button class="livingtmw-home-carousel__arrow livingtmw-home-carousel__arrow--next" type="button" aria-label="다음 카드" data-carousel-next>›</button>
 			<div class="livingtmw-home-carousel__dots" aria-label="카드 선택">
-				<?php for ( $dot = 0; $dot < count( $featured_posts ) + 1; $dot++ ) : ?>
+				<?php for ( $dot = 0; $dot < count( $featured_posts ); $dot++ ) : ?>
 				<button type="button" aria-label="<?php echo esc_attr( (string) ( $dot + 1 ) ); ?>번 카드" aria-current="<?php echo 0 === $dot ? 'true' : 'false'; ?>" data-carousel-dot="<?php echo esc_attr( (string) $dot ); ?>"></button>
 				<?php endfor; ?>
 			</div>
@@ -317,7 +305,6 @@ function livingtmw_render_interior_chrome(): void {
 	if ( is_front_page() || is_home() ) {
 		return;
 	}
-	$fortune_url = home_url( '/today-fortune/' );
 	$guide_url   = home_url( '/myanmar-life-guide/' );
 	?>
 	<style id="livingtmw-interior-chrome-inline">body:not(.home):not(.blog) header#masthead,body:not(.home):not(.blog) .site-header,body:not(.home):not(.blog) nav#site-navigation,body:not(.home):not(.blog) .main-navigation,body:not(.home):not(.blog) .site-branding,body:not(.home):not(.blog) .site-logo{display:none!important}.livingtmw-shared-chrome{box-sizing:border-box!important;margin:0!important;max-width:none!important;padding:28px 20px 0!important;width:100%!important}@media(max-width:768px){.livingtmw-shared-chrome{padding:28px 12px 0!important}}</style>
@@ -333,7 +320,6 @@ function livingtmw_render_interior_chrome(): void {
 				<a<?php echo is_page( 'about-livingtmw' ) ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( home_url( '/about-livingtmw/' ) ); ?>">사이트 소개</a>
 				<a<?php echo is_page( 'myanmar-life-guide' ) ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( $guide_url ); ?>">미얀마 생활</a>
 				<a<?php echo is_category( LIVINGTMW_PRIMARY_CATEGORY_SLUG ) || is_single() ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ) ); ?>">미얀마 가이드</a>
-				<a<?php echo is_page( 'today-fortune' ) ? ' class="is-current"' : ''; ?> href="<?php echo esc_url( $fortune_url ); ?>">오늘의 운세</a>
 				<details class="livingtmw-home-search">
 					<summary aria-label="검색 열기"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="screen-reader-text">검색</span></summary>
 					<form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>"><label><span class="screen-reader-text">검색어</span><input type="search" name="s" placeholder="검색어를 입력하세요" required></label><button type="submit">검색</button></form>
@@ -391,7 +377,6 @@ add_filter(
 			'사이트 소개'   => home_url( '/about-livingtmw/' ),
 			'미얀마 생활'   => home_url( '/myanmar-life-guide/' ),
 			'미얀마 가이드' => home_url( '/category/' . LIVINGTMW_PRIMARY_CATEGORY_SLUG . '/' ),
-			'오늘의 운세' => home_url( '/today-fortune/' ),
 		);
 		$html = '';
 		foreach ( $links as $label => $url ) {
