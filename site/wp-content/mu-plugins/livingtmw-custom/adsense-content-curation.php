@@ -174,3 +174,9 @@ function livingtmw_public_author_name( string $display_name ): string {
 }
 add_filter( 'the_author', 'livingtmw_public_author_name' );
 add_filter( 'get_the_author_display_name', 'livingtmw_public_author_name' );
+
+/** Point public bylines to the editorial profile instead of thin author archives. */
+function livingtmw_public_author_link( string $url ): string {
+	return is_admin() ? $url : home_url( '/about-livingtmw/' );
+}
+add_filter( 'author_link', 'livingtmw_public_author_link' );
