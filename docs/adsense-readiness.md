@@ -35,7 +35,8 @@ Do not invent first-hand experience, sources, credentials, prices, or update dat
 ## 2026-08-24 content curation
 
 The following overlapping or mainly generic legacy posts are automatically
-moved to draft by `adsense-content-curation.php`: 23, 27, 31, 33, 43, and 47.
+moved to draft by `adsense-content-curation.php`: 8, 13, 23, 27, 29, 31, 33,
+39, 43, 45, and 47.
 Their former URLs permanently redirect to a stronger first-hand guide with the
 same reader intent. Nothing is deleted, and increasing the curation revision
 allows a future editorial pass to change the selection safely.
@@ -43,3 +44,8 @@ allows a future editorial pass to change the selection safely.
 Public author labels now use `내일의 생활 편집팀` without modifying the
 WordPress administrator account. The fortune tool remains `noindex` and is
 excluded from the XML sitemap.
+
+The nine retained legacy articles no longer render their repetitive numbered
+starter copy. Each begins with a topic-specific field-note scope and continues
+with its first-hand evidence, calculations, limitations, and cited sources.
+Archive excerpts use the same evidence-led summaries.
