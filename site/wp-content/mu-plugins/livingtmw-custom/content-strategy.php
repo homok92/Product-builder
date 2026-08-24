@@ -12,7 +12,7 @@ const LIVINGTMW_PRIMARY_CATEGORY_SLUG = 'yangon-korean-local-services';
 
 /** Consolidate published and scheduled posts into one durable category. */
 function livingtmw_consolidate_categories(): void {
-	$revision = '2026-08-yangon-services-v3';
+	$revision = '2026-08-yangon-services-v4';
 	if ( $revision === get_option( 'livingtmw_category_revision' ) ) {
 		return;
 	}
@@ -52,6 +52,7 @@ function livingtmw_consolidate_categories(): void {
 	);
 	foreach ( $post_ids as $post_id ) {
 		wp_set_post_terms( (int) $post_id, array( $term_id ), 'category', false );
+		wp_set_post_terms( (int) $post_id, array(), 'post_tag', false );
 	}
 
 	update_option( 'default_category', $term_id );
