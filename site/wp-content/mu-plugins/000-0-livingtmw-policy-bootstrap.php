@@ -1,23 +1,21 @@
 <?php
-/**
- * Load the audited dashboard module before any stale host opcode can reuse the
- * previous public exchange-rate implementation.
- */
+/** Load before the host's retained 000 bootstrap and invalidate stale opcodes. */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$refresh_targets = array(
+$bootstrap_targets = array(
+	__DIR__ . '/000-livingtmw-refresh.php',
 	__DIR__ . '/livingtmw-custom.php',
 	__DIR__ . '/livingtmw-custom/living-tools-v2.php',
 	__DIR__ . '/livingtmw-custom/living-tools-v3.php',
 );
 
 if ( function_exists( 'opcache_invalidate' ) ) {
-	foreach ( $refresh_targets as $refresh_target ) {
-		if ( is_file( $refresh_target ) ) {
-			opcache_invalidate( $refresh_target, true );
+	foreach ( $bootstrap_targets as $bootstrap_target ) {
+		if ( is_file( $bootstrap_target ) ) {
+			opcache_invalidate( $bootstrap_target, true );
 		}
 	}
 }
