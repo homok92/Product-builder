@@ -56,6 +56,7 @@ jobs:
           rm -f /wp-data/wp-content/mu-plugins/livingtmw-custom/living-tools-v3.php
           rm -f /wp-data/wp-content/mu-plugins/zz-livingtmw-policy-output.php
           rm -f /wp-data/wp-content/mu-plugins/zz-livingtmw-cbbank-rates.php
+          rm -f /wp-data/wp-content/mu-plugins/zz-livingtmw-cbbank-rates-v2.php
           put -O /wp-data site/public/robots.txt
           bye
           LFTP
