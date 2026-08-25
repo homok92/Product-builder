@@ -27,7 +27,7 @@ function livingtmw_ensure_trust_pages(): void {
 <h2>정보 이용 시 참고사항</h2>
 <p>미얀마의 환율, 물가, 법률, 행정 절차와 사업자별 서비스 조건은 예고 없이 달라질 수 있습니다. 중요한 계약이나 금융·법률·의료 결정을 내리기 전에는 관계 기관과 해당 서비스 제공자의 최신 공식 안내를 함께 확인해 주세요.</p>
 <h2>운영 및 문의</h2>
-<p>사이트는 내일의 생활 편집팀이 운영합니다. 잘못된 정보, 변경된 정보, 저작권 문제 또는 정정이 필요한 내용을 발견하면 <a href="mailto:help@livingtmw.com">help@livingtmw.com</a>으로 알려주세요. 확인 가능한 내용을 검토해 필요한 경우 수정하겠습니다.</p>',
+<p>사이트는 내일의 생활 편집팀이 운영합니다. 잘못된 정보, 변경된 정보, 저작권 문제 또는 정정이 필요한 내용을 발견하면 <a href="mailto:eft.ho.bang@gmail.com">eft.ho.bang@gmail.com</a>으로 알려주세요. 확인 가능한 내용을 검토해 필요한 경우 수정하겠습니다.</p>',
 		),
 		'editorial-policy' => array(
 			'title'   => '콘텐츠 제작 및 검수 원칙',
@@ -40,7 +40,7 @@ function livingtmw_ensure_trust_pages(): void {
 <h2>광고와 편집의 분리</h2>
 <p>광고나 제휴 관계가 콘텐츠의 결론을 좌우하지 않도록 노력합니다. 광고 또는 제휴 링크가 포함된 콘텐츠는 독자가 알아볼 수 있도록 표시하며, 광고를 콘텐츠나 탐색 메뉴로 오인하게 만드는 배치를 사용하지 않습니다.</p>
 <h2>정정 요청</h2>
-<p>사실 오류나 최신 정보 제보는 <a href="mailto:help@livingtmw.com">help@livingtmw.com</a>으로 보내주세요. 관련 글 주소와 확인 가능한 근거를 함께 보내주시면 검토에 도움이 됩니다.</p>',
+<p>사실 오류나 최신 정보 제보는 <a href="mailto:eft.ho.bang@gmail.com">eft.ho.bang@gmail.com</a>으로 보내주세요. 관련 글 주소와 확인 가능한 근거를 함께 보내주시면 검토에 도움이 됩니다.</p>',
 		),
 		'advertising-disclosure' => array(
 			'title'   => '광고 및 이미지 공개 원칙',
@@ -51,7 +51,7 @@ function livingtmw_ensure_trust_pages(): void {
 <h2>설명용 이미지</h2>
 <p>게시물의 일부 대표 이미지는 주제를 쉽게 이해하도록 AI로 제작한 설명용 이미지입니다. 실제 장소, 인물, 상품 또는 진료 장면을 촬영한 사진이 아니며, 해당 이미지의 캡션에도 이 사실을 표시합니다. 정보 판단은 이미지가 아니라 본문과 연결된 자료를 기준으로 해주세요.</p>
 <h2>광고 관련 문의</h2>
-<p>광고가 콘텐츠나 사이트 기능으로 오인될 수 있거나 부적절한 광고를 발견한 경우 화면과 페이지 주소를 <a href="mailto:help@livingtmw.com">help@livingtmw.com</a>으로 보내주세요.</p>',
+<p>광고가 콘텐츠나 사이트 기능으로 오인될 수 있거나 부적절한 광고를 발견한 경우 화면과 페이지 주소를 <a href="mailto:eft.ho.bang@gmail.com">eft.ho.bang@gmail.com</a>으로 보내주세요.</p>',
 		),
 	);
 
@@ -230,7 +230,7 @@ function livingtmw_add_article_trust_box( string $content ): string {
 		. '<strong>내일의 생활 편집팀</strong>'
 		. '<div class="livingtmw-article-trust__dates">' . $dates . '</div>'
 		. '<p>운영자는 약 1년간 양곤 Inno City에 거주하며 ATOM, APN·MPT, KBZ Bank·KBZPay, Grab과 현지 병원 서비스를 직접 이용했습니다. 개인 경험과 공개 자료를 구분해 정리했으며 가격, 정책 및 서비스 조건은 달라질 수 있으므로 중요한 결정 전에는 관련 기관의 최신 안내를 확인해 주세요.</p>'
-		. '<p><a href="' . esc_url( home_url( '/editorial-policy/' ) ) . '">콘텐츠 제작·검수 원칙</a> · <a href="mailto:help@livingtmw.com?subject=' . rawurlencode( '콘텐츠 정정 요청: ' . get_the_title() ) . '">정보 수정 제보</a></p>'
+		. '<p><a href="' . esc_url( home_url( '/editorial-policy/' ) ) . '">콘텐츠 제작·검수 원칙</a> · <a href="mailto:eft.ho.bang@gmail.com?subject=' . rawurlencode( '콘텐츠 정정 요청: ' . get_the_title() ) . '">정보 수정 제보</a></p>'
 		. '</aside>';
 
 	return $content . $box;
@@ -444,7 +444,7 @@ function livingtmw_quality_head(): void {
 				'@id'   => home_url( '/#organization' ),
 				'name'  => '내일의 생활 편집팀',
 				'url'   => home_url( '/' ),
-				'email' => 'help@livingtmw.com',
+				'email' => 'eft.ho.bang@gmail.com',
 				'logo'  => array(
 					'@type' => 'ImageObject',
 					'url'   => content_url( 'mu-plugins/livingtmw-custom/images/logo-dark.png' ),
