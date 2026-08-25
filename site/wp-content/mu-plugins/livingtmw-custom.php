@@ -16,7 +16,7 @@ require_once __DIR__ . '/livingtmw-custom/content-strategy.php';
 require_once __DIR__ . '/livingtmw-custom/scheduled-experience-posts.php';
 require_once __DIR__ . '/livingtmw-custom/adsense-content-curation.php';
 if ( ! function_exists( 'livingtmw_default_market_rates' ) ) {
-	require_once __DIR__ . '/livingtmw-custom/living-tools-v3.php';
+	require_once __DIR__ . '/livingtmw-custom/living-tools-v2.php';
 }
 require_once __DIR__ . '/livingtmw-custom/daily-fortune.php';
 
