@@ -87,35 +87,9 @@
 		});
 	}
 
-	function formatRate(value, decimals) {
-		return Number(value).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-	}
-
-	function loadMarketRates() {
-		var market = document.querySelector('.livingtmw-market-rate');
-		if (!market) return;
-		fetch('/wp-json/livingtmw/v1/market-rate', { cache: 'no-store', credentials: 'same-origin' })
-			.then(function (response) {
-				if (!response.ok) throw new Error('Rate response failed');
-				return response.json();
-			})
-			.then(function (rates) {
-				market.querySelector('[data-market-usd-buy]').textContent = formatRate(rates.usd_buy, 2);
-				market.querySelector('[data-market-usd-sell]').textContent = formatRate(rates.usd_sell, 2);
-				market.querySelector('[data-market-krw-buy]').textContent = formatRate(rates.krw_buy, 2);
-				market.querySelector('[data-market-krw-sell]').textContent = formatRate(rates.krw_sell, 2);
-				var status = rates.status === 'live' ? '자동 업데이트 · ' + (rates.source_updated_at || rates.updated_at) : '마지막 정상값 · ' + rates.updated_at;
-				market.querySelector('[data-market-status]').textContent = status;
-			})
-			.catch(function () {
-				market.querySelector('[data-market-status]').textContent = '자동 갱신 지연 · 마지막 저장값';
-			});
-	}
-
 	if (weatherCard) {
 		var retry = weatherCard.querySelector('[data-weather-retry]');
 		if (retry) retry.addEventListener('click', loadWeather);
 		loadWeather();
 	}
-	loadMarketRates();
 }());

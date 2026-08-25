@@ -96,25 +96,6 @@ function livingtmw_fetch_live_market_rates( bool $force = false ): array {
 }
 
 add_action(
-	'rest_api_init',
-	static function (): void {
-		register_rest_route(
-			'livingtmw/v1',
-			'/market-rate',
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'permission_callback' => '__return_true',
-				'callback'            => static function (): WP_REST_Response {
-					$response = new WP_REST_Response( livingtmw_fetch_live_market_rates() );
-					$response->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
-					return $response;
-				},
-			)
-		);
-	}
-);
-
-add_action(
 	'admin_init',
 	static function (): void {
 		register_setting(
@@ -259,13 +240,10 @@ function livingtmw_render_living_tools(): void {
 				<div class="livingtmw-weather__error" hidden><p>현재 날씨를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.</p><button type="button" data-weather-retry>다시 불러오기</button></div>
 			</article>
 
-			<article class="livingtmw-market-rate" aria-labelledby="livingtmw-market-title">
-				<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">15분마다 자동 확인</p><h3 id="livingtmw-market-title">오늘의 바깥환율</h3></div><span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span></div>
-				<div class="livingtmw-market-rate__rows">
-					<div><strong>1 USD</strong><span><small>BUY</small><b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div>
-					<div><strong>1원</strong><span><small>BUY</small><b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div>
-				</div>
-				<p><span data-market-status>최신값 확인 중</span> · EGCurrency Black Market 기준 비공식 시장 참고값이며 실제 거래가는 달라질 수 있습니다. <a href="https://egcurrency.com/en/currency/MMK/blackMarket" target="_blank" rel="noopener noreferrer">출처</a></p>
+			<article class="livingtmw-market-rate livingtmw-market-rate--official" aria-labelledby="livingtmw-market-title">
+				<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">거래 전 직접 확인</p><h3 id="livingtmw-market-title">공식 환율 안내</h3></div><span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span></div>
+				<p>환전과 송금 전에는 미얀마 중앙은행 또는 허가받은 금융기관의 당일 고시와 수수료를 직접 확인하세요. 내일의 생활은 비공식 환전 거래를 권유하거나 중개하지 않습니다.</p>
+				<p><a href="https://forex.cbm.gov.mm/" target="_blank" rel="noopener noreferrer">미얀마 중앙은행 공식 환율 확인</a></p>
 			</article>
 		</div>
 			</div>
@@ -346,9 +324,10 @@ function livingtmw_render_interior_rail(): void {
 			<div class="livingtmw-weather__content" hidden><div class="livingtmw-weather__score-row"><strong class="livingtmw-weather__score"><span data-weather-score>--</span><small>/100</small></strong><div><span class="livingtmw-weather__level" data-weather-level>확인 중</span><p data-weather-summary></p></div></div><dl class="livingtmw-weather__metrics"><div><dt>현재</dt><dd data-weather-temperature>--</dd></div><div><dt>체감</dt><dd data-weather-apparent>--</dd></div><div><dt>비 올 확률<br>(6시간 이내)</dt><dd data-weather-rain>--</dd></div><div><dt>대기질</dt><dd data-weather-aqi>--</dd></div></dl><ul class="livingtmw-weather__tips" data-weather-tips></ul><p class="livingtmw-tool-card__meta">양곤 중심부 기준 · <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p></div>
 			<div class="livingtmw-weather__error" hidden><p>현재 날씨를 불러오지 못했습니다.</p><button type="button" data-weather-retry>다시 불러오기</button></div>
 		</article>
-		<article class="livingtmw-market-rate" aria-labelledby="livingtmw-sidebar-market-title">
-			<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">15분마다 자동 확인</p><h3 id="livingtmw-sidebar-market-title">오늘의 바깥환율</h3></div><span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span></div>
-			<div class="livingtmw-market-rate__rows"><div><strong>1 USD</strong><span><small>BUY</small><b data-market-usd-buy><?php echo esc_html( number_format( (float) $rates['usd_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-usd-sell><?php echo esc_html( number_format( (float) $rates['usd_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div><div><strong>1원</strong><span><small>BUY</small><b data-market-krw-buy><?php echo esc_html( number_format( (float) $rates['krw_buy'], 2, '.', ',' ) ); ?></b><em>MMK</em></span><span><small>SELL</small><b data-market-krw-sell><?php echo esc_html( number_format( (float) $rates['krw_sell'], 2, '.', ',' ) ); ?></b><em>MMK</em></span></div></div>
+		<article class="livingtmw-market-rate livingtmw-market-rate--official" aria-labelledby="livingtmw-sidebar-market-title">
+			<div class="livingtmw-tool-card__heading"><div><p class="livingtmw-tool-card__kicker">거래 전 직접 확인</p><h3 id="livingtmw-sidebar-market-title">공식 환율 안내</h3></div><span class="livingtmw-market-rate__icon" aria-hidden="true">💱</span></div>
+			<p>환전과 송금 전 미얀마 중앙은행 또는 허가 금융기관의 당일 고시와 수수료를 확인하세요. 비공식 거래는 권유하거나 중개하지 않습니다.</p>
+			<p><a href="https://forex.cbm.gov.mm/" target="_blank" rel="noopener noreferrer">중앙은행 공식 환율 확인</a></p>
 		</article>
 	</div>
 	<?php
