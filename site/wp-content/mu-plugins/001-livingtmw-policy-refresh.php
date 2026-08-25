@@ -22,6 +22,4 @@ if ( function_exists( 'opcache_invalidate' ) ) {
 	}
 }
 
-if ( ! function_exists( 'livingtmw_default_market_rates' ) ) {
-	require_once __DIR__ . '/livingtmw-custom/living-tools-v3.php';
-}
+require_once __DIR__ . '/livingtmw-custom/living-tools-v3.php';
