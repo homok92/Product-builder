@@ -13,6 +13,12 @@ function livingtmw_public_tagline( $value ): string {
 }
 add_filter( 'option_blogdescription', 'livingtmw_public_tagline' );
 
+/** Keep legacy theme blocks aligned with the site's current contact address. */
+function livingtmw_current_contact_email( string $block_content ): string {
+	return str_replace( 'help@livingtmw.com', 'eft.ho.bang@gmail.com', $block_content );
+}
+add_filter( 'render_block', 'livingtmw_current_contact_email', 20 );
+
 /**
  * Create durable trust pages once. Existing pages are never overwritten.
  */
