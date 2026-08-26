@@ -111,8 +111,62 @@ function livingtmw_august_experience_posts(): array {
 	);
 }
 
+/**
+ * Recover calendar posts whose scheduled WordPress cron event was missed.
+ *
+ * GitHub's cron request is best-effort, so a successful HTTP request does not
+ * guarantee that every individual future_post event still exists in WordPress.
+ */
+function livingtmw_publish_overdue_experience_posts(): void {
+	if ( get_option( 'livingtmw_august_experience_posts_published' ) ) {
+		return;
+	}
+
+	$schedule = array(
+		'myanmar-plaza-market-place-family-shopping' => '2026-08-22 09:00:00',
+		'yangon-viber-vegetable-delivery-maso'        => '2026-08-23 09:00:00',
+		'yangon-coway-wave-water-cost-comparison'    => '2026-08-24 09:00:00',
+		'yangon-korean-family-medicine-kit-cll'      => '2026-08-25 09:00:00',
+		'yangon-live-in-nanny-hiring-experience'     => '2026-08-26 09:00:00',
+		'korea-to-yangon-duro-air-shipping'          => '2026-08-27 09:00:00',
+		'time-city-coco-kids-playground-review'      => '2026-08-28 09:00:00',
+		'yangon-dog-allergy-food-and-grooming'       => '2026-08-29 09:00:00',
+		'yangon-korean-baby-supplies-buying-plan'    => '2026-08-30 09:00:00',
+	);
+	$now      = current_datetime();
+	$all_done = true;
+
+	foreach ( $schedule as $slug => $scheduled_at ) {
+		$due_at = DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $scheduled_at, wp_timezone() );
+		if ( false === $due_at || $due_at > $now ) {
+			$all_done = false;
+			continue;
+		}
+
+		$post = get_page_by_path( $slug, OBJECT, 'post' );
+		if ( ! $post instanceof WP_Post ) {
+			$all_done = false;
+			continue;
+		}
+
+		if ( 'future' === $post->post_status ) {
+			wp_publish_post( $post->ID );
+		}
+
+		if ( 'publish' !== get_post_status( $post->ID ) ) {
+			$all_done = false;
+		}
+	}
+
+	if ( $all_done ) {
+		update_option( 'livingtmw_august_experience_posts_published', 1, false );
+	}
+}
+
 /** Insert or update the calendar exactly once per content revision. */
 function livingtmw_seed_august_experience_posts(): void {
+	livingtmw_publish_overdue_experience_posts();
+
 	$revision = '2026-08-24-experience-calendar-images-v2';
 	if ( $revision === get_option( 'livingtmw_august_experience_posts_revision' ) ) {
 		return;
