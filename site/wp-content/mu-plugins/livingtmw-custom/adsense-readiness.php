@@ -339,6 +339,13 @@ function livingtmw_seo_image( int $post_id = 0 ): array {
 			$images[ $post_id ] = array( 'articles', $calendar_image[0] );
 		}
 	}
+	if ( ! isset( $images[ $post_id ] ) && function_exists( 'livingtmw_september_guide_image_file' ) ) {
+		$post_slug      = (string) get_post_field( 'post_name', $post_id );
+		$september_file = livingtmw_september_guide_image_file( $post_slug );
+		if ( '' !== $september_file ) {
+			$images[ $post_id ] = array( 'articles', $september_file );
+		}
+	}
 
 	if ( ! isset( $images[ $post_id ] ) ) {
 		return array();
