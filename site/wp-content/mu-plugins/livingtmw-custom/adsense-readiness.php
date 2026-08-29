@@ -89,6 +89,18 @@ function livingtmw_privacy_google_disclosure( string $content ): string {
 }
 add_filter( 'the_content', 'livingtmw_privacy_google_disclosure', 22 );
 
+/** Explain the limited, reviewed use of generative tools without implying AI had the experience. */
+function livingtmw_editorial_ai_disclosure( string $content ): string {
+	if ( ! is_page( 'editorial-policy' ) || false !== strpos( $content, 'livingtmw-ai-editorial-disclosure' ) ) {
+		return $content;
+	}
+
+	return $content . '<section id="livingtmw-ai-editorial-disclosure"><h2>AI 보조 도구 사용 범위</h2>'
+		. '<p>일부 글은 운영자가 제공한 양곤 생활 경험과 직접 확인한 수치, 공개 자료를 바탕으로 생성형 AI를 구성·초안·문장 교정 보조에 사용할 수 있습니다. AI가 현장을 경험했거나 확인하지 않은 사실을 직접 본 것처럼 작성하지 않으며, 개인 경험과 전해 들은 내용, 외부 자료를 본문에서 구분합니다.</p>'
+		. '<p>공개 전에는 제목과 본문의 일치 여부, 수치 계산, 출처 링크, 날짜, 과장되거나 단정적인 표현을 다시 확인합니다. 여러 외부 글을 이어 붙이거나 검색 순위만을 목적으로 같은 내용을 대량 변형해 게시하지 않습니다. AI로 만든 설명 이미지는 실제 현장사진으로 오인하지 않도록 해당 이미지의 캡션에 제작 방식을 표시합니다.</p></section>';
+}
+add_filter( 'the_content', 'livingtmw_editorial_ai_disclosure', 23 );
+
 /**
  * Publish a substantive start-here guide that helps readers navigate the
  * site's first-hand Myanmar living articles in a useful decision order.
