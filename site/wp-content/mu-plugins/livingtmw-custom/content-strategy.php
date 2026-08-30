@@ -123,7 +123,7 @@ add_action( 'template_redirect', 'livingtmw_retire_feed_urls', 0 );
 
 /** Clear stale host opcode entries after the dashboard module was versioned. */
 function livingtmw_refresh_versioned_module_cache(): void {
-	if ( '2' === get_option( 'livingtmw_dashboard_opcode_revision' ) ) {
+	if ( '3' === get_option( 'livingtmw_dashboard_opcode_revision' ) ) {
 		return;
 	}
 	if ( function_exists( 'opcache_invalidate' ) ) {
@@ -131,7 +131,7 @@ function livingtmw_refresh_versioned_module_cache(): void {
 		opcache_invalidate( __DIR__ . '/living-tools.php', true );
 		opcache_invalidate( __DIR__ . '/living-tools-v2.php', true );
 	}
-	update_option( 'livingtmw_dashboard_opcode_revision', '2', false );
+	update_option( 'livingtmw_dashboard_opcode_revision', '3', false );
 }
 add_action( 'init', 'livingtmw_refresh_versioned_module_cache', 2 );
 
