@@ -158,9 +158,9 @@ function livingtmw_render_living_tools(): void {
 	);
 	$featured_posts = array_slice( $recent_posts, 0, 3 );
 	?>
-	<section class="livingtmw-tools" aria-labelledby="livingtmw-tools-title">
+	<section class="livingtmw-tools" aria-labelledby="livingtmw-home-title">
 		<style id="livingtmw-home-width-inline">body.home #page.site,body.blog #page.site,body.home .site-content,body.blog .site-content,body.home .content-area,body.blog .content-area{box-sizing:border-box!important;margin-left:0!important;margin-right:0!important;margin-top:0!important;max-width:none!important;padding-left:0!important;padding-right:0!important;width:100%!important}body.home .site-content,body.blog .site-content{padding-top:0!important}.livingtmw-tools{box-sizing:border-box;max-width:none!important;margin-top:0!important;padding-top:28px!important;width:100%!important}@media(max-width:520px){.livingtmw-tools{padding-left:12px!important;padding-right:12px!important}}</style>
-		<style id="livingtmw-home-alert-inline">.livingtmw-tools>.livingtmw-home-alert{background:linear-gradient(90deg,color-mix(in srgb,var(--livingtmw-dashboard-gold) 14%,var(--livingtmw-dashboard-card)),color-mix(in srgb,var(--livingtmw-dashboard-gold) 23%,var(--livingtmw-dashboard-card)),color-mix(in srgb,var(--livingtmw-dashboard-gold) 14%,var(--livingtmw-dashboard-card)));border-color:color-mix(in srgb,var(--livingtmw-dashboard-gold) 46%,var(--livingtmw-dashboard-line));border-radius:9px;box-sizing:border-box;grid-column:1/-1;grid-row:1;justify-content:center;margin:0 0 -8px;min-height:34px;padding:5px 12px;text-align:center}.livingtmw-tools>.livingtmw-home-alert strong{padding:3px 8px}.livingtmw-tools>.livingtmw-home-alert>span{margin-left:10px}.livingtmw-tools>.livingtmw-home-menu{grid-column:1/-1;grid-row:2}.livingtmw-tools>.livingtmw-home-feature{grid-row:3}.livingtmw-tools .livingtmw-tools__grid{grid-row:3/6}.livingtmw-tools .livingtmw-home-news{grid-row:4}.livingtmw-tools .livingtmw-home-steps{grid-row:5}html[data-theme="dark"] .livingtmw-tools>.livingtmw-home-alert{background:linear-gradient(90deg,#211a0d,#38290c,#211a0d);border-color:#71551b}@media(max-width:860px){.livingtmw-tools>.livingtmw-home-feature{grid-row:3}.livingtmw-tools .livingtmw-tools__grid{grid-row:4}.livingtmw-tools .livingtmw-home-news{grid-row:5}.livingtmw-tools .livingtmw-home-steps{grid-row:6}}@media(max-width:560px){.livingtmw-tools>.livingtmw-home-alert{flex-wrap:nowrap;font-size:11px;justify-content:flex-start;overflow:hidden;white-space:nowrap}.livingtmw-tools>.livingtmw-home-alert strong{font-size:9px}.livingtmw-tools>.livingtmw-home-alert>span{display:none}}</style>
+		<style id="livingtmw-home-alert-inline">.livingtmw-tools>.livingtmw-home-alert{background:linear-gradient(90deg,color-mix(in srgb,var(--livingtmw-dashboard-gold) 14%,var(--livingtmw-dashboard-card)),color-mix(in srgb,var(--livingtmw-dashboard-gold) 23%,var(--livingtmw-dashboard-card)),color-mix(in srgb,var(--livingtmw-dashboard-gold) 14%,var(--livingtmw-dashboard-card)));border-color:color-mix(in srgb,var(--livingtmw-dashboard-gold) 46%,var(--livingtmw-dashboard-line));border-radius:9px;box-sizing:border-box;grid-column:1/-1;grid-row:1;justify-content:center;margin:0 0 -8px;min-height:34px;padding:5px 12px;text-align:center}.livingtmw-tools>.livingtmw-home-alert strong{padding:3px 8px}.livingtmw-tools>.livingtmw-home-alert>span{margin-left:10px}.livingtmw-tools>.livingtmw-home-menu{grid-column:1/-1;grid-row:2}.livingtmw-home-intro{grid-column:1/-1;grid-row:3;padding:8px 4px 2px;text-align:center}.livingtmw-home-intro h1{color:var(--livingtmw-text)!important;font-size:clamp(24px,3vw,38px);letter-spacing:-.04em;line-height:1.2;margin:0 0 7px}.livingtmw-home-intro p{color:var(--livingtmw-muted)!important;font-size:13px;margin:0}.livingtmw-tools>.livingtmw-home-feature{grid-row:4}.livingtmw-tools .livingtmw-tools__grid{grid-row:4/7}.livingtmw-tools .livingtmw-home-news{grid-row:5}.livingtmw-tools .livingtmw-home-steps{grid-row:6}html[data-theme="dark"] .livingtmw-tools>.livingtmw-home-alert{background:linear-gradient(90deg,#211a0d,#38290c,#211a0d);border-color:#71551b}@media(max-width:860px){.livingtmw-tools>.livingtmw-home-feature{grid-row:4}.livingtmw-tools .livingtmw-tools__grid{grid-row:5}.livingtmw-tools .livingtmw-home-news{grid-row:6}.livingtmw-tools .livingtmw-home-steps{grid-row:7}}@media(max-width:560px){.livingtmw-tools>.livingtmw-home-alert{flex-wrap:nowrap;font-size:11px;justify-content:flex-start;overflow:hidden;white-space:nowrap}.livingtmw-tools>.livingtmw-home-alert strong{font-size:9px}.livingtmw-tools>.livingtmw-home-alert>span{display:none}.livingtmw-tools>.livingtmw-home-intro{grid-row:4!important;padding:3px 4px}.livingtmw-home-intro h1{font-size:23px}.livingtmw-home-intro p{font-size:12px}.livingtmw-tools>.livingtmw-home-feature{grid-row:5!important}.livingtmw-tools .livingtmw-tools__grid{grid-row:6!important}.livingtmw-tools .livingtmw-home-news{grid-row:7!important}.livingtmw-tools .livingtmw-home-steps{grid-row:8!important}}</style>
 		<div class="livingtmw-mobile-brand"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="내일의 생활 홈"><img src="<?php echo esc_url( content_url( 'uploads/2026/08/cropped-logo3.png' ) ); ?>" alt="내일의 생활" width="1342" height="434"></a></div>
 		<div class="livingtmw-home-alert" role="note"><strong>새로 시작하는 분께</strong><a href="<?php echo esc_url( $guide_url ); ?>">한국인의 미얀마 생활 준비 순서를 먼저 확인하세요 →</a><span>현지 경험 · 공식 자료 · 업데이트 날짜 확인</span></div>
 		<nav class="livingtmw-home-menu" aria-label="홈페이지 주요 메뉴">
@@ -179,6 +179,10 @@ function livingtmw_render_living_tools(): void {
 				</details>
 			</div>
 		</nav>
+		<header class="livingtmw-home-intro">
+			<h1 id="livingtmw-home-title">한국인을 위한 미얀마·양곤 생활 정보</h1>
+			<p>현지에서 직접 겪은 생활 경험과 공식 자료를 함께 확인해 주거·교통·금융·쇼핑 정보를 정리합니다.</p>
+		</header>
 
 		<article class="livingtmw-home-feature livingtmw-home-carousel" aria-label="추천 콘텐츠" aria-roledescription="carousel" data-home-carousel>
 			<div class="livingtmw-home-carousel__track">
@@ -192,11 +196,7 @@ function livingtmw_render_living_tools(): void {
 					<div class="livingtmw-home-feature__shade"></div>
 					<div class="livingtmw-home-feature__content">
 						<p class="livingtmw-tools__eyebrow">LATEST ARTICLE · <?php echo esc_html( (string) ( $index + 1 ) ); ?>/3</p>
-						<?php if ( 0 === $index ) : ?>
-						<h1><?php echo esc_html( get_the_title( $featured_post ) ); ?></h1>
-						<?php else : ?>
 						<h2><?php echo esc_html( get_the_title( $featured_post ) ); ?></h2>
-						<?php endif; ?>
 						<p><?php echo esc_html( $featured_excerpt ); ?></p>
 						<a href="<?php echo esc_url( get_permalink( $featured_post ) ); ?>">글 읽기 <span aria-hidden="true">→</span></a>
 					</div>

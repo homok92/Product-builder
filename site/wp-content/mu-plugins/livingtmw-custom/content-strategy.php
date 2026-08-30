@@ -145,8 +145,24 @@ function livingtmw_redirect_retired_fortune(): void {
 }
 add_action( 'template_redirect', 'livingtmw_redirect_retired_fortune', 1 );
 
+/**
+ * Disable the host plugin's interactive banner layer during AdSense review.
+ * Its drag/click interception is unrelated to the site's editorial content and
+ * can create an ambiguous ad-click experience.
+ */
+function livingtmw_disable_presslearn_banner_assets(): void {
+	wp_dequeue_style( 'presslearn-banner-styles' );
+	wp_deregister_style( 'presslearn-banner-styles' );
+	wp_dequeue_script( 'presslearn-banner-script-js' );
+	wp_deregister_script( 'presslearn-banner-script-js' );
+}
+add_action( 'wp_enqueue_scripts', 'livingtmw_disable_presslearn_banner_assets', PHP_INT_MAX );
+
 /** Remove stale off-topic navigation emitted by a host-level cached callback. */
 function livingtmw_strip_retired_fortune_markup( string $html ): string {
+	// Fallback for host-level inline assets that are printed outside the normal enqueue queue.
+	$html = (string) preg_replace( '#<style\b[^>]*id=["\']presslearn-[^"\']*["\'][^>]*>.*?</style>#uis', '', $html );
+	$html = (string) preg_replace( '#<script\b[^>]*id=["\']presslearn-[^"\']*["\'][^>]*>.*?</script>#uis', '', $html );
 	$html = (string) preg_replace( '#<section\b[^>]*class=["\'][^"\']*livingtmw-home-carousel__slide--fortune[^"\']*["\'][^>]*>.*?</section>#uis', '', $html );
 	$html = (string) preg_replace( '#<a\b[^>]*href=["\'][^"\']*(?:today-fortune|(?:\?|&amp;|&)page_id=104)[^"\']*["\'][^>]*>.*?</a>#uis', '', $html );
 	$html = (string) preg_replace( '#<button\b[^>]*data-carousel-dot=["\']3["\'][^>]*>.*?</button>#uis', '', $html );
