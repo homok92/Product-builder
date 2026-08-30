@@ -163,6 +163,24 @@ function livingtmw_strip_retired_fortune_markup( string $html ): string {
 	// Fallback for host-level inline assets that are printed outside the normal enqueue queue.
 	$html = (string) preg_replace( '#<style\b[^>]*id=["\']presslearn-[^"\']*["\'][^>]*>.*?</style>#uis', '', $html );
 	$html = (string) preg_replace( '#<script\b[^>]*id=["\']presslearn-[^"\']*["\'][^>]*>.*?</script>#uis', '', $html );
+	// Some hosts retain an older compiled dashboard module. Keep the public home
+	// page semantic even while that opcode entry drains, without duplicating the
+	// canonical heading once the current module is active.
+	if ( ( is_front_page() || is_home() ) && ! str_contains( $html, 'id="livingtmw-home-title"' ) ) {
+		$html = (string) preg_replace(
+			'#(<div\b[^>]*class=["\'][^"\']*livingtmw-home-feature__content[^"\']*["\'][^>]*>.*?)(<h1\b[^>]*>)(.*?)(</h1>)#uis',
+			'$1<h2>$3</h2>',
+			$html,
+			1
+		);
+		$home_intro = '<header class="livingtmw-home-intro"><h1 id="livingtmw-home-title">한국인을 위한 미얀마·양곤 생활 정보</h1><p>현지에서 직접 겪은 생활 경험과 공식 자료를 함께 확인해 주거·교통·금융·쇼핑 정보를 정리합니다.</p></header>';
+		$html       = (string) preg_replace(
+			'#(<article\b[^>]*class=["\'][^"\']*livingtmw-home-feature[^"\']*["\'][^>]*>)#ui',
+			$home_intro . '$1',
+			$html,
+			1
+		);
+	}
 	$html = (string) preg_replace( '#<section\b[^>]*class=["\'][^"\']*livingtmw-home-carousel__slide--fortune[^"\']*["\'][^>]*>.*?</section>#uis', '', $html );
 	$html = (string) preg_replace( '#<a\b[^>]*href=["\'][^"\']*(?:today-fortune|(?:\?|&amp;|&)page_id=104)[^"\']*["\'][^>]*>.*?</a>#uis', '', $html );
 	$html = (string) preg_replace( '#<button\b[^>]*data-carousel-dot=["\']3["\'][^>]*>.*?</button>#uis', '', $html );
