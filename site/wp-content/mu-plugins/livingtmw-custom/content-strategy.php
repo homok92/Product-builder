@@ -7,6 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Avoid exposing WordPress URL-pattern wildcards as crawlable-looking strings.
+ * Conservative speculative prefetching is optional and offers little benefit
+ * for this compact editorial site.
+ */
+add_filter( 'wp_speculation_rules_configuration', '__return_null', PHP_INT_MAX );
+
 const LIVINGTMW_PRIMARY_CATEGORY_NAME = '양곤 한국인의 현지생활 서비스';
 const LIVINGTMW_PRIMARY_CATEGORY_SLUG = 'yangon-korean-local-services';
 
