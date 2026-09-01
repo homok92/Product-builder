@@ -437,7 +437,10 @@ function livingtmw_quality_head(): void {
 		echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
 		$canonical = get_category_link( get_queried_object_id() );
 		if ( is_paged() ) {
-			$canonical = get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ) );
+			$canonical = remove_query_arg(
+				array_keys( $_GET ),
+				get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ) )
+			);
 		}
 		echo '<link rel="canonical" href="' . esc_url( $canonical ) . '">' . "\n";
 	} elseif ( is_tag() && function_exists( 'livingtmw_is_indexable_tag_archive' ) && livingtmw_is_indexable_tag_archive() ) {
