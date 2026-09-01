@@ -435,7 +435,11 @@ function livingtmw_quality_head(): void {
 		$category_name = single_cat_title( '', false );
 		$description   = $category_descriptions[ $category_name ] ?? sprintf( '%s에 관한 내일의 생활 현지 정보와 실용 안내를 모았습니다.', $category_name );
 		echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
-		echo '<link rel="canonical" href="' . esc_url( get_category_link( get_queried_object_id() ) ) . '">' . "\n";
+		$canonical = get_category_link( get_queried_object_id() );
+		if ( is_paged() ) {
+			$canonical = get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ) );
+		}
+		echo '<link rel="canonical" href="' . esc_url( $canonical ) . '">' . "\n";
 	} elseif ( is_tag() && function_exists( 'livingtmw_is_indexable_tag_archive' ) && livingtmw_is_indexable_tag_archive() ) {
 		$tag = get_queried_object();
 		$description = $tag instanceof WP_Term ? sprintf( '%s 관련 미얀마 양곤 생활정보와 실용 가이드를 한곳에서 확인하세요.', $tag->name ) : '';
